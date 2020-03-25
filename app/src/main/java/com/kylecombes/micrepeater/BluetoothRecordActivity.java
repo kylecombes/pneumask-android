@@ -2,23 +2,52 @@ package com.kylecombes.micrepeater;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Sample that demonstrates how to record from a Bluetooth HFP microphone using {@link AudioRecord}.
  */
 public class BluetoothRecordActivity extends Activity {
 
+    private AudioManager audioManager;
+
+    boolean mBound = false;
+    AudioRelayService audioRelayService;
+
+    Intent audioRelayServiceIntent;
+
+    // Buttons
+    Button startButton;
+    Button stopButton;
+    private Button bluetoothButton;
+
+    /**
+     * Signals whether a recording is in progress (true) or not (false).
+     */
+    private final AtomicBoolean recordingInProgress = new AtomicBoolean(false);
+
     private static final String TAG = BluetoothRecordActivity.class.getCanonicalName();
-    /*
+
     private final BroadcastReceiver bluetoothStateReceiver = new BroadcastReceiver() {
 
         private BluetoothState bluetoothState = BluetoothState.UNAVAILABLE;
@@ -54,15 +83,41 @@ public class BluetoothRecordActivity extends Activity {
             bluetoothStateChanged(state);
         }
     };
-     */
 
-    Button startButton;
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection connection = new ServiceConnection() {
 
-    Button stopButton;
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            AudioRelayService.LocalBinder binder = (AudioRelayService.LocalBinder) service;
+            audioRelayService = binder.getService();
+            mBound = true;
+        }
 
-    Intent audioRelayServiceIntent;
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
 
-//    private Button bluetoothButton;
+    @Override
+    protected void onStart() {
+        // This happens after onCreate()
+        super.onStart();
+        // Bind to LocalService
+        audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
+        bindService(audioRelayServiceIntent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unbindService(connection);
+        mBound = false;
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +130,8 @@ public class BluetoothRecordActivity extends Activity {
                     new String[]{Manifest.permission.RECORD_AUDIO},
                     1234);
         }
+
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         startButton = (Button) findViewById(R.id.btnStart);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -91,17 +148,17 @@ public class BluetoothRecordActivity extends Activity {
                 stopRecording();
             }
         });
-        /*
+
         bluetoothButton = (Button) findViewById(R.id.btnBluetooth);
         bluetoothButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activateBluetoothSco();
             }
-        });*/
+        });
     }
 
-    /*
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -113,19 +170,38 @@ public class BluetoothRecordActivity extends Activity {
         registerReceiver(bluetoothStateReceiver, new IntentFilter(
                 AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED));
     }
-    */
 
     private void startRecording() {
-        audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
+        // Boolean signal that recording has started
+        recordingInProgress.set(true);
+        if(mBound){
+            audioRelayService.setAudioManager(audioManager);
+            Toast.makeText(getApplicationContext(), "AM Sent", Toast.LENGTH_LONG).show();
+        }
+
         // TODO: Should run this as a foreground service so there's a persistent notification with a
         // stop button https://developer.android.com/guide/components/services#Foreground
+        audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
         startService(audioRelayServiceIntent);
+
+        // Update the button states
+        bluetoothButton.setEnabled(false);
+        startButton.setEnabled(false);
+        stopButton.setEnabled(true);
     }
 
     private void stopRecording() {
-        stopService(audioRelayServiceIntent);
+        // Boolean signal that recording has ended
+        recordingInProgress.set(false);
+
+        audioRelayService.stopRecording();
+
+        // Update the button states
+//        bluetoothButton.setEnabled(calculateBluetoothButtonState());
+        startButton.setEnabled(true);
+        stopButton.setEnabled(false);
     }
-    /*
+
     private void activateBluetoothSco() {
         if (!audioManager.isBluetoothScoAvailableOffCall()) {
             Log.e(TAG, "SCO ist not available, recording is not possible");
@@ -164,5 +240,5 @@ public class BluetoothRecordActivity extends Activity {
     enum BluetoothState {
         AVAILABLE, UNAVAILABLE
     }
-     */
+
 }

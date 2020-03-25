@@ -1,13 +1,17 @@
 package com.kylecombes.micrepeater;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
+import android.os.Binder;
 import android.os.IBinder;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -17,6 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AudioRelayService extends Service {
 
+    private AudioManager audioManager;
     private static final int SAMPLING_RATE_IN_HZ = 44100;
 
     private static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
@@ -46,6 +51,10 @@ public class AudioRelayService extends Service {
 
     private Thread recordingThread = null;
 
+    public AudioRelayService(){
+
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "AudioRelayService starting", Toast.LENGTH_SHORT).show();
@@ -55,12 +64,25 @@ public class AudioRelayService extends Service {
         return Service.START_STICKY;
     }
 
-    @Nullable
+    /* Binding service to main activity */
+
+    // Binder given to clients
+    private final IBinder binder = new LocalBinder();
+
+    /**
+     * Class used for the client Binder.  Because we know this service always
+     * runs in the same process as its clients, we don't need to deal with IPC.
+     */
+    public class LocalBinder extends Binder {
+        AudioRelayService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return AudioRelayService.this;
+        }
+    }
+//
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: We probably want to be able to bind to this so we can communicate from the
-        // main activity
-        return null;
+        return binder;
     }
 
     private void startRecording() {
@@ -78,7 +100,7 @@ public class AudioRelayService extends Service {
 
     }
 
-    private void stopRecording() {
+    public void stopRecording() {
         if (null == recorder) {
             return;
         }
@@ -92,6 +114,8 @@ public class AudioRelayService extends Service {
         recorder = null;
 
         recordingThread = null;
+
+        Toast.makeText(this, "Stopped Recording", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -105,7 +129,9 @@ public class AudioRelayService extends Service {
 
         @Override
         public void run() {
-            AudioTrack audio = new AudioTrack(AudioManager.STREAM_MUSIC,
+            audioManager.setSpeakerphoneOn(true);
+
+            AudioTrack audio = new AudioTrack(AudioManager.STREAM_SYSTEM,
                     SAMPLING_RATE_IN_HZ,
                     AudioFormat.CHANNEL_OUT_MONO,
                     AUDIO_FORMAT,
@@ -124,6 +150,7 @@ public class AudioRelayService extends Service {
                 audio.write(buffer, BUFFER_SIZE, AudioTrack.WRITE_NON_BLOCKING);
                 buffer.clear();
             }
+            audioManager.setSpeakerphoneOn(false);
         }
 
         private String getBufferReadFailureReason(int errorCode) {
@@ -141,5 +168,14 @@ public class AudioRelayService extends Service {
             }
         }
     }
+
+    public AudioManager getAudioManager(){
+        return audioManager;
+    }
+
+    public void setAudioManager(AudioManager AM) {
+        this.audioManager = AM;
+    }
+
 
 }
