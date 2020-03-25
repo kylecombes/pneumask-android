@@ -2,26 +2,15 @@ package com.kylecombes.micrepeater;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.media.AudioFormat;
-import android.media.AudioManager;
 import android.media.AudioRecord;
-import android.media.AudioTrack;
-import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import java.nio.ByteBuffer;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Sample that demonstrates how to record from a Bluetooth HFP microphone using {@link AudioRecord}.
@@ -29,32 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class BluetoothRecordActivity extends Activity {
 
     private static final String TAG = BluetoothRecordActivity.class.getCanonicalName();
-
-    private static final int SAMPLING_RATE_IN_HZ = 44100;
-
-    private static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
-
-    private static final int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
-
-    /**
-     * Factor by that the minimum buffer size is multiplied. The bigger the factor is the less
-     * likely it is that samples will be dropped, but more memory will be used. The minimum buffer
-     * size is determined by {@link AudioRecord#getMinBufferSize(int, int, int)} and depends on the
-     * recording settings.
-     */
-    private static final int BUFFER_SIZE_FACTOR = 2;
-
-    /**
-     * Size of the buffer where the audio data is stored by Android
-     */
-    private static final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLING_RATE_IN_HZ,
-            CHANNEL_CONFIG, AUDIO_FORMAT) * BUFFER_SIZE_FACTOR;
-
-    /**
-     * Signals whether a recording is in progress (true) or not (false).
-     */
-    private final AtomicBoolean recordingInProgress = new AtomicBoolean(false);
-
+    /*
     private final BroadcastReceiver bluetoothStateReceiver = new BroadcastReceiver() {
 
         private BluetoothState bluetoothState = BluetoothState.UNAVAILABLE;
@@ -90,18 +54,15 @@ public class BluetoothRecordActivity extends Activity {
             bluetoothStateChanged(state);
         }
     };
+     */
 
-    private AudioRecord recorder = null;
+    Button startButton;
 
-    private AudioManager audioManager;
+    Button stopButton;
 
-    private Thread recordingThread = null;
+    Intent audioRelayServiceIntent;
 
-    private Button startButton;
-
-    private Button stopButton;
-
-    private Button bluetoothButton;
+//    private Button bluetoothButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,18 +91,17 @@ public class BluetoothRecordActivity extends Activity {
                 stopRecording();
             }
         });
-
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
+        /*
         bluetoothButton = (Button) findViewById(R.id.btnBluetooth);
         bluetoothButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 activateBluetoothSco();
             }
-        });
+        });*/
     }
 
+    /*
     @Override
     protected void onResume() {
         super.onResume();
@@ -153,53 +113,19 @@ public class BluetoothRecordActivity extends Activity {
         registerReceiver(bluetoothStateReceiver, new IntentFilter(
                 AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED));
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        stopRecording();
-        unregisterReceiver(bluetoothStateReceiver);
-    }
+    */
 
     private void startRecording() {
-        // Depending on the device one might has to change the AudioSource, e.g. to DEFAULT
-        // or VOICE_COMMUNICATION
-        recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT,
-                SAMPLING_RATE_IN_HZ, CHANNEL_CONFIG, AUDIO_FORMAT, BUFFER_SIZE);
-
-        recorder.startRecording();
-
-        recordingInProgress.set(true);
-
-        recordingThread = new Thread(new RecordingRunnable(), "Recording Thread");
-        recordingThread.start();
-
-        bluetoothButton.setEnabled(calculateBluetoothButtonState());
-        startButton.setEnabled(calculateStartRecordButtonState());
-        stopButton.setEnabled(calculateStopRecordButtonState());
+        audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
+        // TODO: Should run this as a foreground service so there's a persistent notification with a
+        // stop button https://developer.android.com/guide/components/services#Foreground
+        startService(audioRelayServiceIntent);
     }
 
     private void stopRecording() {
-        if (null == recorder) {
-            return;
-        }
-
-        recordingInProgress.set(false);
-
-        recorder.stop();
-
-        recorder.release();
-
-        recorder = null;
-
-        recordingThread = null;
-
-        bluetoothButton.setEnabled(calculateBluetoothButtonState());
-        startButton.setEnabled(calculateStartRecordButtonState());
-        stopButton.setEnabled(calculateStopRecordButtonState());
+        stopService(audioRelayServiceIntent);
     }
-
+    /*
     private void activateBluetoothSco() {
         if (!audioManager.isBluetoothScoAvailableOffCall()) {
             Log.e(TAG, "SCO ist not available, recording is not possible");
@@ -235,49 +161,8 @@ public class BluetoothRecordActivity extends Activity {
         return audioManager.isBluetoothScoOn() && recordingInProgress.get();
     }
 
-    private class RecordingRunnable implements Runnable {
-
-        @Override
-        public void run() {
-            AudioTrack audio = new AudioTrack(AudioManager.STREAM_MUSIC,
-                    SAMPLING_RATE_IN_HZ,
-                    AudioFormat.CHANNEL_OUT_MONO,
-                    AUDIO_FORMAT,
-                    BUFFER_SIZE,
-                    AudioTrack.MODE_STREAM);
-            final ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
-            audio.play();
-
-            while (recordingInProgress.get()) {
-                int result = recorder.read(buffer, BUFFER_SIZE);
-                if (result < 0) {
-                    throw new RuntimeException("Reading of audio buffer failed: " +
-                            getBufferReadFailureReason(result));
-                }
-                // TODO: Convert to write(byte[], int, int) for support of earlier Android?
-                audio.write(buffer, BUFFER_SIZE, AudioTrack.WRITE_NON_BLOCKING);
-//                outStream.write(buffer.array(), 0, BUFFER_SIZE);
-                buffer.clear();
-            }
-        }
-
-        private String getBufferReadFailureReason(int errorCode) {
-            switch (errorCode) {
-                case AudioRecord.ERROR_INVALID_OPERATION:
-                    return "ERROR_INVALID_OPERATION";
-                case AudioRecord.ERROR_BAD_VALUE:
-                    return "ERROR_BAD_VALUE";
-                case AudioRecord.ERROR_DEAD_OBJECT:
-                    return "ERROR_DEAD_OBJECT";
-                case AudioRecord.ERROR:
-                    return "ERROR";
-                default:
-                    return "Unknown (" + errorCode + ")";
-            }
-        }
-    }
-
     enum BluetoothState {
         AVAILABLE, UNAVAILABLE
     }
+     */
 }
