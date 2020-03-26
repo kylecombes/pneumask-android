@@ -3,16 +3,13 @@ package com.kylecombes.micrepeater;
 import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,8 +23,6 @@ import androidx.core.content.ContextCompat;
 public class BluetoothRecordActivity extends Activity {
 
     private AudioManager audioManager;
-    private boolean recordingInProgress;
-
     Intent audioRelayServiceIntent;
 
     // Buttons
@@ -108,10 +103,15 @@ public class BluetoothRecordActivity extends Activity {
             @Override
             public void onClick(View view) {
                 activateBluetoothSco();
+                updateButtonStates();
             }
         });
+    }
 
-        recordingInProgress = false;
+    private void updateButtonStates() {
+        bluetoothButton.setEnabled(calculateBluetoothButtonState());
+        startButton.setEnabled(calculateStartRecordButtonState());
+        stopButton.setEnabled(calculateStopRecordButtonState());
     }
 
 
@@ -119,18 +119,26 @@ public class BluetoothRecordActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        bluetoothButton.setEnabled(calculateBluetoothButtonState());
-        startButton.setEnabled(calculateStartRecordButtonState());
-        stopButton.setEnabled(calculateStopRecordButtonState());
+        updateButtonStates();
 
         registerReceiver(bluetoothStateReceiver, new IntentFilter(
                 AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED));
     }
 
-    private void startRecording() {
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(bluetoothStateReceiver);
+    }
+
+    private void startAudioService() {
         audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
         startService(audioRelayServiceIntent);
-        recordingInProgress = true;
+    }
+
+    private void startRecording() {
+        startAudioService();
 
         // Update the button states
         bluetoothButton.setEnabled(false);
@@ -139,8 +147,9 @@ public class BluetoothRecordActivity extends Activity {
     }
 
     private void stopRecording() {
-        stopService(audioRelayServiceIntent);
-        recordingInProgress = false;
+        if (AudioRelayService.service != null) {
+            AudioRelayService.service.shutDown();
+        }
 
         // Update the button states
         bluetoothButton.setEnabled(calculateBluetoothButtonState());
@@ -149,7 +158,7 @@ public class BluetoothRecordActivity extends Activity {
     }
 
     private void activateBluetoothSco() {
-        if (!audioManager.isBluetoothScoAvailableOffCall()) {
+        if (audioManager == null || !audioManager.isBluetoothScoAvailableOffCall()) {
             Log.e(TAG, "SCO ist not available, recording is not possible");
             return;
         }
@@ -162,7 +171,9 @@ public class BluetoothRecordActivity extends Activity {
     private void bluetoothStateChanged(BluetoothState state) {
         Log.i(TAG, "Bluetooth state changed to:" + state);
 
-        if (BluetoothState.UNAVAILABLE == state && recordingInProgress) {
+        AudioRelayService ars = AudioRelayService.service;
+
+        if (BluetoothState.UNAVAILABLE == state && ars != null && ars.recordingInProgress()) {
             stopRecording();
         }
 
@@ -176,11 +187,11 @@ public class BluetoothRecordActivity extends Activity {
     }
 
     private boolean calculateStartRecordButtonState() {
-        return audioManager.isBluetoothScoOn() && !recordingInProgress;
+        return audioManager.isBluetoothScoOn() && AudioRelayService.service == null;
     }
 
     private boolean calculateStopRecordButtonState() {
-        return audioManager.isBluetoothScoOn() && recordingInProgress;
+        return audioManager.isBluetoothScoOn() && AudioRelayService.service != null;
     }
 
     enum BluetoothState {
