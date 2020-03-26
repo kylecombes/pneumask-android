@@ -159,7 +159,7 @@ public class BluetoothRecordActivity extends Activity {
 
     private void activateBluetoothSco() {
         if (audioManager == null || !audioManager.isBluetoothScoAvailableOffCall()) {
-            Log.e(TAG, "SCO ist not available, recording is not possible");
+            Log.e(TAG, "SCO ist not available. Recording is not possible");
             return;
         }
 
@@ -169,7 +169,7 @@ public class BluetoothRecordActivity extends Activity {
     }
 
     private void bluetoothStateChanged(BluetoothState state) {
-        Log.i(TAG, "Bluetooth state changed to:" + state);
+        Log.i(TAG, "Bluetooth state changed to: " + state);
 
         AudioRelayService ars = AudioRelayService.service;
 

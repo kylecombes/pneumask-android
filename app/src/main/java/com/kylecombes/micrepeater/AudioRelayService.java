@@ -45,12 +45,9 @@ public class AudioRelayService extends Service {
 
     private Thread recordingThread = null;
 
-    public AudioRelayService(){
-        Log.d("AudioRelayService", "Sampling rate: " + SAMPLING_RATE_IN_HZ + " Hz");
-    }
-
     @Override
     public void onCreate() {
+        Log.d("AudioRelayService", "Sampling rate: " + SAMPLING_RATE_IN_HZ + " Hz");
         service = this;
     }
 
@@ -60,7 +57,7 @@ public class AudioRelayService extends Service {
                 .setContentTitle("Mic Repeater is running");
         startForeground(1, notif.build());
 
-        Toast.makeText(this, "AudioRelayService starting", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Microphone relay started", Toast.LENGTH_SHORT).show();
 
         startRecording();
 
@@ -119,14 +116,12 @@ public class AudioRelayService extends Service {
 
         recordingThread = null;
 
-        Toast.makeText(this, "Stopped Recording", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Microphone relay stopped", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDestroy() {
         stopRecording();
-
-        Toast.makeText(this, "Destroyed AudioRelayService", Toast.LENGTH_SHORT).show();
     }
 
     public void shutDown() {
