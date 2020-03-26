@@ -26,9 +26,7 @@ import androidx.core.content.ContextCompat;
 public class BluetoothRecordActivity extends Activity {
 
     private AudioManager audioManager;
-
-    boolean mBound = false;
-    AudioRelayService audioRelayService;
+    private boolean recordingInProgress;
 
     Intent audioRelayServiceIntent;
 
@@ -75,43 +73,6 @@ public class BluetoothRecordActivity extends Activity {
         }
     };
 
-    /** Defines callbacks for service binding, passed to bindService() */
-    private ServiceConnection connection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            AudioRelayService.LocalBinder binder = (AudioRelayService.LocalBinder) service;
-            audioRelayService = binder.getService();
-            mBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
-
-    @Override
-    protected void onStart() {
-        // This happens after onCreate()
-        super.onStart();
-        // TODO: Can we do this in onResume() (without starting a new service, for when the user
-        //  returns to the app)?
-        // Bind to LocalService
-        audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
-        bindService(audioRelayServiceIntent, connection, Context.BIND_AUTO_CREATE);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbindService(connection);
-        mBound = false;
-    }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,6 +110,8 @@ public class BluetoothRecordActivity extends Activity {
                 activateBluetoothSco();
             }
         });
+
+        recordingInProgress = false;
     }
 
 
@@ -165,7 +128,10 @@ public class BluetoothRecordActivity extends Activity {
     }
 
     private void startRecording() {
-        audioRelayService.startRecording();
+        audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
+        startService(audioRelayServiceIntent);
+        recordingInProgress = true;
+
         // Update the button states
         bluetoothButton.setEnabled(false);
         startButton.setEnabled(false);
@@ -173,10 +139,11 @@ public class BluetoothRecordActivity extends Activity {
     }
 
     private void stopRecording() {
-        audioRelayService.stopRecording();
+        stopService(audioRelayServiceIntent);
+        recordingInProgress = false;
 
         // Update the button states
-//        bluetoothButton.setEnabled(calculateBluetoothButtonState());
+        bluetoothButton.setEnabled(calculateBluetoothButtonState());
         startButton.setEnabled(true);
         stopButton.setEnabled(false);
     }
@@ -195,7 +162,7 @@ public class BluetoothRecordActivity extends Activity {
     private void bluetoothStateChanged(BluetoothState state) {
         Log.i(TAG, "Bluetooth state changed to:" + state);
 
-        if (BluetoothState.UNAVAILABLE == state && audioRelayService.recordingInProgress()) {
+        if (BluetoothState.UNAVAILABLE == state && recordingInProgress) {
             stopRecording();
         }
 
@@ -209,11 +176,11 @@ public class BluetoothRecordActivity extends Activity {
     }
 
     private boolean calculateStartRecordButtonState() {
-        return audioManager.isBluetoothScoOn() && !audioRelayService.recordingInProgress();
+        return audioManager.isBluetoothScoOn() && !recordingInProgress;
     }
 
     private boolean calculateStopRecordButtonState() {
-        return audioManager.isBluetoothScoOn() && audioRelayService.recordingInProgress();
+        return audioManager.isBluetoothScoOn() && recordingInProgress;
     }
 
     enum BluetoothState {

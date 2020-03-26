@@ -57,25 +57,9 @@ public class AudioRelayService extends Service {
         return Service.START_STICKY;
     }
 
-    /* Binding service to main activity */
-
-    // Binder given to clients
-    private final IBinder binder = new LocalBinder();
-
-    /**
-     * Class used for the client Binder.  Because we know this service always
-     * runs in the same process as its clients, we don't need to deal with IPC.
-     */
-    public class LocalBinder extends Binder {
-        AudioRelayService getService() {
-            // Return this instance of LocalService so clients can call public methods
-            return AudioRelayService.this;
-        }
-    }
-//
     @Override
     public IBinder onBind(Intent intent) {
-        return binder;
+        return null; 
     }
 
     public void startRecording() {
@@ -99,7 +83,7 @@ public class AudioRelayService extends Service {
 
         if(NoiseSuppressor.isAvailable())
         {
-              NoiseSuppressor.create(audioSessionId);
+//              NoiseSuppressor.create(audioSessionId);
         }
 //        if(AutomaticGainControl.isAvailable())
 //        {
@@ -213,8 +197,7 @@ public class AudioRelayService extends Service {
                 return validSampleRate;
             }
         }
-        // If none of the sample rates are supported return -1 handle it in
-        // calling method
+        // If none of the sample rates are supported return -1 handle it in calling method
         return -1;
     }
 }
