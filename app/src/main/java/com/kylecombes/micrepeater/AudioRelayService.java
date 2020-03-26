@@ -7,6 +7,10 @@ import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
+import android.media.MicrophoneDirection;
+import android.media.audiofx.AcousticEchoCanceler;
+import android.media.audiofx.AutomaticGainControl;
+import android.media.audiofx.NoiseSuppressor;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -80,6 +84,7 @@ public class AudioRelayService extends Service {
         recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT,
                 SAMPLING_RATE_IN_HZ, CHANNEL_CONFIG, AUDIO_FORMAT, BUFFER_SIZE);
 
+        improveRecorder(recorder);
         recorder.startRecording();
 
         recordingInProgress.set(true);
@@ -87,6 +92,22 @@ public class AudioRelayService extends Service {
         recordingThread = new Thread(new RecordingRunnable(), "Recording Thread");
         recordingThread.start();
 
+    }
+
+    private void improveRecorder(AudioRecord recorder) {
+        int audioSessionId = recorder.getAudioSessionId();
+
+        if(NoiseSuppressor.isAvailable())
+        {
+              NoiseSuppressor.create(audioSessionId);
+        }
+//        if(AutomaticGainControl.isAvailable())
+//        {
+//             AutomaticGainControl.create(audioSessionId);
+//        }
+        if(AcousticEchoCanceler.isAvailable()){
+             AcousticEchoCanceler.create(audioSessionId);
+        }
     }
 
     public void stopRecording() {
