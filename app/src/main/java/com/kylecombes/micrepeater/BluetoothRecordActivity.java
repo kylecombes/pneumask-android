@@ -13,16 +13,12 @@ import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Sample that demonstrates how to record from a Bluetooth HFP microphone using {@link AudioRecord}.
@@ -40,11 +36,6 @@ public class BluetoothRecordActivity extends Activity {
     Button startButton;
     Button stopButton;
     private Button bluetoothButton;
-
-    /**
-     * Signals whether a recording is in progress (true) or not (false).
-     */
-    private final AtomicBoolean recordingInProgress = new AtomicBoolean(false);
 
     private static final String TAG = BluetoothRecordActivity.class.getCanonicalName();
 
@@ -106,6 +97,8 @@ public class BluetoothRecordActivity extends Activity {
     protected void onStart() {
         // This happens after onCreate()
         super.onStart();
+        // TODO: Can we do this in onResume() (without starting a new service, for when the user
+        //  returns to the app)?
         // Bind to LocalService
         audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
         bindService(audioRelayServiceIntent, connection, Context.BIND_AUTO_CREATE);
@@ -172,18 +165,7 @@ public class BluetoothRecordActivity extends Activity {
     }
 
     private void startRecording() {
-        // Boolean signal that recording has started
-        recordingInProgress.set(true);
-        if(mBound){
-            audioRelayService.setAudioManager(audioManager);
-            Toast.makeText(getApplicationContext(), "AM Sent", Toast.LENGTH_LONG).show();
-        }
-
-        // TODO: Should run this as a foreground service so there's a persistent notification with a
-        // stop button https://developer.android.com/guide/components/services#Foreground
-        audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
-        startService(audioRelayServiceIntent);
-
+        audioRelayService.startRecording();
         // Update the button states
         bluetoothButton.setEnabled(false);
         startButton.setEnabled(false);
@@ -191,9 +173,6 @@ public class BluetoothRecordActivity extends Activity {
     }
 
     private void stopRecording() {
-        // Boolean signal that recording has ended
-        recordingInProgress.set(false);
-
         audioRelayService.stopRecording();
 
         // Update the button states
@@ -216,7 +195,7 @@ public class BluetoothRecordActivity extends Activity {
     private void bluetoothStateChanged(BluetoothState state) {
         Log.i(TAG, "Bluetooth state changed to:" + state);
 
-        if (BluetoothState.UNAVAILABLE == state && recordingInProgress.get()) {
+        if (BluetoothState.UNAVAILABLE == state && audioRelayService.recordingInProgress()) {
             stopRecording();
         }
 
@@ -230,11 +209,11 @@ public class BluetoothRecordActivity extends Activity {
     }
 
     private boolean calculateStartRecordButtonState() {
-        return audioManager.isBluetoothScoOn() && !recordingInProgress.get();
+        return audioManager.isBluetoothScoOn() && !audioRelayService.recordingInProgress();
     }
 
     private boolean calculateStopRecordButtonState() {
-        return audioManager.isBluetoothScoOn() && recordingInProgress.get();
+        return audioManager.isBluetoothScoOn() && audioRelayService.recordingInProgress();
     }
 
     enum BluetoothState {
