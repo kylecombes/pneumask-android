@@ -13,16 +13,12 @@ import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Sample that demonstrates how to record from a Bluetooth HFP microphone using {@link AudioRecord}.

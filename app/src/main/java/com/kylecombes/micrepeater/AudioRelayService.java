@@ -1,7 +1,6 @@
 package com.kylecombes.micrepeater;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -10,11 +9,8 @@ import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.os.Binder;
 import android.os.IBinder;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -22,25 +18,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class AudioRelayService extends Service {
 
     private AudioManager audioManager;
-    private static final int SAMPLING_RATE_IN_HZ = 44100;
+    private static final int SAMPLING_RATE_IN_HZ = getMinSupportedSampleRate();
+
 
     private static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
 
     private static final int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
 
     /**
-     * Factor by that the minimum buffer size is multiplied. The bigger the factor is the less
-     * likely it is that samples will be dropped, but more memory will be used. The minimum buffer
-     * size is determined by {@link AudioRecord#getMinBufferSize(int, int, int)} and depends on the
-     * recording settings.
-     */
-    private static final int BUFFER_SIZE_FACTOR = 2;
-
-    /**
      * Size of the buffer where the audio data is stored by Android
      */
     private static final int BUFFER_SIZE = AudioRecord.getMinBufferSize(SAMPLING_RATE_IN_HZ,
-            CHANNEL_CONFIG, AUDIO_FORMAT) * BUFFER_SIZE_FACTOR;
+            CHANNEL_CONFIG, AUDIO_FORMAT);
 
     /**
      * Signals whether a recording is in progress (true) or not (false).
@@ -52,7 +41,7 @@ public class AudioRelayService extends Service {
     private Thread recordingThread = null;
 
     public AudioRelayService(){
-
+        Log.d("AudioRelayService", "Sampling rate: " + SAMPLING_RATE_IN_HZ + " Hz");
     }
 
     @Override
@@ -176,4 +165,33 @@ public class AudioRelayService extends Service {
         return recordingInProgress.get();
     }
 
+    private static int getMinSupportedSampleRate() {
+        /*
+         * Valid Audio Sample rates
+         *
+         * @see <a
+         * href="http://en.wikipedia.org/wiki/Sampling_%28signal_processing%29"
+         * >Wikipedia</a>
+         */
+        final int[] validSampleRates = new int[] { 8000, 11025, 16000, 22050,
+                32000, 37800, 44056, 44100, 47250, 48000, 50000, 50400, 88200,
+                96000, 176400, 192000, 352800, 2822400, 5644800 };
+        /*
+         * Selecting default audio input source for recording since
+         * AudioFormat.CHANNEL_CONFIGURATION_DEFAULT is deprecated and selecting
+         * default encoding format.
+         */
+        for (int validSampleRate : validSampleRates) {
+            int result = AudioRecord.getMinBufferSize(validSampleRate,
+                    CHANNEL_CONFIG,
+                    AUDIO_FORMAT);
+            if (result > 0) {
+                // return the minimum supported audio sample rate
+                return validSampleRate;
+            }
+        }
+        // If none of the sample rates are supported return -1 handle it in
+        // calling method
+        return -1;
+    }
 }
