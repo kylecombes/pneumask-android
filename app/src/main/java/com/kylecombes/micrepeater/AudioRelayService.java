@@ -59,8 +59,6 @@ public class AudioRelayService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "AudioRelayService starting", Toast.LENGTH_SHORT).show();
 
-        startRecording();
-
         return Service.START_STICKY;
     }
 
@@ -85,7 +83,7 @@ public class AudioRelayService extends Service {
         return binder;
     }
 
-    private void startRecording() {
+    public void startRecording() {
         // Depending on the device one might has to change the AudioSource, e.g. to DEFAULT
         // or VOICE_COMMUNICATION
         recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT,
@@ -129,9 +127,8 @@ public class AudioRelayService extends Service {
 
         @Override
         public void run() {
-            audioManager.setSpeakerphoneOn(true);
 
-            AudioTrack audio = new AudioTrack(AudioManager.STREAM_SYSTEM,
+            AudioTrack audio = new AudioTrack(AudioManager.STREAM_MUSIC,
                     SAMPLING_RATE_IN_HZ,
                     AudioFormat.CHANNEL_OUT_MONO,
                     AUDIO_FORMAT,
@@ -146,11 +143,9 @@ public class AudioRelayService extends Service {
                     throw new RuntimeException("Reading of audio buffer failed: " +
                             getBufferReadFailureReason(result));
                 }
-                // TODO: Convert to write(byte[], int, int) for support of earlier Android?
-                audio.write(buffer, BUFFER_SIZE, AudioTrack.WRITE_NON_BLOCKING);
+                audio.write(buffer.array(), 0, BUFFER_SIZE);
                 buffer.clear();
             }
-            audioManager.setSpeakerphoneOn(false);
         }
 
         private String getBufferReadFailureReason(int errorCode) {
@@ -177,5 +172,8 @@ public class AudioRelayService extends Service {
         this.audioManager = AM;
     }
 
+    public boolean recordingInProgress() {
+        return recordingInProgress.get();
+    }
 
 }
