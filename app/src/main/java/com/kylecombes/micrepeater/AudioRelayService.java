@@ -61,7 +61,7 @@ public class AudioRelayService extends Service {
 
         startRecording();
 
-        return Service.START_STICKY;
+        return Service.START_NOT_STICKY; // TODO: START_STICKY
     }
 
     /* Binding service to main activity */
@@ -129,7 +129,6 @@ public class AudioRelayService extends Service {
 
         @Override
         public void run() {
-            audioManager.setSpeakerphoneOn(true);
 
             AudioTrack audio = new AudioTrack(AudioManager.STREAM_SYSTEM,
                     SAMPLING_RATE_IN_HZ,
@@ -150,7 +149,6 @@ public class AudioRelayService extends Service {
                 audio.write(buffer, BUFFER_SIZE, AudioTrack.WRITE_NON_BLOCKING);
                 buffer.clear();
             }
-            audioManager.setSpeakerphoneOn(false);
         }
 
         private String getBufferReadFailureReason(int errorCode) {
