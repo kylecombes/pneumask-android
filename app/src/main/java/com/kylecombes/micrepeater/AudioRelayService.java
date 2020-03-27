@@ -59,7 +59,7 @@ public class AudioRelayService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null; 
+        return null;
     }
 
     public void startRecording() {
