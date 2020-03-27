@@ -95,7 +95,7 @@ public class AudioRelayService extends Service {
 
         if(NoiseSuppressor.isAvailable())
         {
-//              NoiseSuppressor.create(audioSessionId);
+              NoiseSuppressor.create(audioSessionId);
         }
 //        if(AutomaticGainControl.isAvailable())
 //        {
