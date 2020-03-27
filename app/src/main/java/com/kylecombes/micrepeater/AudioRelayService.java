@@ -1,5 +1,6 @@
 package com.kylecombes.micrepeater;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioFormat;
@@ -7,11 +8,8 @@ import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
-import android.media.MicrophoneDirection;
 import android.media.audiofx.AcousticEchoCanceler;
-import android.media.audiofx.AutomaticGainControl;
 import android.media.audiofx.NoiseSuppressor;
-import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -21,7 +19,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AudioRelayService extends Service {
 
-    private AudioManager audioManager;
+    static AudioRelayService service;
+
+    private static final String TAG = AudioRelayService.class.getCanonicalName();
+
+    public static final String STREAM_KEY = "STREAM";
+
     private static final int SAMPLING_RATE_IN_HZ = getMinSupportedSampleRate();
 
 
@@ -44,13 +47,22 @@ public class AudioRelayService extends Service {
 
     private Thread recordingThread = null;
 
-    public AudioRelayService(){
+    private int streamOutput;
+
+    @Override
+    public void onCreate() {
         Log.d("AudioRelayService", "Sampling rate: " + SAMPLING_RATE_IN_HZ + " Hz");
+        service = this;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "AudioRelayService starting", Toast.LENGTH_SHORT).show();
+
+        streamOutput = intent.getIntExtra(STREAM_KEY, AudioManager.STREAM_ALARM);
+
+        Notification.Builder notif = new Notification.Builder(this)
+                .setContentTitle("Mic Repeater is running");
+        startForeground(1, notif.build());
 
         startRecording();
 
@@ -108,15 +120,17 @@ public class AudioRelayService extends Service {
         recorder = null;
 
         recordingThread = null;
-
-        Toast.makeText(this, "Stopped Recording", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDestroy() {
         stopRecording();
+    }
 
-        Toast.makeText(this, "Destroyed AudioRelayService", Toast.LENGTH_SHORT).show();
+    public void shutDown() {
+        stopRecording();
+        service = null;
+        stopSelf();
     }
 
     private class RecordingRunnable implements Runnable {
@@ -124,7 +138,7 @@ public class AudioRelayService extends Service {
         @Override
         public void run() {
 
-            AudioTrack audio = new AudioTrack(AudioManager.STREAM_MUSIC,
+            AudioTrack audio = new AudioTrack(streamOutput,
                     SAMPLING_RATE_IN_HZ,
                     AudioFormat.CHANNEL_OUT_MONO,
                     AUDIO_FORMAT,
@@ -136,11 +150,11 @@ public class AudioRelayService extends Service {
             while (recordingInProgress.get()) {
                 int result = recorder.read(buffer, BUFFER_SIZE);
                 if (result < 0) {
-                    throw new RuntimeException("Reading of audio buffer failed: " +
-                            getBufferReadFailureReason(result));
+                    Log.w(TAG, "Reading of buffer failed.");
+                } else {
+                    audio.write(buffer.array(), 0, BUFFER_SIZE);
+                    buffer.clear();
                 }
-                audio.write(buffer.array(), 0, BUFFER_SIZE);
-                buffer.clear();
             }
         }
 
@@ -158,14 +172,6 @@ public class AudioRelayService extends Service {
                     return "Unknown (" + errorCode + ")";
             }
         }
-    }
-
-    public AudioManager getAudioManager(){
-        return audioManager;
-    }
-
-    public void setAudioManager(AudioManager AM) {
-        this.audioManager = AM;
     }
 
     public boolean recordingInProgress() {
