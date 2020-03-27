@@ -17,30 +17,22 @@
         android:id="@+id/btnStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:padding="30dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@android:color/holo_green_light"
-        android:text="Start" />
+        android:onClick="onStartButtonPressed"
+        android:padding="30dp"
+        android:text="Start"
+        android:textSize="22sp" />
 
     <Button
         android:id="@+id/btnStop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:padding="30dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@android:color/holo_red_light"
-        android:text="Stop" />
-
-    <Button
-        android:id="@+id/btnBluetooth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="22sp"
+        android:onClick="onStopButtonPressed"
         android:padding="30dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@android:color/holo_blue_light"
-        android:text="Check Bluetooth Connection" />
+        android:text="Stop"
+        android:textSize="22sp" />
 
 </LinearLayout>

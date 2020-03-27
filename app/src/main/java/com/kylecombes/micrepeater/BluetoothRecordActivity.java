@@ -2,7 +2,6 @@ package com.kylecombes.micrepeater;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -22,57 +21,97 @@ import androidx.core.content.ContextCompat;
  */
 public class BluetoothRecordActivity extends Activity {
 
+    private static final String TAG = BluetoothRecordActivity.class.getCanonicalName();
+
     private AudioManager audioManager;
     Intent audioRelayServiceIntent;
+
+    BluetoothState mBluetoothState = BluetoothState.INITIALIZING;
+    boolean recordingInProgress = false;
 
     // Buttons
     Button startButton;
     Button stopButton;
-    private Button bluetoothButton;
-
-    private static final String TAG = BluetoothRecordActivity.class.getCanonicalName();
-
-    private final BroadcastReceiver bluetoothStateReceiver = new BroadcastReceiver() {
-
-        private BluetoothState bluetoothState = BluetoothState.UNAVAILABLE;
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int state = intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1);
-            switch (state) {
-                case AudioManager.SCO_AUDIO_STATE_CONNECTED:
-                    Log.i(TAG, "Bluetooth HFP Headset is connected");
-                    handleBluetoothStateChange(BluetoothState.AVAILABLE);
-                    break;
-                case AudioManager.SCO_AUDIO_STATE_CONNECTING:
-                    Log.i(TAG, "Bluetooth HFP Headset is connecting");
-                    handleBluetoothStateChange(BluetoothState.UNAVAILABLE);
-                case AudioManager.SCO_AUDIO_STATE_DISCONNECTED:
-                    Log.i(TAG, "Bluetooth HFP Headset is disconnected");
-                    handleBluetoothStateChange(BluetoothState.UNAVAILABLE);
-                    break;
-                case AudioManager.SCO_AUDIO_STATE_ERROR:
-                    Log.i(TAG, "Bluetooth HFP Headset is in error state");
-                    handleBluetoothStateChange(BluetoothState.UNAVAILABLE);
-                    break;
-            }
-        }
-
-        private void handleBluetoothStateChange(BluetoothState state) {
-            if (bluetoothState == state) {
-                return;
-            }
-
-            bluetoothState = state;
-            bluetoothStateChanged(state);
-        }
-    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth);
 
+        requestNeededPermissions();
+
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        // Register a listener to respond to Bluetooth connect/disconnect events
+        registerReceiver(BluetoothStateReceiver.getInstance(),
+                new IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED));
+
+        // Register a callback to get notified about Bluetooth connect/disconnect events
+        BluetoothStateReceiver.getInstance().registerStateChangeReceiver(
+                new BluetoothStateReceiver.StateChangeReceiver() {
+                    public void stateChanged(boolean bluetoothAvailable) {
+                        if (bluetoothAvailable) {
+                            mBluetoothState = BluetoothState.AVAILABLE;
+                        } else {
+                            mBluetoothState = BluetoothState.UNAVAILABLE;
+                            stopRecording();
+                        }
+                        updateButtonStates();
+                    }
+                }
+        );
+
+        // Find our buttons so we can change their enabled/disabled states later
+        startButton = findViewById(R.id.btnStart);
+        stopButton = findViewById(R.id.btnStop);
+    }
+
+    public void onStartButtonPressed(View v) {
+        startAudioService();
+
+        updateButtonStates();
+    }
+
+    public void onStopButtonPressed(View v) {
+        stopRecording();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Make sure we're sending audio over Bluetooth
+        activateBluetoothSco();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (AudioRelayService.service != null) {
+            recordingInProgress = AudioRelayService.service.recordingInProgress();
+        } else {
+            recordingInProgress = false;
+        }
+        updateButtonStates();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // If Bluetooth SCO is on but we're not recording, shut it off
+        if (audioManager != null && audioManager.isBluetoothScoOn() && AudioRelayService.service == null) {
+            audioManager.stopBluetoothSco();
+        }
+    }
+
+    /**
+     * Checks to make sure the app has the needed permissions:
+     *   - RECORD_AUDIO
+     * If those permissions have not been granted, they will be requested.
+     */
+    private void requestNeededPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -80,88 +119,15 @@ public class BluetoothRecordActivity extends Activity {
                     1234);
         }
 
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
-        startButton = (Button) findViewById(R.id.btnStart);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startRecording();
-            }
-        });
-
-        stopButton = (Button) findViewById(R.id.btnStop);
-        stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopRecording();
-            }
-        });
-
-        bluetoothButton = (Button) findViewById(R.id.btnBluetooth);
-        bluetoothButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                activateBluetoothSco();
-                updateButtonStates();
-            }
-        });
     }
 
-    private void updateButtonStates() {
-        bluetoothButton.setEnabled(calculateBluetoothButtonState());
-        startButton.setEnabled(calculateStartRecordButtonState());
-        stopButton.setEnabled(calculateStopRecordButtonState());
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        updateButtonStates();
-
-        registerReceiver(bluetoothStateReceiver, new IntentFilter(
-                AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED));
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        unregisterReceiver(bluetoothStateReceiver);
-    }
-
-    private void startAudioService() {
-        audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
-        audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY,
-                audioManager.isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
-        startService(audioRelayServiceIntent);
-    }
-
-    private void startRecording() {
-        startAudioService();
-
-        // Update the button states
-        bluetoothButton.setEnabled(false);
-        startButton.setEnabled(false);
-        stopButton.setEnabled(true);
-    }
-
-    private void stopRecording() {
-        if (AudioRelayService.service != null) {
-            AudioRelayService.service.shutDown();
-        }
-
-        // Update the button states
-        bluetoothButton.setEnabled(calculateBluetoothButtonState());
-        startButton.setEnabled(true);
-        stopButton.setEnabled(false);
-    }
-
+    /**
+     * Attempts to start Bluetooth SCO (used for streaming audio to and from Bluetooth devices).
+     */
     private void activateBluetoothSco() {
         if (audioManager == null || !audioManager.isBluetoothScoAvailableOffCall()) {
             Log.e(TAG, "SCO ist not available. Recording is not possible");
+            mBluetoothState = BluetoothState.UNAVAILABLE;
             return;
         }
 
@@ -170,34 +136,36 @@ public class BluetoothRecordActivity extends Activity {
         }
     }
 
-    private void bluetoothStateChanged(BluetoothState state) {
-        Log.i(TAG, "Bluetooth state changed to: " + state);
+    /**
+     * Starts the AudioRelayService.
+     */
+    private void startAudioService() {
+        audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
+        audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY,
+                audioManager.isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
+        startService(audioRelayServiceIntent);
+        recordingInProgress = true;
+    }
 
-        AudioRelayService ars = AudioRelayService.service;
-
-        if (BluetoothState.UNAVAILABLE == state && ars != null && ars.recordingInProgress()) {
-            stopRecording();
+    private void stopRecording() {
+        if (AudioRelayService.service != null) {
+            AudioRelayService.service.shutDown();
+            recordingInProgress = false;
         }
 
-        bluetoothButton.setEnabled(calculateBluetoothButtonState());
-        startButton.setEnabled(calculateStartRecordButtonState());
-        stopButton.setEnabled(calculateStopRecordButtonState());
+        updateButtonStates();
     }
 
-    private boolean calculateBluetoothButtonState() {
-        return !audioManager.isBluetoothScoOn();
-    }
-
-    private boolean calculateStartRecordButtonState() {
-        return audioManager.isBluetoothScoOn() && AudioRelayService.service == null;
-    }
-
-    private boolean calculateStopRecordButtonState() {
-        return audioManager.isBluetoothScoOn() && AudioRelayService.service != null;
+    private void updateButtonStates() {
+        boolean bluetoothOn = audioManager.isBluetoothScoOn();
+        startButton.setEnabled(bluetoothOn && !recordingInProgress);
+        stopButton.setEnabled(bluetoothOn && recordingInProgress);
     }
 
     enum BluetoothState {
-        AVAILABLE, UNAVAILABLE
+        AVAILABLE,
+        INITIALIZING,
+        UNAVAILABLE,
     }
 
 }
