@@ -64,8 +64,6 @@ public class AudioRelayService extends Service {
                 .setContentTitle("Mic Repeater is running");
         startForeground(1, notif.build());
 
-        Toast.makeText(this, "Microphone relay started", Toast.LENGTH_SHORT).show();
-
         startRecording();
 
         return Service.START_STICKY;
@@ -122,8 +120,6 @@ public class AudioRelayService extends Service {
         recorder = null;
 
         recordingThread = null;
-
-        Toast.makeText(this, "Microphone relay stopped", Toast.LENGTH_SHORT).show();
     }
 
     @Override
