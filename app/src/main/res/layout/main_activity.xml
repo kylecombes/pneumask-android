@@ -6,30 +6,30 @@
     android:gravity="center_vertical"
     android:orientation="vertical">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:layout_marginBottom="20dp"-->
-<!--        app:srcCompat="@drawable/bluetooth" />-->
+    <TextView
+        android:id="@+id/textView_main_bluetoothStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bluetooth_initializing"
+        android:textAlignment="center" />
 
     <Button
-        android:id="@+id/btnStart"
+        android:id="@+id/button_main_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@android:color/holo_green_light"
+        android:background="@android:color/holo_green_light"
         android:onClick="onStartButtonPressed"
         android:padding="30dp"
         android:text="@string/start"
         android:textSize="22sp" />
 
     <Button
-        android:id="@+id/btnStop"
+        android:id="@+id/button_main_stop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@android:color/holo_red_light"
+        android:background="@android:color/holo_red_light"
         android:onClick="onStopButtonPressed"
         android:padding="30dp"
         android:text="@string/stop"

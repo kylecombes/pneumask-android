@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -26,10 +27,11 @@ public class MainActivity extends Activity {
     private AudioManager audioManager;
     Intent audioRelayServiceIntent;
 
-    BluetoothState mBluetoothState = BluetoothState.INITIALIZING;
+    boolean mBluetoothAvailable = false;
     boolean recordingInProgress = false;
 
-    // Buttons
+    // View elements
+    TextView bluetoothStatusTV;
     Button startButton;
     Button stopButton;
 
@@ -50,26 +52,25 @@ public class MainActivity extends Activity {
         BluetoothStateReceiver.getInstance().registerStateChangeReceiver(
                 new BluetoothStateReceiver.StateChangeReceiver() {
                     public void stateChanged(boolean bluetoothAvailable) {
-                        if (bluetoothAvailable) {
-                            mBluetoothState = BluetoothState.AVAILABLE;
-                        } else {
-                            mBluetoothState = BluetoothState.UNAVAILABLE;
+                        mBluetoothAvailable = bluetoothAvailable;
+                        if (!bluetoothAvailable) {
                             stopRecording();
                         }
-                        updateButtonStates();
+                        updateViewStates();
                     }
                 }
         );
 
-        // Find our buttons so we can change their enabled/disabled states later
-        startButton = findViewById(R.id.btnStart);
-        stopButton = findViewById(R.id.btnStop);
+        // Find our view elements so we can change their properties later
+        bluetoothStatusTV = findViewById(R.id.textView_main_bluetoothStatus);
+        startButton = findViewById(R.id.button_main_start);
+        stopButton = findViewById(R.id.button_main_stop);
     }
 
     public void onStartButtonPressed(View v) {
         startAudioService();
 
-        updateButtonStates();
+        updateViewStates();
     }
 
     public void onStopButtonPressed(View v) {
@@ -93,7 +94,7 @@ public class MainActivity extends Activity {
         } else {
             recordingInProgress = false;
         }
-        updateButtonStates();
+        updateViewStates();
     }
 
     @Override
@@ -127,7 +128,7 @@ public class MainActivity extends Activity {
     private void activateBluetoothSco() {
         if (audioManager == null || !audioManager.isBluetoothScoAvailableOffCall()) {
             Log.e(TAG, "SCO ist not available. Recording is not possible");
-            mBluetoothState = BluetoothState.UNAVAILABLE;
+            mBluetoothAvailable = false;
             return;
         }
 
@@ -153,13 +154,17 @@ public class MainActivity extends Activity {
             recordingInProgress = false;
         }
 
-        updateButtonStates();
+        updateViewStates();
     }
 
-    private void updateButtonStates() {
-        boolean bluetoothOn = audioManager.isBluetoothScoOn();
-        startButton.setEnabled(bluetoothOn && !recordingInProgress);
-        stopButton.setEnabled(bluetoothOn && recordingInProgress);
+    private void updateViewStates() {
+        if (mBluetoothAvailable) {
+            bluetoothStatusTV.setText(R.string.bluetooth_available);
+        } else {
+            bluetoothStatusTV.setText(R.string.bluetooth_unavailable);
+        }
+        startButton.setEnabled(mBluetoothAvailable && !recordingInProgress);
+        stopButton.setEnabled(mBluetoothAvailable && recordingInProgress);
     }
 
     enum BluetoothState {
