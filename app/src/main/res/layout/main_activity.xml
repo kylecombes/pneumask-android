@@ -21,7 +21,7 @@
         android:backgroundTint="@android:color/holo_green_light"
         android:onClick="onStartButtonPressed"
         android:padding="30dp"
-        android:text="Start"
+        android:text="@string/start"
         android:textSize="22sp" />
 
     <Button
@@ -32,7 +32,7 @@
         android:backgroundTint="@android:color/holo_red_light"
         android:onClick="onStopButtonPressed"
         android:padding="30dp"
-        android:text="Stop"
+        android:text="@string/stop"
         android:textSize="22sp" />
 
 </LinearLayout>

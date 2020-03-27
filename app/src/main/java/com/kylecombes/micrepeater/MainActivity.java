@@ -19,9 +19,9 @@ import androidx.core.content.ContextCompat;
 /**
  * Sample that demonstrates how to record from a Bluetooth HFP microphone using {@link AudioRecord}.
  */
-public class BluetoothRecordActivity extends Activity {
+public class MainActivity extends Activity {
 
-    private static final String TAG = BluetoothRecordActivity.class.getCanonicalName();
+    private static final String TAG = MainActivity.class.getCanonicalName();
 
     private AudioManager audioManager;
     Intent audioRelayServiceIntent;
@@ -36,7 +36,7 @@ public class BluetoothRecordActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bluetooth);
+        setContentView(R.layout.main_activity);
 
         requestNeededPermissions();
 
