@@ -134,6 +134,8 @@ public class BluetoothRecordActivity extends Activity {
 
     private void startAudioService() {
         audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
+        audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY,
+                audioManager.isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
         startService(audioRelayServiceIntent);
     }
 

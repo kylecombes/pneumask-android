@@ -23,6 +23,8 @@ public class AudioRelayService extends Service {
 
     private static final String TAG = AudioRelayService.class.getCanonicalName();
 
+    public static final String STREAM_KEY = "STREAM";
+
     private static final int SAMPLING_RATE_IN_HZ = getMinSupportedSampleRate();
 
 
@@ -45,6 +47,8 @@ public class AudioRelayService extends Service {
 
     private Thread recordingThread = null;
 
+    private int streamOutput;
+
     @Override
     public void onCreate() {
         Log.d("AudioRelayService", "Sampling rate: " + SAMPLING_RATE_IN_HZ + " Hz");
@@ -53,6 +57,9 @@ public class AudioRelayService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        streamOutput = intent.getIntExtra(STREAM_KEY, AudioManager.STREAM_ALARM);
+
         Notification.Builder notif = new Notification.Builder(this)
                 .setContentTitle("Mic Repeater is running");
         startForeground(1, notif.build());
@@ -135,7 +142,7 @@ public class AudioRelayService extends Service {
         @Override
         public void run() {
 
-            AudioTrack audio = new AudioTrack(AudioManager.STREAM_MUSIC,
+            AudioTrack audio = new AudioTrack(streamOutput,
                     SAMPLING_RATE_IN_HZ,
                     AudioFormat.CHANNEL_OUT_MONO,
                     AUDIO_FORMAT,
