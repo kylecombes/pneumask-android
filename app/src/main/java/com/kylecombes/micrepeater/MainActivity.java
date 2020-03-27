@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
@@ -31,6 +32,7 @@ public class MainActivity extends Activity {
     boolean recordingInProgress = false;
 
     // View elements
+    ImageView bluetoothIcon;
     TextView bluetoothStatusTV;
     Button startButton;
     Button stopButton;
@@ -53,7 +55,7 @@ public class MainActivity extends Activity {
                 new BluetoothStateReceiver.StateChangeReceiver() {
                     public void stateChanged(boolean bluetoothAvailable) {
                         mBluetoothAvailable = bluetoothAvailable;
-                        if (!bluetoothAvailable) {
+                        if (recordingInProgress && !bluetoothAvailable) {
                             stopRecording();
                         }
                         updateViewStates();
@@ -62,12 +64,14 @@ public class MainActivity extends Activity {
         );
 
         // Find our view elements so we can change their properties later
+        bluetoothIcon = findViewById(R.id.imageView_main_bluetooth);
         bluetoothStatusTV = findViewById(R.id.textView_main_bluetoothStatus);
         startButton = findViewById(R.id.button_main_start);
         stopButton = findViewById(R.id.button_main_stop);
     }
 
     public void onStartButtonPressed(View v) {
+        activateBluetoothSco();
         startAudioService();
 
         updateViewStates();
@@ -75,14 +79,7 @@ public class MainActivity extends Activity {
 
     public void onStopButtonPressed(View v) {
         stopRecording();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // Make sure we're sending audio over Bluetooth
-        activateBluetoothSco();
+        audioManager.stopBluetoothSco();
     }
 
     @Override
@@ -98,12 +95,10 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-
-        // If Bluetooth SCO is on but we're not recording, shut it off
-        if (audioManager != null && audioManager.isBluetoothScoOn() && AudioRelayService.service == null) {
-            audioManager.stopBluetoothSco();
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!recordingInProgress) {
+            unregisterReceiver(BluetoothStateReceiver.getInstance());
         }
     }
 
@@ -159,18 +154,14 @@ public class MainActivity extends Activity {
 
     private void updateViewStates() {
         if (mBluetoothAvailable) {
+            bluetoothIcon.setImageAlpha(255);
             bluetoothStatusTV.setText(R.string.bluetooth_available);
         } else {
+            bluetoothIcon.setImageAlpha(128);
             bluetoothStatusTV.setText(R.string.bluetooth_unavailable);
         }
         startButton.setEnabled(mBluetoothAvailable && !recordingInProgress);
         stopButton.setEnabled(mBluetoothAvailable && recordingInProgress);
-    }
-
-    enum BluetoothState {
-        AVAILABLE,
-        INITIALIZING,
-        UNAVAILABLE,
     }
 
 }

@@ -71,7 +71,7 @@ public class AudioRelayService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null; 
+        return null;
     }
 
     public void startRecording() {
@@ -95,7 +95,7 @@ public class AudioRelayService extends Service {
 
         if(NoiseSuppressor.isAvailable())
         {
-//              NoiseSuppressor.create(audioSessionId);
+              NoiseSuppressor.create(audioSessionId);
         }
 //        if(AutomaticGainControl.isAvailable())
 //        {
