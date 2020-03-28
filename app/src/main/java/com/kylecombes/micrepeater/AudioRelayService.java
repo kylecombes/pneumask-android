@@ -12,21 +12,19 @@ import android.media.audiofx.AcousticEchoCanceler;
 import android.media.audiofx.NoiseSuppressor;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AudioRelayService extends Service {
 
-    static AudioRelayService service;
+    private static AudioRelayService mInstance;
 
     private static final String TAG = AudioRelayService.class.getCanonicalName();
 
     public static final String STREAM_KEY = "STREAM";
 
     private static final int SAMPLING_RATE_IN_HZ = getMinSupportedSampleRate();
-
 
     private static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO;
 
@@ -49,10 +47,14 @@ public class AudioRelayService extends Service {
 
     private int streamOutput;
 
+    public static AudioRelayService getInstance() {
+        return mInstance;
+    }
+
     @Override
     public void onCreate() {
         Log.d("AudioRelayService", "Sampling rate: " + SAMPLING_RATE_IN_HZ + " Hz");
-        service = this;
+        mInstance = this;
     }
 
     @Override
@@ -93,15 +95,13 @@ public class AudioRelayService extends Service {
     private void improveRecorder(AudioRecord recorder) {
         int audioSessionId = recorder.getAudioSessionId();
 
-        if(NoiseSuppressor.isAvailable())
-        {
+        if (NoiseSuppressor.isAvailable()) {
               NoiseSuppressor.create(audioSessionId);
         }
-//        if(AutomaticGainControl.isAvailable())
-//        {
+//        if(AutomaticGainControl.isAvailable()) {
 //             AutomaticGainControl.create(audioSessionId);
 //        }
-        if(AcousticEchoCanceler.isAvailable()){
+        if (AcousticEchoCanceler.isAvailable()) {
              AcousticEchoCanceler.create(audioSessionId);
         }
     }
@@ -110,15 +110,10 @@ public class AudioRelayService extends Service {
         if (null == recorder) {
             return;
         }
-
         recordingInProgress.set(false);
-
         recorder.stop();
-
         recorder.release();
-
         recorder = null;
-
         recordingThread = null;
     }
 
@@ -129,7 +124,7 @@ public class AudioRelayService extends Service {
 
     public void shutDown() {
         stopRecording();
-        service = null;
+        mInstance = null;
         stopSelf();
     }
 
@@ -157,21 +152,6 @@ public class AudioRelayService extends Service {
                 }
             }
         }
-
-        private String getBufferReadFailureReason(int errorCode) {
-            switch (errorCode) {
-                case AudioRecord.ERROR_INVALID_OPERATION:
-                    return "ERROR_INVALID_OPERATION";
-                case AudioRecord.ERROR_BAD_VALUE:
-                    return "ERROR_BAD_VALUE";
-                case AudioRecord.ERROR_DEAD_OBJECT:
-                    return "ERROR_DEAD_OBJECT";
-                case AudioRecord.ERROR:
-                    return "ERROR";
-                default:
-                    return "Unknown (" + errorCode + ")";
-            }
-        }
     }
 
     public boolean recordingInProgress() {
@@ -179,13 +159,6 @@ public class AudioRelayService extends Service {
     }
 
     private static int getMinSupportedSampleRate() {
-        /*
-         * Valid Audio Sample rates
-         *
-         * @see <a
-         * href="http://en.wikipedia.org/wiki/Sampling_%28signal_processing%29"
-         * >Wikipedia</a>
-         */
         final int[] validSampleRates = new int[] { 8000, 11025, 16000, 22050,
                 32000, 37800, 44056, 44100, 47250, 48000, 50000, 50400, 88200,
                 96000, 176400, 192000, 352800, 2822400, 5644800 };
@@ -203,7 +176,7 @@ public class AudioRelayService extends Service {
                 return validSampleRate;
             }
         }
-        // If none of the sample rates are supported return -1 handle it in calling method
+        // If none of the sample rates are supported return -1 and handle it in calling method
         return -1;
     }
 }

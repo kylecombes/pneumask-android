@@ -89,8 +89,9 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        if (AudioRelayService.service != null) {
-            recordingInProgress = AudioRelayService.service.recordingInProgress();
+        AudioRelayService ars = AudioRelayService.getInstance();
+        if (ars != null) {
+            recordingInProgress = ars.recordingInProgress();
         } else {
             recordingInProgress = false;
         }
@@ -158,10 +159,11 @@ public class MainActivity extends Activity {
      * Stops the AudioRelayService.
      */
     private void stopRecording() {
-        if (AudioRelayService.service != null) {
-            AudioRelayService.service.shutDown();
-            recordingInProgress = false;
+        AudioRelayService ars = AudioRelayService.getInstance();
+        if (ars != null) {
+            ars.shutDown();
         }
+        recordingInProgress = false;
 
         updateViewStates();
     }
