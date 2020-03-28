@@ -3,6 +3,6 @@
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="bluetooth_initializing">Bluetooth initializing…</string>
-    <string name="bluetooth_available">Bluetooth initialized</string>
+    <string name="bluetooth_available">Bluetooth ready</string>
     <string name="bluetooth_unavailable">Bluetooth unavailable</string>
 </resources>

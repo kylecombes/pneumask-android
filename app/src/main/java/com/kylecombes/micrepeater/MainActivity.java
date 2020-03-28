@@ -71,15 +71,18 @@ public class MainActivity extends Activity {
     }
 
     public void onStartButtonPressed(View v) {
-        activateBluetoothSco();
         startAudioService();
-
         updateViewStates();
     }
 
     public void onStopButtonPressed(View v) {
         stopRecording();
-        audioManager.stopBluetoothSco();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        activateBluetoothSco();
     }
 
     @Override
@@ -92,6 +95,14 @@ public class MainActivity extends Activity {
             recordingInProgress = false;
         }
         updateViewStates();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (!recordingInProgress && !isChangingConfigurations()) {
+            audioManager.stopBluetoothSco();
+        }
     }
 
     @Override
