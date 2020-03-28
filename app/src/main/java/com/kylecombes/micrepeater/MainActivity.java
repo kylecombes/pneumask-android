@@ -154,6 +154,9 @@ public class MainActivity extends Activity {
         recordingInProgress = true;
     }
 
+    /**
+     * Stops the AudioRelayService.
+     */
     private void stopRecording() {
         if (AudioRelayService.service != null) {
             AudioRelayService.service.shutDown();
@@ -163,11 +166,17 @@ public class MainActivity extends Activity {
         updateViewStates();
     }
 
+    /**
+     * Refreshes the appearance (e.g. text, enabled/disabled) of Buttons, TextViews, etc according
+     * to the current state of the application.
+     */
     private void updateViewStates() {
         if (mBluetoothAvailable) {
+            // Display Bluetooth icon at full opacity
             bluetoothIcon.setImageAlpha(255);
             bluetoothStatusTV.setText(R.string.bluetooth_available);
         } else {
+            // Make Bluetooth icon 50% transparent
             bluetoothIcon.setImageAlpha(128);
             bluetoothStatusTV.setText(R.string.bluetooth_unavailable);
         }
