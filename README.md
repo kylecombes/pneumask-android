@@ -9,7 +9,7 @@ reusable masks.
 
 ![Prakash Lab mask demo](https://i.imgur.com/N6knQJ0.png)
 
-One downside of the mask is that it severly muffles the voice of the user, thereby inhibiting
+One downside of the mask is that it severely muffles the voice of the user, thereby inhibiting
 communication and requiring the user to strain their voice to communicate with others in a noisy
 environment. In order to help sound travel past the mask, we created a mobile app to relay audio from
 a Bluetooth microphone inside the mask to speakers outside the mask. Sound can either be played on
@@ -29,9 +29,10 @@ meantime, you can download and install the APK with the following instructions.
    non-Google Play) sources. If it does, simply follow the on-screen instructions. If no such prompt
    appears and the installation merely fails, do the following:
      * Allow app installations from unknown sources by going to your phone’s Settings -> Security ->
-       Unknown Sources and enable installations to allow installation of apps from sources other
-       than Google Play. This setting might have a different name, depending on your version of
-       Android and device manufacturer.
+       Unknown Sources and enable installations. This setting might have a different name, depending
+       on your version of Android and device manufacturer.
+     * Try to install the app again by re-opening the download or revisiting the link above.
+
 
 # Using the app
 
