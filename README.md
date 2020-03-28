@@ -15,6 +15,8 @@ environment. In order to help sound travel past the mask, we created a mobile ap
 a Bluetooth microphone inside the mask to speakers outside the mask. Sound can either be played on
 the phone’s internal speakers or through speakers connected to the device’s wired headphone jack.
 
+![App screenshot](https://imgur.com/JStMk71.png)
+
 As it currently stands, we only have a version of the app for Android. An iOS version of the app is
 under development and a beta version should be released within a week.
 
