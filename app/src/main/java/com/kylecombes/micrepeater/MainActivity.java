@@ -18,18 +18,24 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+import static java.lang.System.currentTimeMillis;
+
 /**
  * Sample that demonstrates how to record from a Bluetooth HFP microphone using {@link AudioRecord}.
  */
 public class MainActivity extends Activity {
 
     private static final String TAG = MainActivity.class.getCanonicalName();
+    FirebaseAnalytics mFirebaseAnalytics;
 
     private AudioManager audioManager;
     Intent audioRelayServiceIntent;
 
     boolean mBluetoothAvailable = false;
     boolean recordingInProgress = false;
+    long startTime;
 
     // View elements
     ImageView bluetoothIcon;
@@ -68,15 +74,31 @@ public class MainActivity extends Activity {
         bluetoothStatusTV = findViewById(R.id.textView_main_bluetoothStatus);
         startButton = findViewById(R.id.button_main_start);
         stopButton = findViewById(R.id.button_main_stop);
+
+        // Log events and crashes
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     public void onStartButtonPressed(View v) {
         startAudioService();
         updateViewStates();
+
+        // Log this start button press in Firebase
+        Bundle bundle = new Bundle();
+        bundle.putString("Relaying", "start");
+        mFirebaseAnalytics.logEvent("ButtonPress", bundle);
+        startTime = currentTimeMillis();
     }
 
     public void onStopButtonPressed(View v) {
         stopRecording();
+
+        // Log this stop button press in Firebase
+        long elapsedTimeS = (currentTimeMillis() - startTime) / 1000;
+        Bundle bundle = new Bundle();
+        bundle.putString("Relaying", "stop");
+        bundle.putInt("ElapsedTime", (int)elapsedTimeS);
+        mFirebaseAnalytics.logEvent("ButtonPress", bundle);
     }
 
     @Override
