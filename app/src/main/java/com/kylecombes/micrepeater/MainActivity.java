@@ -85,8 +85,8 @@ public class MainActivity extends Activity {
 
         // Log this start button press in Firebase
         Bundle bundle = new Bundle();
-        bundle.putString("Relaying", "start");
-        mFirebaseAnalytics.logEvent("ButtonPress", bundle);
+        bundle.putString("RelayingControlAction", "start");
+        mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
         startTime = currentTimeMillis();
     }
 
@@ -96,9 +96,9 @@ public class MainActivity extends Activity {
         // Log this stop button press in Firebase
         long elapsedTimeS = (currentTimeMillis() - startTime) / 1000;
         Bundle bundle = new Bundle();
-        bundle.putString("Relaying", "stop");
-        bundle.putInt("ElapsedTime", (int)elapsedTimeS);
-        mFirebaseAnalytics.logEvent("ButtonPress", bundle);
+        bundle.putString("RelayingControlAction", "stop");
+        bundle.putInt("ElapsedSeconds", (int)elapsedTimeS);
+        mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
     }
 
     @Override
