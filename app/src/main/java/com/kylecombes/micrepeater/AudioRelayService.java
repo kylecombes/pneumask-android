@@ -1,7 +1,10 @@
 package com.kylecombes.micrepeater;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -10,8 +13,11 @@ import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.media.audiofx.AcousticEchoCanceler;
 import android.media.audiofx.NoiseSuppressor;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -23,6 +29,10 @@ public class AudioRelayService extends Service {
     private static final String TAG = AudioRelayService.class.getCanonicalName();
 
     public static final String STREAM_KEY = "STREAM";
+
+    private static final String NOTIFICATION_CHANNEL_ID = BuildConfig.class.getPackage().toString()
+            + "." + TAG;
+    private static final String NOTIFICATION_MESSAGE = "Mic Repeater is running.";
 
     private static final int SAMPLING_RATE_IN_HZ = getMinSupportedSampleRate();
 
@@ -62,9 +72,7 @@ public class AudioRelayService extends Service {
 
         streamOutput = intent.getIntExtra(STREAM_KEY, AudioManager.STREAM_ALARM);
 
-        Notification.Builder notif = new Notification.Builder(this)
-                .setContentTitle("Mic Repeater is running");
-        startForeground(1, notif.build());
+        displayNotification();
 
         startRecording();
 
@@ -126,6 +134,28 @@ public class AudioRelayService extends Service {
         stopRecording();
         mInstance = null;
         stopSelf();
+    }
+
+    private void displayNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel chan = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                    "AudioRelayService", NotificationManager.IMPORTANCE_NONE);
+            chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            assert manager != null;
+            manager.createNotificationChannel(chan);
+
+            Notification.Builder notificationBuilder = new Notification.Builder(this, NOTIFICATION_CHANNEL_ID);
+            Notification notification = notificationBuilder.setOngoing(true)
+                    .setContentTitle(NOTIFICATION_MESSAGE)
+                    .setCategory(Notification.CATEGORY_SERVICE)
+                    .build();
+            startForeground(2, notification);
+        } else {
+            Notification.Builder notification = new Notification.Builder(this)
+                    .setContentTitle(NOTIFICATION_MESSAGE);
+            startForeground(1, notification.build());
+        }
     }
 
     private class RecordingRunnable implements Runnable {

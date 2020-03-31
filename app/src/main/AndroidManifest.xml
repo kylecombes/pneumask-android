@@ -4,6 +4,7 @@
     package="com.kylecombes.micrepeater">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <!-- Both permissions are required for the Bluetooth HFP recording to work -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
