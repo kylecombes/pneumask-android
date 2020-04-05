@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
-import android.media.AudioRecord;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,9 +17,6 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-/**
- * Sample that demonstrates how to record from a Bluetooth HFP microphone using {@link AudioRecord}.
- */
 public class MainActivity extends Activity {
 
     private static final String TAG = MainActivity.class.getCanonicalName();
