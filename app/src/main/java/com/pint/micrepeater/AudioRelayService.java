@@ -108,7 +108,7 @@ public class AudioRelayService extends Service {
               NoiseSuppressor.create(audioSessionId);
         }
 
-        // Android library filter for automatic gain control in recordings
+        // Android library filter for automatic volume control in recordings
 //        if(AutomaticGainControl.isAvailable()) {
 //             AutomaticGainControl.create(audioSessionId);
 //        }
@@ -174,11 +174,7 @@ public class AudioRelayService extends Service {
                     AUDIO_FORMAT,
                     BUFFER_SIZE,
                     AudioTrack.MODE_STREAM);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                audio.setVolume(maxVolume);
-            } else {
-                audio.setStereoVolume(maxVolume, maxVolume);
-            }
+
             final ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
             audio.play();
 
