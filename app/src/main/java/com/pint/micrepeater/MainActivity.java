@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
-import android.media.AudioRecord;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,10 +31,10 @@ public class MainActivity extends Activity {
 
     private AudioManager audioManager;
     Intent audioRelayServiceIntent;
+    private long startTime;
 
     boolean mBluetoothAvailable = false;
     boolean recordingInProgress = false;
-    long startTime;
 
     // View elements
     ImageView bluetoothIcon;
@@ -51,6 +50,15 @@ public class MainActivity extends Activity {
         requestNeededPermissions();
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        // Find our view elements so we can change their properties later
+        bluetoothIcon = findViewById(R.id.imageView_main_bluetooth);
+        bluetoothStatusTV = findViewById(R.id.textView_main_bluetoothStatus);
+        startButton = findViewById(R.id.button_main_start);
+        stopButton = findViewById(R.id.button_main_stop);
+
+        // Log events and crashes
+//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // Register a listener to respond to Bluetooth connect/disconnect events
         registerReceiver(BluetoothStateReceiver.getInstance(),
@@ -68,27 +76,18 @@ public class MainActivity extends Activity {
                     }
                 }
         );
-
-        // Find our view elements so we can change their properties later
-        bluetoothIcon = findViewById(R.id.imageView_main_bluetooth);
-        bluetoothStatusTV = findViewById(R.id.textView_main_bluetoothStatus);
-        startButton = findViewById(R.id.button_main_start);
-        stopButton = findViewById(R.id.button_main_stop);
-
-        // Log events and crashes
-//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     public void onStartButtonPressed(View v) {
-        startAudioService();
-        updateViewStates();
+            startAudioService();
+            updateViewStates();
 
-        // Log this start button press in Firebase
-        Bundle bundle = new Bundle();
-        bundle.putString("RelayingControlAction", "start");
+            // Log this start button press in Firebase
+            Bundle bundle = new Bundle();
+            bundle.putString("RelayingControlAction", "start");
 //        mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
-        startTime = currentTimeMillis();
-    }
+            startTime = currentTimeMillis();
+        }
 
     public void onStopButtonPressed(View v) {
         stopRecording();
@@ -173,6 +172,8 @@ public class MainActivity extends Activity {
         audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
         audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY,
                 audioManager.isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
+        // Set default volume control to alarm volume control
+        setVolumeControlStream(audioManager.isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
         startService(audioRelayServiceIntent);
         recordingInProgress = true;
     }
