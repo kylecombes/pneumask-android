@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mic Repeater</string>
+    <string name="app_name">Audio Relay</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="bluetooth_initializing">Bluetooth initializing…</string>

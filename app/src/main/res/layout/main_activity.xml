@@ -20,6 +20,7 @@
         android:layout_marginBottom="20dp"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
+        android:textColor="@color/blue"
         android:text="@string/bluetooth_initializing"
         android:textAlignment="center" />
 

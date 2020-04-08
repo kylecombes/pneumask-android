@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater;
+package com.pint.micrepeater;
 
 import android.Manifest;
 import android.app.Activity;
@@ -18,7 +18,7 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
+//import com.google.firebase.analytics.FirebaseAnalytics;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -28,7 +28,7 @@ import static java.lang.System.currentTimeMillis;
 public class MainActivity extends Activity {
 
     private static final String TAG = MainActivity.class.getCanonicalName();
-    FirebaseAnalytics mFirebaseAnalytics;
+//    FirebaseAnalytics mFirebaseAnalytics;
 
     private AudioManager audioManager;
     Intent audioRelayServiceIntent;
@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
         stopButton = findViewById(R.id.button_main_stop);
 
         // Log events and crashes
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     public void onStartButtonPressed(View v) {
@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
         // Log this start button press in Firebase
         Bundle bundle = new Bundle();
         bundle.putString("RelayingControlAction", "start");
-        mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
+//        mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
         startTime = currentTimeMillis();
     }
 
@@ -98,7 +98,7 @@ public class MainActivity extends Activity {
         Bundle bundle = new Bundle();
         bundle.putString("RelayingControlAction", "stop");
         bundle.putInt("ElapsedSeconds", (int)elapsedTimeS);
-        mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
+//        mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
     }
 
     @Override

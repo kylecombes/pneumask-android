@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater;
+package com.pint.micrepeater;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -16,8 +16,6 @@ import android.media.audiofx.NoiseSuppressor;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-
-import androidx.core.app.NotificationCompat;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -56,6 +54,7 @@ public class AudioRelayService extends Service {
     private Thread recordingThread = null;
 
     private int streamOutput;
+    private float maxVolume;
 
     public static AudioRelayService getInstance() {
         return mInstance;
@@ -65,6 +64,7 @@ public class AudioRelayService extends Service {
     public void onCreate() {
         Log.d("AudioRelayService", "Sampling rate: " + SAMPLING_RATE_IN_HZ + " Hz");
         mInstance = this;
+        maxVolume = AudioTrack.getMaxVolume();
     }
 
     @Override
@@ -103,12 +103,17 @@ public class AudioRelayService extends Service {
     private void improveRecorder(AudioRecord recorder) {
         int audioSessionId = recorder.getAudioSessionId();
 
+        // Turn on Android library filter for reducing background noise in recordings
         if (NoiseSuppressor.isAvailable()) {
               NoiseSuppressor.create(audioSessionId);
         }
+
+        // Android library filter for automatic gain control in recordings
 //        if(AutomaticGainControl.isAvailable()) {
 //             AutomaticGainControl.create(audioSessionId);
 //        }
+
+        // Android library filter for reducing echo in recordings
         if (AcousticEchoCanceler.isAvailable()) {
              AcousticEchoCanceler.create(audioSessionId);
         }
@@ -169,6 +174,11 @@ public class AudioRelayService extends Service {
                     AUDIO_FORMAT,
                     BUFFER_SIZE,
                     AudioTrack.MODE_STREAM);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                audio.setVolume(maxVolume);
+            } else {
+                audio.setStereoVolume(maxVolume, maxVolume);
+            }
             final ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
             audio.play();
 

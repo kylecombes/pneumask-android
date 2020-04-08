@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater;
+package com.pint.micrepeater;
 
 import org.junit.Test;
 
