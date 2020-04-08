@@ -10,11 +10,9 @@ The terms used in this Privacy Policy have the same meanings as in our Terms and
 
 **Information Collection and Use**
 
-For a better experience, while using our Service, we may require you to provide us with permission to record audio. A pop-up will appear asking you to enable this functionality.
+While using our Service, we may request for you to provide us with permission to record audio. A pop-up will appear asking you to enable this functionality.
 
-The app does use a third party service that may collect information used to identify you.
-
-Link to privacy policy of third party service providers used by the app:
+The app does use a third party service that may collect information used to identify you. Link to privacy policy of third party service providers used by the app:
 
 *   [Google Play Services](https://www.google.com/policies/privacy/)
 
