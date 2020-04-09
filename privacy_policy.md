@@ -12,15 +12,7 @@ The terms used in this Privacy Policy have the same meanings as in our Terms and
 
 While using our Service, we may request for you to provide us with permission to record audio. A pop-up will appear asking you to enable this functionality.
 
-The app does use a third party service that may collect information used to identify you. Link to privacy policy of third party service providers used by the app:
-
-*   [Google Play Services](https://www.google.com/policies/privacy/)
-
-**Cookies**
-
-Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device's internal memory.
-
-This Service does not use these “cookies” explicitly. However, the app may use third party code and libraries that use “cookies” to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service.
+The app does not sell any information to third party services. However, the app does use Google Play Services, to enable core functionality. Link to privacy policy of [Google Play Services](https://www.google.com/policies/privacy/) can be found [here](https://www.google.com/policies/privacy/).
 
 **Service Providers**
 
