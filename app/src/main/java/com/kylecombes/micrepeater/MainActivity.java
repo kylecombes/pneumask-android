@@ -1,4 +1,4 @@
-package com.pint.micrepeater;
+package com.kylecombes.micrepeater;
 
 import android.Manifest;
 import android.app.Activity;
@@ -17,17 +17,17 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-//import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import static java.lang.System.currentTimeMillis;
 
 /**
- * Sample that demonstrates how to record from a Bluetooth HFP microphone using {@link AudioRecord}.
+ * Service that runs in background and records in one thread, then plays back in another thread.
  */
 public class MainActivity extends Activity {
 
     private static final String TAG = MainActivity.class.getCanonicalName();
-//    FirebaseAnalytics mFirebaseAnalytics;
+    FirebaseAnalytics mFirebaseAnalytics;
 
     private AudioManager audioManager;
     Intent audioRelayServiceIntent;
@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
         stopButton = findViewById(R.id.button_main_stop);
 
         // Log events and crashes
-//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         // Register a listener to respond to Bluetooth connect/disconnect events
         registerReceiver(BluetoothStateReceiver.getInstance(),
@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
             // Log this start button press in Firebase
             Bundle bundle = new Bundle();
             bundle.putString("RelayingControlAction", "start");
-//        mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
+            mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
             startTime = currentTimeMillis();
         }
 
@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
         Bundle bundle = new Bundle();
         bundle.putString("RelayingControlAction", "stop");
         bundle.putInt("ElapsedSeconds", (int)elapsedTimeS);
-//        mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
+        mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
     }
 
     @Override

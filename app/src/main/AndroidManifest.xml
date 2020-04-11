@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.pint.micrepeater">
+    package="com.kylecombes.micrepeater">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/speaker"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.pint.micrepeater.MainActivity">
+        <activity android:name="com.kylecombes.micrepeater.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name="com.pint.micrepeater.AudioRelayService"
+            android:name="com.kylecombes.micrepeater.AudioRelayService"
             android:enabled="true"
             android:exported="false">
         </service>

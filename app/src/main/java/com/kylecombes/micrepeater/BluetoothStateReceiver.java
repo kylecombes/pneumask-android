@@ -1,4 +1,4 @@
-package com.pint.micrepeater;
+package com.kylecombes.micrepeater;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
