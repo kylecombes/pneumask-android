@@ -196,14 +196,24 @@ public class MainActivity extends Activity {
      * to the current state of the application.
      */
     private void updateViewStates() {
-        if (mBluetoothAvailable) {
+        if (recordingInProgress) {
+            //Display recording icon and change text to red
+            bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.recording));
+            bluetoothStatusTV.setText("Broadcasting in process");
+            bluetoothStatusTV.setTextColor(getResources().getColor(R.color.red));
+
+        } else if (mBluetoothAvailable) {
             // Display Bluetooth icon at full opacity
+            bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.bluetooth));
             bluetoothIcon.setImageAlpha(255);
             bluetoothStatusTV.setText(R.string.bluetooth_available);
+            bluetoothStatusTV.setTextColor(getResources().getColor(R.color.blue));
         } else {
             // Make Bluetooth icon 50% transparent
+            bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.bluetooth));
             bluetoothIcon.setImageAlpha(128);
             bluetoothStatusTV.setText(R.string.bluetooth_unavailable);
+            bluetoothStatusTV.setTextColor(getResources().getColor(R.color.blue));
         }
         startButton.setEnabled(mBluetoothAvailable && !recordingInProgress);
         stopButton.setEnabled(mBluetoothAvailable && recordingInProgress);
