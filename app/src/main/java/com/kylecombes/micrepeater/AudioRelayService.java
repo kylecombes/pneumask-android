@@ -54,7 +54,6 @@ public class AudioRelayService extends Service {
     private Thread recordingThread = null;
 
     private int streamOutput;
-    private float maxVolume;
 
     public static AudioRelayService getInstance() {
         return mInstance;
@@ -64,7 +63,6 @@ public class AudioRelayService extends Service {
     public void onCreate() {
         Log.d("AudioRelayService", "Sampling rate: " + SAMPLING_RATE_IN_HZ + " Hz");
         mInstance = this;
-        maxVolume = AudioTrack.getMaxVolume();
     }
 
     @Override
