@@ -1,57 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
+    android:gravity="top"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView_main_bluetooth"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/bluetooth" />
-
-    <TextView
-        android:id="@+id/textView_main_bluetoothStatus"
-        android:layout_width="match_parent"
+    <Switch
+        android:id="@+id/firebase_switch"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:textColor="@color/blue"
-        android:text="@string/bluetooth_initializing"
-        android:textAlignment="center" />
+        android:layout_gravity="right"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:checked="true"
+        android:switchMinWidth="56dp"
+        android:text="Enable crash reports"
+        android:textColor="@color/off"
+        android:textOff="OFF"
+        android:textOn="ON" />
 
-    <Button
-        android:id="@+id/button_main_start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@android:color/holo_green_light"
-        android:onClick="onStartButtonPressed"
-        android:padding="30dp"
-        android:text="@string/start"
-        android:textSize="22sp" />
 
-    <Button
-        android:id="@+id/button_main_stop"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@android:color/holo_red_light"
-        android:onClick="onStopButtonPressed"
-        android:padding="30dp"
-        android:text="@string/stop"
-        android:textSize="22sp" />
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/version"
-        android:textAlignment="center"/>
+        <ImageView
+            android:id="@+id/imageView_main_bluetooth"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/bluetooth" />
+
+        <TextView
+            android:id="@+id/textView_main_bluetoothStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:textColor="@color/blue"
+            android:text="@string/bluetooth_initializing"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/button_main_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/holo_green_light"
+            android:onClick="onStartButtonPressed"
+            android:padding="30dp"
+            android:text="@string/start"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/button_main_stop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@android:color/holo_red_light"
+            android:onClick="onStopButtonPressed"
+            android:padding="30dp"
+            android:text="@string/stop"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/version"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/spacer"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"/>
+
+
+
+    </LinearLayout>
 
 </LinearLayout>
