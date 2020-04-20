@@ -212,7 +212,7 @@ public class MainActivity extends Activity {
     private void updateViewStates() {
         if (recordingInProgress) {
             //Display recording icon and change text to red
-            bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.record));
+            bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.speaker));
             bluetoothStatusTV.setText(R.string.broadcasting_in_process);
             bluetoothStatusTV.setTextColor(getResources().getColor(R.color.red));
         } else if (mBluetoothAvailable) {
