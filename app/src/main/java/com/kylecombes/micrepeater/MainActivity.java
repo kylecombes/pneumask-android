@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -45,6 +44,7 @@ public class MainActivity extends Activity {
     TextView bluetoothStatusTV;
     Button startButton;
     Button stopButton;
+    Switch firebaseSwitch;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,12 +60,11 @@ public class MainActivity extends Activity {
         bluetoothStatusTV = findViewById(R.id.textView_main_bluetoothStatus);
         startButton = findViewById(R.id.button_main_start);
         stopButton = findViewById(R.id.button_main_stop);
+        firebaseSwitch = findViewById(R.id.firebase_switch);
 
-        final Switch firebaseSwitch = (Switch) findViewById(R.id.firebase_switch);
         firebaseSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonview, boolean isChecked) {
                 firebaseAnalyticsOn = !firebaseAnalyticsOn;
-
             }
         });
 
@@ -93,16 +92,15 @@ public class MainActivity extends Activity {
 
 
     public void onStartButtonPressed(View v) {
-            startAudioService();
-            updateViewStates();
+        startAudioService();
+        updateViewStates();
 
-            // Log this start button press in Firebase
-            Bundle bundle = new Bundle();
-            bundle.putString("RelayingControlAction", "start");
-            if (firebaseAnalyticsOn) mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
-
-            startTime = currentTimeMillis();
-        }
+        // Log this start button press in Firebase
+        Bundle bundle = new Bundle();
+        bundle.putString("RelayingControlAction", "start");
+        if (firebaseAnalyticsOn) mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
+        startTime = currentTimeMillis();
+    }
 
     public void onStopButtonPressed(View v) {
         stopRecording();
@@ -111,8 +109,7 @@ public class MainActivity extends Activity {
         long elapsedTimeS = (currentTimeMillis() - startTime) / 1000;
         Bundle bundle = new Bundle();
         bundle.putString("RelayingControlAction", "stop");
-        bundle.putInt("ElapsedSeconds", (int)elapsedTimeS);
-
+        bundle.putInt("ElapsedSeconds", (int) elapsedTimeS);
         if (firebaseAnalyticsOn) mFirebaseAnalytics.logEvent("RelayingButtonPress", bundle);
     }
 
@@ -154,7 +151,7 @@ public class MainActivity extends Activity {
 
     /**
      * Checks to make sure the app has the needed permissions:
-     *   - RECORD_AUDIO
+     * - RECORD_AUDIO
      * If those permissions have not been granted, they will be requested.
      */
     private void requestNeededPermissions() {
@@ -218,7 +215,6 @@ public class MainActivity extends Activity {
             bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.record));
             bluetoothStatusTV.setText(R.string.broadcasting_in_process);
             bluetoothStatusTV.setTextColor(getResources().getColor(R.color.red));
-
         } else if (mBluetoothAvailable) {
             // Display Bluetooth icon at full opacity
             bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.bluetooth));
@@ -235,7 +231,6 @@ public class MainActivity extends Activity {
         startButton.setEnabled(mBluetoothAvailable && !recordingInProgress);
         stopButton.setEnabled(mBluetoothAvailable && recordingInProgress);
     }
-
 
 
 }
