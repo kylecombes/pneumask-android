@@ -11,17 +11,16 @@
         android:id="@+id/firebase_switch"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginLeft="100dp"
+        android:layout_gravity="end"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
         android:checked="true"
         android:switchMinWidth="56dp"
-        android:text="Enable crash reports"
+        android:text="@string/enable_crash_reports"
         android:textColor="@color/off"
-        android:textOff="OFF"
-        android:textOn="ON" />
-
+        android:textOff="@string/off"
+        android:textOn="@string/on" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,8 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="20dp"/>
-
-
 
     </LinearLayout>
 
