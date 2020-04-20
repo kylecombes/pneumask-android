@@ -14,10 +14,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import static java.lang.System.currentTimeMillis;
 

@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioDeviceInfo;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -51,6 +52,8 @@ public class AudioRelayService extends Service {
 
     private AudioRecord recorder = null;
 
+    private AudioManager audioManager;
+
     private Thread recordingThread = null;
 
     private int streamOutput;
@@ -65,6 +68,7 @@ public class AudioRelayService extends Service {
         Log.d("AudioRelayService", "Sampling rate: " + SAMPLING_RATE_IN_HZ + " Hz");
         mInstance = this;
         maxVolume = AudioTrack.getMaxVolume();
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
     @Override
@@ -89,7 +93,14 @@ public class AudioRelayService extends Service {
         // or VOICE_COMMUNICATION
         recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT,
                 SAMPLING_RATE_IN_HZ, CHANNEL_CONFIG, AUDIO_FORMAT, BUFFER_SIZE);
-
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            AudioDeviceInfo[] inputs = audioManager.getDevices(AudioManager.GET_DEVICES_INPUTS);
+            for (AudioDeviceInfo input : inputs) {
+                if (input.getType() == AudioDeviceInfo.TYPE_BLUETOOTH_SCO) {
+                    recorder.setPreferredDevice(input);
+                }
+            }
+        }
         improveRecorder(recorder);
         recorder.startRecording();
 
@@ -174,7 +185,17 @@ public class AudioRelayService extends Service {
                     AUDIO_FORMAT,
                     BUFFER_SIZE,
                     AudioTrack.MODE_STREAM);
-
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                AudioDeviceInfo[] outputs = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
+                for (AudioDeviceInfo output : outputs) {
+                    if (output.getType() == AudioDeviceInfo.TYPE_AUX_LINE) {
+                        audio.setPreferredDevice(output);
+                        break;
+                    } else if (output.getType() == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER) {
+                        audio.setPreferredDevice(output);
+                    }
+                }
+            }
             final ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
             audio.play();
 
