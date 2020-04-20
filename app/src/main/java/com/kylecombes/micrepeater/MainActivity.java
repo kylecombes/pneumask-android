@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -185,9 +187,9 @@ public class MainActivity extends Activity {
     private void startAudioService() {
         audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
         audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY,
-                audioManager.isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
+                isAuxConnected() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
         // Set default volume control to alarm volume control
-        setVolumeControlStream(audioManager.isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
+        setVolumeControlStream(isAuxConnected() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
         startService(audioRelayServiceIntent);
         recordingInProgress = true;
     }
@@ -232,5 +234,21 @@ public class MainActivity extends Activity {
         stopButton.setEnabled(mBluetoothAvailable && recordingInProgress);
     }
 
+    /**
+     * Check whether a AUX core is connected
+     * @return: true if AUX is available
+     */
+    private boolean isAuxConnected() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            AudioDeviceInfo[] outputs = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
+            for (AudioDeviceInfo output : outputs) {
+                if (output.getType() == AudioDeviceInfo.TYPE_AUX_LINE)
+                    return true;
+            }
+            return false;
+        } else {
+            return audioManager.isWiredHeadsetOn();
+        }
+    }
 
 }
