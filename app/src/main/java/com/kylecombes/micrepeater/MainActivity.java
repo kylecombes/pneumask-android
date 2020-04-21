@@ -45,6 +45,7 @@ public class MainActivity extends Activity {
     Button startButton;
     Button stopButton;
     Switch firebaseSwitch;
+    TextView versionNumber;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,10 @@ public class MainActivity extends Activity {
         startButton = findViewById(R.id.button_main_start);
         stopButton = findViewById(R.id.button_main_stop);
         firebaseSwitch = findViewById(R.id.firebase_switch);
+        versionNumber = findViewById(R.id.version);
+
+        int versionCode = BuildConfig.VERSION_CODE;
+        versionNumber.setText(getResources().getString(R.string.version, versionCode));
 
         firebaseSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonview, boolean isChecked) {
