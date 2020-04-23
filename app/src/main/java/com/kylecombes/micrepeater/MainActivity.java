@@ -54,24 +54,32 @@ public class MainActivity extends Activity {
         requestNeededPermissions();
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        bindingViews();
+        setUpFirebaseAnalytics();
+        registerBluetoothSCOListener();
+    }
 
+    public void bindingViews() {
         // Find our view elements so we can change their properties later
         bluetoothIcon = findViewById(R.id.imageView_main_bluetooth);
         bluetoothStatusTV = findViewById(R.id.textView_main_bluetoothStatus);
         startButton = findViewById(R.id.button_main_start);
         stopButton = findViewById(R.id.button_main_stop);
         firebaseSwitch = findViewById(R.id.firebase_switch);
+    }
 
+    public void setUpFirebaseAnalytics() {
         firebaseSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonview, boolean isChecked) {
-                firebaseAnalyticsOn = !firebaseAnalyticsOn;
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                firebaseAnalyticsOn = isChecked;
             }
         });
 
-
         // Log events and crashes
         if (firebaseAnalyticsOn) mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+    }
 
+    public void registerBluetoothSCOListener() {
         // Register a listener to respond to Bluetooth connect/disconnect events
         registerReceiver(BluetoothStateReceiver.getInstance(),
                 new IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED));
@@ -89,7 +97,6 @@ public class MainActivity extends Activity {
                 }
         );
     }
-
 
     public void onStartButtonPressed(View v) {
         startAudioService();
