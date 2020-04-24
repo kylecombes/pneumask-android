@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">Audio Relay</string>
-    <string name="version">Version 5 includes Firebase Crash Analytics.</string>
+    <string name="version">Version %1$d.</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     <string name="bluetooth_initializing">Bluetooth initializing…</string>
     <string name="bluetooth_available">Bluetooth ready</string>
     <string name="bluetooth_unavailable">Bluetooth microphone unavailable.\nPlease ensure your Bluetooth device is connected, then close and reopen the app.</string>
     <string name="broadcasting_in_process">Broadcasting in process</string>
+    <string name="enable_crash_reports">Enable crash reports</string>
+    <string name="off">OFF</string>
+    <string name="on">ON</string>
 </resources>

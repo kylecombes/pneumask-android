@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +47,7 @@ public class MainActivity extends Activity {
     Button startButton;
     Button stopButton;
     Switch firebaseSwitch;
+    TextView versionNumber;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,24 +57,34 @@ public class MainActivity extends Activity {
         requestNeededPermissions();
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        bindingViews();
+        setUpFirebaseAnalytics();
+        registerBluetoothSCOListener();
+    }
 
+    public void bindingViews() {
         // Find our view elements so we can change their properties later
         bluetoothIcon = findViewById(R.id.imageView_main_bluetooth);
         bluetoothStatusTV = findViewById(R.id.textView_main_bluetoothStatus);
         startButton = findViewById(R.id.button_main_start);
         stopButton = findViewById(R.id.button_main_stop);
         firebaseSwitch = findViewById(R.id.firebase_switch);
+        versionNumber = findViewById(R.id.version);
+        versionNumber.setText(getResources().getString(R.string.version, BuildConfig.VERSION_CODE));
+    }
 
+    public void setUpFirebaseAnalytics() {
         firebaseSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonview, boolean isChecked) {
-                firebaseAnalyticsOn = !firebaseAnalyticsOn;
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                firebaseAnalyticsOn = isChecked;
             }
         });
 
-
         // Log events and crashes
         if (firebaseAnalyticsOn) mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+    }
 
+    public void registerBluetoothSCOListener() {
         // Register a listener to respond to Bluetooth connect/disconnect events
         registerReceiver(BluetoothStateReceiver.getInstance(),
                 new IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED));
@@ -89,7 +102,6 @@ public class MainActivity extends Activity {
                 }
         );
     }
-
 
     public void onStartButtonPressed(View v) {
         startAudioService();
@@ -185,9 +197,9 @@ public class MainActivity extends Activity {
     private void startAudioService() {
         audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
         audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY,
-                audioManager.isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
+                isAuxConnected() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
         // Set default volume control to alarm volume control
-        setVolumeControlStream(audioManager.isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
+        setVolumeControlStream(isAuxConnected() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
         startService(audioRelayServiceIntent);
         recordingInProgress = true;
     }
@@ -212,7 +224,7 @@ public class MainActivity extends Activity {
     private void updateViewStates() {
         if (recordingInProgress) {
             //Display recording icon and change text to red
-            bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.record));
+            bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.speaker));
             bluetoothStatusTV.setText(R.string.broadcasting_in_process);
             bluetoothStatusTV.setTextColor(getResources().getColor(R.color.red));
         } else if (mBluetoothAvailable) {
@@ -232,5 +244,21 @@ public class MainActivity extends Activity {
         stopButton.setEnabled(mBluetoothAvailable && recordingInProgress);
     }
 
+    /**
+     * Check whether a AUX core is connected
+     * @return: true if AUX is available
+     */
+    private boolean isAuxConnected() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            AudioDeviceInfo[] outputs = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
+            for (AudioDeviceInfo output : outputs) {
+                if (output.getType() == AudioDeviceInfo.TYPE_AUX_LINE)
+                    return true;
+            }
+            return false;
+        } else {
+            return audioManager.isWiredHeadsetOn();
+        }
+    }
 
 }

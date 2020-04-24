@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioDeviceInfo;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -53,6 +54,8 @@ public class AudioRelayService extends Service {
 
     private Thread recordingThread = null;
 
+    private AudioManager audioManager;
+
     private int streamOutput;
 
     public static AudioRelayService getInstance() {
@@ -63,6 +66,7 @@ public class AudioRelayService extends Service {
     public void onCreate() {
         Log.d("AudioRelayService", "Sampling rate: " + SAMPLING_RATE_IN_HZ + " Hz");
         mInstance = this;
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
     }
 
     @Override
@@ -87,7 +91,7 @@ public class AudioRelayService extends Service {
         // or VOICE_COMMUNICATION
         recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT,
                 SAMPLING_RATE_IN_HZ, CHANNEL_CONFIG, AUDIO_FORMAT, BUFFER_SIZE);
-
+        setPreferredInputDevice(recorder);
         improveRecorder(recorder);
         recorder.startRecording();
 
@@ -166,14 +170,14 @@ public class AudioRelayService extends Service {
         @Override
         public void run() {
 
+            final ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
             AudioTrack audio = new AudioTrack(streamOutput,
                     SAMPLING_RATE_IN_HZ,
                     AudioFormat.CHANNEL_OUT_MONO,
                     AUDIO_FORMAT,
                     BUFFER_SIZE,
                     AudioTrack.MODE_STREAM);
-
-            final ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
+            setPreferredOutputDevice(audio);
             audio.play();
 
             while (recordingInProgress.get()) {
@@ -212,5 +216,41 @@ public class AudioRelayService extends Service {
         }
         // If none of the sample rates are supported return -1 and handle it in calling method
         return -1;
+    }
+
+    /**
+     * Function to set the preferred input device to Bluetooth SCO.
+     * Function has no effect on Android version below Android 6.0 Marshmallow
+     * @param recorder: AudioRecord instance
+     */
+    private void setPreferredInputDevice(AudioRecord recorder) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            AudioDeviceInfo[] inputs = audioManager.getDevices(AudioManager.GET_DEVICES_INPUTS);
+            for (AudioDeviceInfo input : inputs) {
+                if (input.getType() == AudioDeviceInfo.TYPE_BLUETOOTH_SCO) {
+                    recorder.setPreferredDevice(input);
+                }
+            }
+        }
+    }
+
+    /**
+     * Function to set the preferred input device to a connected AUX line (preferably) or
+     * the built-in speakers if the AUX line is not connected.
+     * Function has no effect on Android version below Android 6.0 Marshmallow
+     * @param audio: AudioTrack instance
+     */
+    private void setPreferredOutputDevice(AudioTrack audio) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            AudioDeviceInfo[] outputs = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
+            for (AudioDeviceInfo output : outputs) {
+                if (output.getType() == AudioDeviceInfo.TYPE_AUX_LINE) {
+                    audio.setPreferredDevice(output);
+                    break;
+                } else if (output.getType() == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER) {
+                    audio.setPreferredDevice(output);
+                }
+            }
+        }
     }
 }
