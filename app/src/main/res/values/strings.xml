@@ -10,4 +10,15 @@
     <string name="enable_crash_reports">Enable crash reports</string>
     <string name="off">OFF</string>
     <string name="on">ON</string>
+    <string name="settings">Settings</string>
+    <string name="informationtext">This app was developed by members of Olin College of
+        Engineering\'s <a href="http://pint.olin.edu/"> Public Interest Technology group </a>,
+        who were working in tandem with students and faculty from Stanford\'s
+        <a href="https://web.stanford.edu/group/prakash-lab/cgi-bin/labsite/">Prakash Lab</a>. This app
+        is meant to help medical professionals using the Pnuemask communicate, as the mask muffles
+        sound and makes it difficult for the wearer to be heard by people in their surroundings. For
+        more information about the Pnuemask project, please visit
+        <a href="https://www.pneumask.org/">this website.</a></string>
+    <string name="linktosite"><a href="https://www.pneumask.org/">Pneumask website</a></string>
+    <string name="linktoPint"><a href="http://pint.olin.edu/">PInT website</a></string>
 </resources>
