@@ -2,6 +2,7 @@ package com.kylecombes.micrepeater;
 
 import android.Manifest;
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -37,7 +38,7 @@ public class MainActivity extends Activity {
     Intent audioRelayServiceIntent;
     private long startTime;
 
-    boolean mBluetoothAvailable = false;
+    boolean mScoAudioConnected = false;
     boolean recordingInProgress = false;
     boolean firebaseAnalyticsOn = true;
 
@@ -86,15 +87,21 @@ public class MainActivity extends Activity {
 
     public void registerBluetoothSCOListener() {
         // Register a listener to respond to Bluetooth connect/disconnect events
-        registerReceiver(BluetoothStateReceiver.getInstance(),
-                new IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED));
+        IntentFilter intent = new IntentFilter();
+        intent.addAction(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED);
+        intent.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        intent.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        intent.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+        registerReceiver(BluetoothStateReceiver.getInstance(), intent);
 
         // Register a callback to get notified about Bluetooth connect/disconnect events
         BluetoothStateReceiver.getInstance().registerStateChangeReceiver(
                 new BluetoothStateReceiver.StateChangeReceiver() {
-                    public void stateChanged(boolean bluetoothAvailable) {
-                        mBluetoothAvailable = bluetoothAvailable;
-                        if (recordingInProgress && !bluetoothAvailable) {
+                    public void stateChanged(boolean deviceConnected, boolean scoAudioConnected) {
+                        if (deviceConnected && !scoAudioConnected)
+                            activateBluetoothSco();
+                        mScoAudioConnected = scoAudioConnected;
+                        if (recordingInProgress && !scoAudioConnected) {
                             stopRecording();
                         }
                         updateViewStates();
@@ -182,7 +189,7 @@ public class MainActivity extends Activity {
     private void activateBluetoothSco() {
         if (audioManager == null || !audioManager.isBluetoothScoAvailableOffCall()) {
             Log.e(TAG, "SCO ist not available. Recording is not possible");
-            mBluetoothAvailable = false;
+            mScoAudioConnected = false;
             return;
         }
 
@@ -227,7 +234,7 @@ public class MainActivity extends Activity {
             bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.speaker));
             bluetoothStatusTV.setText(R.string.broadcasting_in_process);
             bluetoothStatusTV.setTextColor(getResources().getColor(R.color.red));
-        } else if (mBluetoothAvailable) {
+        } else if (mScoAudioConnected) {
             // Display Bluetooth icon at full opacity
             bluetoothIcon.setImageDrawable(getResources().getDrawable(R.drawable.bluetooth));
             bluetoothIcon.setImageAlpha(255);
@@ -240,8 +247,8 @@ public class MainActivity extends Activity {
             bluetoothStatusTV.setText(R.string.bluetooth_unavailable);
             bluetoothStatusTV.setTextColor(getResources().getColor(R.color.blue));
         }
-        startButton.setEnabled(mBluetoothAvailable && !recordingInProgress);
-        stopButton.setEnabled(mBluetoothAvailable && recordingInProgress);
+        startButton.setEnabled(mScoAudioConnected && !recordingInProgress);
+        stopButton.setEnabled(mScoAudioConnected && recordingInProgress);
     }
 
     /**
