@@ -14,9 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
@@ -40,14 +39,14 @@ public class MainActivity extends Activity {
 
     boolean mScoAudioConnected = false;
     boolean recordingInProgress = false;
-    boolean firebaseAnalyticsOn = true;
+    static boolean firebaseAnalyticsOn = true;
 
     // View elements
     ImageView bluetoothIcon;
     TextView bluetoothStatusTV;
     Button startButton;
     Button stopButton;
-    Switch firebaseSwitch;
+    ImageButton settingButton;
     TextView versionNumber;
 
     @Override
@@ -59,7 +58,7 @@ public class MainActivity extends Activity {
 
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         bindingViews();
-        setUpFirebaseAnalytics();
+        if (firebaseAnalyticsOn) mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         registerBluetoothSCOListener();
     }
 
@@ -69,20 +68,14 @@ public class MainActivity extends Activity {
         bluetoothStatusTV = findViewById(R.id.textView_main_bluetoothStatus);
         startButton = findViewById(R.id.button_main_start);
         stopButton = findViewById(R.id.button_main_stop);
-        firebaseSwitch = findViewById(R.id.firebase_switch);
+        settingButton = findViewById(R.id.button_setting);
         versionNumber = findViewById(R.id.version);
         versionNumber.setText(getResources().getString(R.string.version, BuildConfig.VERSION_CODE));
     }
 
-    public void setUpFirebaseAnalytics() {
-        firebaseSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                firebaseAnalyticsOn = isChecked;
-            }
-        });
-
-        // Log events and crashes
-        if (firebaseAnalyticsOn) mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+    public static void activateFirebase(boolean isChecked){
+        firebaseAnalyticsOn = isChecked;
+        Log.i(TAG, "Switched firebase analytics" + firebaseAnalyticsOn);
     }
 
     public void registerBluetoothSCOListener() {
@@ -108,6 +101,17 @@ public class MainActivity extends Activity {
                     }
                 }
         );
+    }
+
+    public void onSettingButtonPressed(View v) {
+        Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void onInfoButtonPressed(View v){
+        Intent intent = new Intent(MainActivity.this, InformationActivity.class);
+        startActivity(intent);
     }
 
     public void onStartButtonPressed(View v) {
