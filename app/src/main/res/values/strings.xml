@@ -21,4 +21,6 @@
         <a href="https://www.pneumask.org/">this website.</a></string>
     <string name="linktosite"><a href="https://www.pneumask.org/">Pneumask website</a></string>
     <string name="linktoPint"><a href="http://pint.olin.edu/">PInT website</a></string>
+    <string name="imageview_content">exit button</string>
+    <string name="imageview_bluetooth">bluetooth image</string>
 </resources>
