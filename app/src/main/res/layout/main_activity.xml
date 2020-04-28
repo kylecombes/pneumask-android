@@ -30,10 +30,10 @@
         android:background="@drawable/info"
         android:onClick="onInfoButtonPressed"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentRight="true"/>
 
     <Space
-        android:id="@+id/head_space"
+        android:id="@+id/headspace"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@id/button_setting"/>
@@ -44,8 +44,7 @@
         android:layout_height="100dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/bluetooth"
-        android:layout_below="@id/head_space"
-        android:contentDescription="@string/imageview_bluetooth" />
+        android:layout_below="@id/headspace"/>
 
     <TextView
         android:id="@+id/textView_main_bluetoothStatus"

@@ -1,6 +1,6 @@
 package com.kylecombes.micrepeater;
 
-import android.app.Activity;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class Information extends Activity {
+public class Information extends MainActivity {
 
     ImageButton exitButton;
 

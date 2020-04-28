@@ -16,15 +16,14 @@
         android:onClick="exitPage"
         android:background="@drawable/close"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:contentDescription="@string/imageview_content" />
+        android:layout_alignParentRight="true"/>
 
     <TextView
         android:id="@+id/textView_settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="@string/settings"
+        android:text="Settings"
         android:textAlignment="center"
         android:textSize="22sp"
         android:layout_below="@id/setting_exit"/>

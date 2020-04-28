@@ -74,8 +74,8 @@ public class MainActivity extends Activity {
         versionNumber.setText(getResources().getString(R.string.version, BuildConfig.VERSION_CODE));
     }
 
-    public static void enableFirebase(boolean isChecked){
-        firebaseAnalyticsOn = isChecked;
+    public static void activateFirebase(){
+        firebaseAnalyticsOn = !firebaseAnalyticsOn;
         Log.i(TAG, "Switched firebase analytics" + firebaseAnalyticsOn);
     }
 
