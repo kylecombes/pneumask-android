@@ -1,6 +1,6 @@
 package com.kylecombes.micrepeater;
 
-import android.media.Image;
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class Information extends MainActivity {
+public class InformationActivity extends Activity {
+
 
     ImageButton exitButton;
 
@@ -23,7 +24,7 @@ public class Information extends MainActivity {
         //sets the setting window dimensions to fill portion of screen
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        getWindow().setLayout((int)(width*0.8), (int)(height * 0.6));
+        getWindow().setLayout((int) (width * 0.8), (int) (height * 0.6));
 
         //allow for links
         TextView text = (TextView) findViewById(R.id.Info_text);

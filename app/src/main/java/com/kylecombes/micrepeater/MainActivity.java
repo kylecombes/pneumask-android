@@ -13,10 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
@@ -74,8 +72,8 @@ public class MainActivity extends Activity {
         versionNumber.setText(getResources().getString(R.string.version, BuildConfig.VERSION_CODE));
     }
 
-    public static void activateFirebase(){
-        firebaseAnalyticsOn = !firebaseAnalyticsOn;
+    public static void activateFirebase(boolean isChecked){
+        firebaseAnalyticsOn = isChecked;
         Log.i(TAG, "Switched firebase analytics" + firebaseAnalyticsOn);
     }
 
@@ -99,13 +97,13 @@ public class MainActivity extends Activity {
     }
 
     public void onSettingButtonPressed(View v) {
-        Intent intent = new Intent(MainActivity.this, Setting.class);
+        Intent intent = new Intent(MainActivity.this, SettingActivity.class);
         startActivity(intent);
 
     }
 
     public void onInfoButtonPressed(View v){
-        Intent intent = new Intent(MainActivity.this, Information.class);
+        Intent intent = new Intent(MainActivity.this, InformationActivity.class);
         startActivity(intent);
     }
 

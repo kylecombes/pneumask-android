@@ -30,7 +30,7 @@
         android:background="@drawable/info"
         android:onClick="onInfoButtonPressed"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentEnd="true"/>
 
     <Space
         android:id="@+id/headspace"

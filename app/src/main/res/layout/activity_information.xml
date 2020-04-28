@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/popup_background"
-    tools:context=".Information">
+    tools:context=".InformationActivity">
 
     <ImageButton
         android:id="@+id/info_exit"

@@ -16,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Information"
+            android:name=".InformationActivity"
             android:theme="@style/AppTheme.PopUpTheme"></activity>
         <activity
-            android:name=".Setting"
+            android:name=".SettingActivity"
             android:theme="@style/AppTheme.PopUpTheme"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
