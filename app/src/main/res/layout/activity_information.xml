@@ -14,14 +14,14 @@
         android:layout_margin="30dp"
         android:onClick="exitPage"
         android:background="@drawable/close"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"/>
 
     <TextView
         android:id="@+id/Info_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Background Information"
+        android:text="@string/background_information"
         android:textSize="22sp"
         android:textColor="@color/black"
         android:layout_below="@id/info_exit"
@@ -33,7 +33,7 @@
         android:paddingRight="30dp"
         android:paddingLeft="30dp"
         android:paddingTop="20dp"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:text="@string/informationtext"
         android:layout_below="@id/Info_title"
         android:layout_centerHorizontal="true"/>
