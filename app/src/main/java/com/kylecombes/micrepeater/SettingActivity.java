@@ -27,6 +27,7 @@ public class SettingActivity extends Activity {
         getWindow().setLayout((int) (width * 0.8), (int) (height * 0.6));
 
         firebaseSwitch = findViewById(R.id.firebase_switch);
+        firebaseSwitch.setChecked(MainActivity.firebaseAnalyticsOn);
         exitButton = findViewById(R.id.setting_exit);
 
         firebaseSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
