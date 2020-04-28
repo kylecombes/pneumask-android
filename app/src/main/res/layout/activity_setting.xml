@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/popup_background"
+    tools:context=".SettingActivity">
+
+    <ImageButton
+        android:id="@+id/setting_exit"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="30dp"
+        android:layout_gravity="end"
+        android:onClick="exitPage"
+        android:background="@drawable/close"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/textView_settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="@string/settings"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:layout_below="@id/setting_exit"/>
+
+    <Switch
+        android:id="@+id/firebase_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:switchMinWidth="56dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/enable_crash_reports"
+        android:textColor="@color/black"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textView_settings"/>
+
+</RelativeLayout>
