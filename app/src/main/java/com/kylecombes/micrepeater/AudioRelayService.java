@@ -13,6 +13,7 @@ import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.media.audiofx.AcousticEchoCanceler;
+import android.media.audiofx.AutomaticGainControl;
 import android.media.audiofx.NoiseSuppressor;
 import android.os.Build;
 import android.os.IBinder;
@@ -72,7 +73,7 @@ public class AudioRelayService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        streamOutput = intent.getIntExtra(STREAM_KEY, AudioManager.STREAM_ALARM);
+        streamOutput = intent.getIntExtra(STREAM_KEY, AudioManager.STREAM_VOICE_CALL);
 
         displayNotification();
 
@@ -110,10 +111,10 @@ public class AudioRelayService extends Service {
               NoiseSuppressor.create(audioSessionId);
         }
 
-        // Android library filter for automatic volume control in recordings
-//        if(AutomaticGainControl.isAvailable()) {
-//             AutomaticGainControl.create(audioSessionId);
-//        }
+         // Android library filter for automatic volume control in recordings
+        if(AutomaticGainControl.isAvailable()) {
+             AutomaticGainControl.create(audioSessionId);
+        }
 
         // Android library filter for reducing echo in recordings
         if (AcousticEchoCanceler.isAvailable()) {

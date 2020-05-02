@@ -3,10 +3,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:gravity="top"
     android:paddingBottom="15dp"
-    android:paddingTop="15dp">
+    android:paddingTop="5dp">
 
     <ImageButton
         android:id="@+id/button_setting"
@@ -35,13 +35,13 @@
     <Space
         android:id="@+id/headspace"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="30dp"
         android:layout_below="@id/button_setting"/>
 
     <ImageView
         android:id="@+id/imageView_main_bluetooth"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/bluetooth"
         android:layout_below="@id/headspace"/>

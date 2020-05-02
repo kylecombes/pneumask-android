@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -9,9 +8,9 @@
 
     <ImageButton
         android:id="@+id/info_exit"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="10dp"
         android:onClick="exitPage"
         android:background="@drawable/close"
         android:layout_alignParentEnd="true"
@@ -30,9 +29,7 @@
         android:id="@+id/Info_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="30dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="20dp"
+        android:layout_margin="30dp"
         android:textSize="15sp"
         android:text="@string/informationtext"
         android:layout_below="@id/Info_title"

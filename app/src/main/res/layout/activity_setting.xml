@@ -9,9 +9,9 @@
 
     <ImageButton
         android:id="@+id/setting_exit"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="10dp"
         android:layout_gravity="end"
         android:onClick="exitPage"
         android:background="@drawable/close"
