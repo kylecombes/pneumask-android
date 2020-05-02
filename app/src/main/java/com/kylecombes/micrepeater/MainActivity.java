@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
@@ -40,6 +41,7 @@ public class MainActivity extends Activity {
     boolean mScoAudioConnected = false;
     boolean recordingInProgress = false;
     static boolean firebaseAnalyticsOn = true;
+    static int streamType = AudioManager.STREAM_VOICE_CALL;
 
     // View elements
     ImageView bluetoothIcon;
@@ -207,10 +209,9 @@ public class MainActivity extends Activity {
      */
     private void startAudioService() {
         audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
-        audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY,
-                isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_VOICE_CALL);
+        audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY, streamType);
         // Set default volume control
-        setVolumeControlStream(isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_VOICE_CALL);
+        setVolumeControlStream(streamType);
         startService(audioRelayServiceIntent);
         recordingInProgress = true;
     }

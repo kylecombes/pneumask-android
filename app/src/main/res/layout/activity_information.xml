@@ -14,7 +14,8 @@
         android:onClick="exitPage"
         android:background="@drawable/close"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/close" />
 
     <TextView
         android:id="@+id/Info_title"

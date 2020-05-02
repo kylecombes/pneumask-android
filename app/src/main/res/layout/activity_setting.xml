@@ -17,7 +17,8 @@
         android:onClick="exitPage"
         android:background="@drawable/close"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/close" />
 
     <TextView
         android:id="@+id/textView_settings"
@@ -62,18 +63,18 @@
         android:layout_marginStart="40dp"
         android:layout_below="@id/textView_outputs">
         <RadioButton
-            android:id="@+id/option1"
+            android:id="@+id/voice_call_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/option1"
             android:checked="true"/>
         <RadioButton
-            android:id="@+id/option2"
+            android:id="@+id/alarm_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/option2" />
         <RadioButton
-            android:id="@+id/option3"
+            android:id="@+id/music_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/option3"/>
