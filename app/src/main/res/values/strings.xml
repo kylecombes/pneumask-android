@@ -22,4 +22,8 @@
     <string name="linktoPint"><a href="http://pint.olin.edu/">PInT website</a></string>
     <string name="settings">Settings</string>
     <string name="background_information">Background Information</string>
+    <string name="option1">Voice Call</string>
+    <string name="option2">Alarm Speaker</string>
+    <string name="option3">Music Speaker</string>
+    <string name="output_options">Sound Output Options</string>
 </resources>

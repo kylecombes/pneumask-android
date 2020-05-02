@@ -5,7 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/popup_background"
-    tools:context=".SettingActivity">
+    tools:context=".SettingActivity"
+    android:gravity="center_horizontal">
 
     <ImageButton
         android:id="@+id/setting_exit"
@@ -43,4 +44,38 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/textView_settings"/>
 
+    <TextView
+        android:id="@+id/textView_outputs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:text="@string/output_options"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:layout_below="@id/firebase_switch"/>
+
+    <RadioGroup
+        android:id="@+id/output_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_below="@id/textView_outputs">
+        <RadioButton
+            android:id="@+id/option1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/option1"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/option2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/option2" />
+        <RadioButton
+            android:id="@+id/option3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/option3"/>
+    </RadioGroup>
 </RelativeLayout>
