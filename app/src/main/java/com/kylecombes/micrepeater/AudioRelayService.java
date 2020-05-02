@@ -244,7 +244,9 @@ public class AudioRelayService extends Service {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             AudioDeviceInfo[] outputs = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
             for (AudioDeviceInfo output : outputs) {
-                if (output.getType() == AudioDeviceInfo.TYPE_AUX_LINE) {
+                if (output.getType() == AudioDeviceInfo.TYPE_AUX_LINE ||
+                        output.getType() == AudioDeviceInfo.TYPE_WIRED_HEADPHONES ||
+                        output.getType() == AudioDeviceInfo.TYPE_WIRED_HEADSET) {
                     audio.setPreferredDevice(output);
                     break;
                 } else if (output.getType() == AudioDeviceInfo.TYPE_BUILTIN_SPEAKER) {

@@ -208,9 +208,9 @@ public class MainActivity extends Activity {
     private void startAudioService() {
         audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
         audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY,
-                isAuxConnected() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
+                isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
         // Set default volume control to alarm volume control
-        setVolumeControlStream(isAuxConnected() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
+        setVolumeControlStream(isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
         startService(audioRelayServiceIntent);
         recordingInProgress = true;
     }
@@ -256,14 +256,16 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Check whether a AUX core is connected
-     * @return: true if AUX is available
+     * Check if wired speakers are connected (AUX line, wired headphones/headset)
+     * @return: true if wired speakers are connected
      */
-    private boolean isAuxConnected() {
+    private boolean isWiredHeadsetOn() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             AudioDeviceInfo[] outputs = audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS);
             for (AudioDeviceInfo output : outputs) {
-                if (output.getType() == AudioDeviceInfo.TYPE_AUX_LINE)
+                if (output.getType() == AudioDeviceInfo.TYPE_AUX_LINE ||
+                        output.getType() == AudioDeviceInfo.TYPE_WIRED_HEADPHONES ||
+                        output.getType() == AudioDeviceInfo.TYPE_WIRED_HEADSET)
                     return true;
             }
             return false;
