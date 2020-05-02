@@ -208,9 +208,9 @@ public class MainActivity extends Activity {
     private void startAudioService() {
         audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
         audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY,
-                isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
-        // Set default volume control to alarm volume control
-        setVolumeControlStream(isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_ALARM);
+                isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_VOICE_CALL);
+        // Set default volume control
+        setVolumeControlStream(isWiredHeadsetOn() ? AudioManager.STREAM_MUSIC : AudioManager.STREAM_VOICE_CALL);
         startService(audioRelayServiceIntent);
         recordingInProgress = true;
     }
