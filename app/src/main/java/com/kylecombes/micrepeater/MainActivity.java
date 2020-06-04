@@ -3,6 +3,7 @@ package com.kylecombes.micrepeater;
 import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothHeadset;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -80,6 +81,7 @@ public class MainActivity extends Activity {
         Log.i(TAG, "Switched firebase analytics" + firebaseAnalyticsOn);
     }
 
+
     public void registerBluetoothSCOListener() {
         // Register a listener to respond to Bluetooth connect/disconnect events
         IntentFilter intent = new IntentFilter();
@@ -87,6 +89,8 @@ public class MainActivity extends Activity {
         intent.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
         intent.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         intent.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+        intent.addAction("android.bluetooth.device.action.BATTERY_LEVEL_CHANGED");
+        intent.addAction(BluetoothHeadset.ACTION_VENDOR_SPECIFIC_HEADSET_EVENT);
         registerReceiver(BluetoothStateReceiver.getInstance(), intent);
 
         // Register a callback to get notified about Bluetooth connect/disconnect events

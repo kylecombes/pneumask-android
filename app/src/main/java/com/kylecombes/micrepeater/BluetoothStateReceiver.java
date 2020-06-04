@@ -33,7 +33,6 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (action == null)
             return;
-
         if (action.equals(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED)) {
             int state = intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1);
             switch (state) {
@@ -56,6 +55,13 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
                     // Don't trigger any notifications
                     return;
             }
+        } else if(action.equals("android.bluetooth.device.action.BATTERY_LEVEL_CHANGED")){
+            int battery = intent.getIntExtra("android.bluetooth.device.extra.BATTERY_LEVEL", -1);
+            Log.i(TAG, "" + battery);
+            if(battery != -1) {
+                Log.i(TAG, "" + battery);
+            }
+
         } else {
             mDeviceConnected = BluetoothDevice.ACTION_ACL_CONNECTED.equals(action);
         }
