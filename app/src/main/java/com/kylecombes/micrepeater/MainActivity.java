@@ -264,10 +264,10 @@ public class MainActivity extends Activity {
         if (mBatteryLevel != -1){
             //Make bluetooth battery level visible
             bluetoothBattery.setVisibility(View.VISIBLE);
-            if(mBatteryLevel > 95){
+            if(mBatteryLevel > 75){
                 //show full battery image
                 bluetoothBattery.setImageDrawable(getResources().getDrawable(R.drawable.full_bat));
-            } else if(mBatteryLevel > 85){
+            } else if(mBatteryLevel > 50){
                 //show 75% full battery image
                 bluetoothBattery.setImageDrawable(getResources().getDrawable(R.drawable.mostlyfull_bat));
             } else if(mBatteryLevel > 25){
