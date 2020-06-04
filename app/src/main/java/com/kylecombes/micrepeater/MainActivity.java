@@ -41,6 +41,7 @@ public class MainActivity extends Activity {
 
     boolean mScoAudioConnected = false;
     boolean recordingInProgress = false;
+    int mBatteryLevel = -1;
     static boolean firebaseAnalyticsOn = true;
     static int streamType = AudioManager.STREAM_VOICE_CALL;
 
@@ -51,6 +52,7 @@ public class MainActivity extends Activity {
     Button stopButton;
     ImageButton settingButton;
     TextView versionNumber;
+    ImageView bluetoothBattery;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,7 @@ public class MainActivity extends Activity {
         settingButton = findViewById(R.id.button_setting);
         versionNumber = findViewById(R.id.version);
         versionNumber.setText(getResources().getString(R.string.version, BuildConfig.VERSION_CODE));
+        bluetoothBattery = findViewById(R.id.battery_level);
     }
 
     public static void activateFirebase(boolean isChecked){
@@ -96,10 +99,11 @@ public class MainActivity extends Activity {
         // Register a callback to get notified about Bluetooth connect/disconnect events
         BluetoothStateReceiver.getInstance().registerStateChangeReceiver(
                 new BluetoothStateReceiver.StateChangeReceiver() {
-                    public void stateChanged(boolean deviceConnected, boolean scoAudioConnected) {
+                    public void stateChanged(boolean deviceConnected, boolean scoAudioConnected, int batterylevel) {
                         if (deviceConnected && !scoAudioConnected)
                             activateBluetoothSco();
                         mScoAudioConnected = scoAudioConnected;
+                        mBatteryLevel = batterylevel;
                         if (recordingInProgress && !scoAudioConnected) {
                             stopRecording();
                         }
@@ -255,6 +259,27 @@ public class MainActivity extends Activity {
             bluetoothIcon.setImageAlpha(128);
             bluetoothStatusTV.setText(R.string.bluetooth_unavailable);
             bluetoothStatusTV.setTextColor(getResources().getColor(R.color.blue));
+            mBatteryLevel = -1;
+        }
+        if (mBatteryLevel != -1){
+            //Make bluetooth battery level visible
+            bluetoothBattery.setVisibility(View.VISIBLE);
+            if(mBatteryLevel > 95){
+                //show full battery image
+                bluetoothBattery.setImageDrawable(getResources().getDrawable(R.drawable.full_bat));
+            } else if(mBatteryLevel > 85){
+                //show 75% full battery image
+                bluetoothBattery.setImageDrawable(getResources().getDrawable(R.drawable.mostlyfull_bat));
+            } else if(mBatteryLevel > 25){
+                //show 50% full battery image
+                bluetoothBattery.setImageDrawable(getResources().getDrawable(R.drawable.mostlydrained_bat));
+            } else {
+                //show 25% full battery image
+                bluetoothBattery.setImageDrawable(getResources().getDrawable(R.drawable.drained_bat));
+            }
+        } else {
+            //Make bluetooth battery level invisible
+            bluetoothBattery.setVisibility(View.INVISIBLE);
         }
         startButton.setEnabled(mScoAudioConnected && !recordingInProgress);
         stopButton.setEnabled(mScoAudioConnected && recordingInProgress);
