@@ -29,4 +29,11 @@
     <string name="option3">Music Speaker</string>
     <string name="output_options">Sound Output Options</string>
     <string name="close">Close</string>
+    <string name="status">Status:</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="mice_battery">Mic Battery:</string>
+    <string name="percentage">%d%%</string>
+    <string name="tab_text_1">Voice Amplifier</string>
+    <string name="tab_text_2">Pneumask Resources</string>
 </resources>

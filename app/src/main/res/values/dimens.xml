@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="tile_padding">10dp</dimen>
+    <dimen name="text_space">5dp</dimen>
+</resources>
