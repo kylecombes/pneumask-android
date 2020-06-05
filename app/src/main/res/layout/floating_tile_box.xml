@@ -14,7 +14,7 @@
             android:id="@+id/status_box_status_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/status"
+            android:text="@string/status_colon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>
         <TextView

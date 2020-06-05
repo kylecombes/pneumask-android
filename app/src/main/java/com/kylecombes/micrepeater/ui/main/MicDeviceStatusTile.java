@@ -8,8 +8,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.kylecombes.micrepeater.R;
 
-public class FloatingTileBox extends ConstraintLayout {
-    public FloatingTileBox(Context context, AttributeSet attrs) {
+public class MicDeviceStatusTile extends ConstraintLayout {
+    public MicDeviceStatusTile(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         LayoutInflater inflater = (LayoutInflater) context

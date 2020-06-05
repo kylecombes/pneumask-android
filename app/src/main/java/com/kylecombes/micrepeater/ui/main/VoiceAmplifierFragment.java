@@ -26,6 +26,7 @@ public class VoiceAmplifierFragment extends Fragment {
     private TextView mBatteryStatusTextView;
     private Button mStartStopButton;
     private ImageView mStatusImageView;
+    private AmplifyingControlTile mAmplifyingControlTile;
     private VoiceAmplificationController mAmpController;
 
     static VoiceAmplifierFragment newInstance() {
@@ -53,7 +54,9 @@ public class VoiceAmplifierFragment extends Fragment {
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_voice_amplifier, container, false);
         mBatteryStatusTextView = root.findViewById(R.id.status_box_battery_level_tv);
-        mStartStopButton = root.findViewById(R.id.voice_amplifier_start_stop_button);
+        mAmplifyingControlTile = root.findViewById(R.id.amplifying_control_tile);
+        mStartStopButton = root.findViewById(R.id.amplifying_control_start_stop_button);
+        mStartStopButton.setOnClickListener(startStopButtonClickedListener);
         mStatusImageView = root.findViewById(R.id.voice_amplifier_status_iv);
         pageViewModel.getMicBatteryPercentage().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -64,17 +67,15 @@ public class VoiceAmplifierFragment extends Fragment {
         pageViewModel.getMicIsOn().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean b) {
+                mAmplifyingControlTile.setAmplifyingActive(b);
                 if (b) {
-                    mStartStopButton.setText(R.string.stop);
                     mStatusImageView.setImageDrawable(getResources().getDrawable(R.drawable.amplifying_on));
 
                 } else {
-                    mStartStopButton.setText(R.string.start);
                     mStatusImageView.setImageDrawable(getResources().getDrawable(R.drawable.amplifying_off));
                 }
             }
         });
-        root.findViewById(R.id.voice_amplifier_start_stop_button).setOnClickListener(startStopButtonClickedListener);
         return root;
     }
 
