@@ -1,6 +1,5 @@
 package com.kylecombes.micrepeater.ui.main;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -12,7 +11,7 @@ public class AppStateViewModel extends ViewModel {
         mMicBatteryPercentage.setValue(percentage);
     }
 
-    public LiveData<Integer> getMicBatteryPercentage() {
+    public MutableLiveData<Integer> getMicBatteryPercentage() {
         return mMicBatteryPercentage;
     }
 }
