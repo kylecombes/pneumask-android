@@ -10,4 +10,5 @@
     <color name='off'>#8E8888</color>
     <color name="black">#090909</color>
     <color name="tile_bg_light">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
 </resources>
