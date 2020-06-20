@@ -1,0 +1,7 @@
+<resources>
+    <declare-styleable name="ResourceLinkTile">
+        <attr name="link_title" format="string"/>
+        <attr name="link_url" format="string"/>
+        <attr name="tile_image" format="reference"/>
+    </declare-styleable>
+</resources>
