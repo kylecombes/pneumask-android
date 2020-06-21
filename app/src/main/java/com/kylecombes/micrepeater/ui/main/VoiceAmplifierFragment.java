@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,6 +24,8 @@ import java.util.Objects;
 public class VoiceAmplifierFragment extends Fragment {
 
     private AppStateViewModel pageViewModel;
+    private TextView mDeviceStatusTitleTextView;
+    private TextView mDeviceStatusTextView;
     private TextView mBatteryStatusTitleTextView;
     private TextView mBatteryStatusTextView;
     private Button mStartStopButton;
@@ -54,19 +57,29 @@ public class VoiceAmplifierFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_voice_amplifier, container, false);
+        mDeviceStatusTitleTextView = root.findViewById(R.id.status_box_status_title_tv);
+        mDeviceStatusTextView = root.findViewById(R.id.status_box_status_tv);
         mBatteryStatusTitleTextView = root.findViewById(R.id.status_box_battery_level_title_tv);
         mBatteryStatusTextView = root.findViewById(R.id.status_box_battery_level_tv);
         mAmplifyingControlTile = root.findViewById(R.id.amplifying_control_tile);
         mStartStopButton = root.findViewById(R.id.amplifying_control_start_stop_button);
         mStartStopButton.setOnClickListener(startStopButtonClickedListener);
         mStatusImageView = root.findViewById(R.id.voice_amplifier_status_iv);
-        pageViewModel.getMicBatteryPercentage().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+
+        LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+        pageViewModel.getBluetoothAudioConnected().observe(lifecycleOwner, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean deviceConnected) {
+                updateConnectedText(deviceConnected);
+            }
+        });
+        pageViewModel.getMicBatteryPercentage().observe(lifecycleOwner, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer p) {
                 updateBatteryLevelText(p);
             }
         });
-        pageViewModel.getMicIsOn().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+        pageViewModel.getMicIsOn().observe(lifecycleOwner, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean b) {
                 mAmplifyingControlTile.setAmplifyingActive(b);
@@ -79,6 +92,18 @@ public class VoiceAmplifierFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    private void updateConnectedText(Boolean isDeviceConnected) {
+        if (isDeviceConnected) {
+            mDeviceStatusTextView.setText(R.string.connected);
+            mDeviceStatusTextView.setTextColor(getResources().getColor(R.color.green));
+            mDeviceStatusTitleTextView.setTextColor(getResources().getColor(R.color.green));
+        } else {
+            mDeviceStatusTextView.setText(R.string.disconnected);
+            mDeviceStatusTextView.setTextColor(getResources().getColor(R.color.red));
+            mDeviceStatusTitleTextView.setTextColor(getResources().getColor(R.color.red));
+        }
     }
 
     private void updateBatteryLevelText(Integer percentage) {

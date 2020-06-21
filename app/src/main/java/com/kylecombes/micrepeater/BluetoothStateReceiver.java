@@ -29,7 +29,7 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         boolean mScoAudioConnected = false;
-        boolean mDeviceConnected = false;
+        boolean mDeviceConnected;
         Integer batteryLevel = null;
         String action = intent.getAction();
         if (action == null)
@@ -44,6 +44,7 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
                 case AudioManager.SCO_AUDIO_STATE_CONNECTING:
                     Log.i(TAG, "Bluetooth HFP Headset is connecting");
                     mScoAudioConnected = false;
+                    break;
                 case AudioManager.SCO_AUDIO_STATE_DISCONNECTED:
                     Log.i(TAG, "Bluetooth HFP Headset is disconnected");
                     mScoAudioConnected = false;
@@ -62,9 +63,9 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
                 batteryLevel = null;
             }
             Log.i(TAG, "Battery level: " + batteryLevel);
-        }else {
-            mDeviceConnected = BluetoothDevice.ACTION_ACL_CONNECTED.equals(action);
         }
+
+        mDeviceConnected = mScoAudioConnected || BluetoothDevice.ACTION_ACL_CONNECTED.equals(action);
         if (stateChangeReceiver != null) {
             stateChangeReceiver.stateChanged(mDeviceConnected, mScoAudioConnected, batteryLevel);
         }

@@ -94,6 +94,7 @@ public class MainActivity2 extends AppCompatActivity implements VoiceAmplificati
                         if (deviceConnected && !scoAudioConnected) {
                             activateBluetoothSco();
                         }
+                        mViewModel.setBluetoothAudioConnected(scoAudioConnected);
                         mScoAudioConnected = scoAudioConnected;
                         mViewModel.setMicBatteryPercentage(batteryPercentage);
                         Boolean micIsOn = Objects.requireNonNull(mViewModel.getMicIsOn().getValue());
