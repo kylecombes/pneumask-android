@@ -99,11 +99,8 @@ public class MainActivity extends Activity {
         // Register a callback to get notified about Bluetooth connect/disconnect events
         BluetoothStateReceiver.getInstance().registerStateChangeReceiver(
                 new BluetoothStateReceiver.StateChangeReceiver() {
-                    public void stateChanged(
-                            boolean deviceConnected,
-                            boolean scoAudioConnected,
-                            Integer batteryLevel
-                    ) {
+                    public void stateChanged(boolean deviceConnected, boolean scoAudioConnected,
+                            Integer batteryLevel) {
                         if (deviceConnected && !scoAudioConnected)
                             activateBluetoothSco();
                         mScoAudioConnected = scoAudioConnected;
