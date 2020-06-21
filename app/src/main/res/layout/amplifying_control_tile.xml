@@ -33,13 +33,13 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="@dimen/text_space"
                 android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
                 android:textSize="20sp"
                 android:text="@string/off"/>
         </LinearLayout>
         <Button
             android:id="@+id/amplifying_control_start_stop_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.33"
             android:layout_height="0dp"
             android:text="@string/start"
             android:textColor="@color/colorPrimary"
