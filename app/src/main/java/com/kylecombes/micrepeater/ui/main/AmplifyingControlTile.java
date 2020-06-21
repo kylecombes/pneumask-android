@@ -15,6 +15,9 @@ public class AmplifyingControlTile extends ConstraintLayout {
     private Button mStartStopButton;
     private TextView mStatusTextView;
 
+    private int COLOR_PRIMARY = getResources().getColor(R.color.colorPrimary);
+    private int COLOR_RED = getResources().getColor(R.color.red);
+
     public AmplifyingControlTile(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater inflater = (LayoutInflater) context
@@ -28,10 +31,12 @@ public class AmplifyingControlTile extends ConstraintLayout {
     public void setAmplifyingActive(boolean isActive) {
         if (isActive) {
             mStartStopButton.setText(R.string.stop);
-            mStatusTextView.setText(R.string.on);
+            mStatusTextView.setText(R.string.amplification_active);
+            mStatusTextView.setTextColor(COLOR_RED);
         } else {
             mStatusTextView.setText(R.string.off);
             mStartStopButton.setText(R.string.start);
+            mStatusTextView.setTextColor(COLOR_PRIMARY);
         }
     }
 }
