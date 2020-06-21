@@ -12,9 +12,6 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
     private static final String TAG = BluetoothStateReceiver.class.getCanonicalName();
 
     private static BluetoothStateReceiver mInstance = null;
-    private boolean mScoAudioConnected = false;
-    private boolean mDeviceConnected = false;
-    private int batteryLevel = -1;
 
     private StateChangeReceiver stateChangeReceiver = null;
 
@@ -31,6 +28,9 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        boolean mScoAudioConnected = false;
+        boolean mDeviceConnected = false;
+        Integer batteryLevel = null;
         String action = intent.getAction();
         if (action == null)
             return;
@@ -58,6 +58,9 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
             }
         } else if (action.equals("android.bluetooth.device.action.BATTERY_LEVEL_CHANGED")) {
             batteryLevel = intent.getIntExtra("android.bluetooth.device.extra.BATTERY_LEVEL", -1);
+            if (batteryLevel == -1) {
+                batteryLevel = null;
+            }
             Log.i(TAG, "Battery level: " + batteryLevel);
         }else {
             mDeviceConnected = BluetoothDevice.ACTION_ACL_CONNECTED.equals(action);
@@ -68,7 +71,7 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
     }
 
     public interface StateChangeReceiver {
-        void stateChanged(boolean deviceConnected, boolean scoAudioConnected, int batterylevel);
+        void stateChanged(boolean deviceConnected, boolean scoAudioConnected, Integer batteryLevel);
     }
 
 }

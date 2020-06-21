@@ -12,7 +12,7 @@ public class AppStateViewModel extends ViewModel {
     private MutableLiveData<Boolean> mMicIsOn = new MutableLiveData<>(false);
     private MutableLiveData<Integer> mStreamType = new MutableLiveData<>(AudioManager.STREAM_VOICE_CALL);
 
-    public void setMicBatteryPercentage(int percentage) {
+    public void setMicBatteryPercentage(Integer percentage) {
         mMicBatteryPercentage.setValue(percentage);
     }
 

@@ -90,7 +90,7 @@ public class MainActivity2 extends AppCompatActivity implements VoiceAmplificati
         BluetoothStateReceiver.getInstance().registerStateChangeReceiver(
                 new BluetoothStateReceiver.StateChangeReceiver() {
                     public void stateChanged(boolean deviceConnected, boolean scoAudioConnected,
-                                             int batteryPercentage) {
+                                             Integer batteryPercentage) {
                         if (deviceConnected && !scoAudioConnected) {
                             activateBluetoothSco();
                         }

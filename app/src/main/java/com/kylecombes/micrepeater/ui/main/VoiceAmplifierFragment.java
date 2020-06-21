@@ -23,6 +23,7 @@ import java.util.Objects;
 public class VoiceAmplifierFragment extends Fragment {
 
     private AppStateViewModel pageViewModel;
+    private TextView mBatteryStatusTitleTextView;
     private TextView mBatteryStatusTextView;
     private Button mStartStopButton;
     private ImageView mStatusImageView;
@@ -53,6 +54,7 @@ public class VoiceAmplifierFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_voice_amplifier, container, false);
+        mBatteryStatusTitleTextView = root.findViewById(R.id.status_box_battery_level_title_tv);
         mBatteryStatusTextView = root.findViewById(R.id.status_box_battery_level_tv);
         mAmplifyingControlTile = root.findViewById(R.id.amplifying_control_tile);
         mStartStopButton = root.findViewById(R.id.amplifying_control_start_stop_button);
@@ -61,7 +63,7 @@ public class VoiceAmplifierFragment extends Fragment {
         pageViewModel.getMicBatteryPercentage().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer p) {
-                setBatteryLevelText(p);
+                updateBatteryLevelText(p);
             }
         });
         pageViewModel.getMicIsOn().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
@@ -79,10 +81,17 @@ public class VoiceAmplifierFragment extends Fragment {
         return root;
     }
 
-    private void setBatteryLevelText(Integer percentage) {
-        percentage = Math.max(0, Math.min(percentage, 100));
-        String percentageText = getString(R.string.percentage, percentage);
-        mBatteryStatusTextView.setText(percentageText);
+    private void updateBatteryLevelText(Integer percentage) {
+        if (percentage == null) {
+            mBatteryStatusTextView.setVisibility(View.GONE);
+            mBatteryStatusTitleTextView.setVisibility(View.GONE);
+        } else {
+            mBatteryStatusTextView.setVisibility(View.VISIBLE);
+            mBatteryStatusTitleTextView.setVisibility(View.VISIBLE);
+            percentage = Math.max(0, Math.min(percentage, 100));
+            String percentageText = getString(R.string.percentage, percentage);
+            mBatteryStatusTextView.setText(percentageText);
+        }
     }
 
     private View.OnClickListener startStopButtonClickedListener = new View.OnClickListener() {
