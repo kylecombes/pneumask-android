@@ -1,16 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/fragment_padding"
-    android:background="@color/colorPrimary">
-    <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
-        android:layout_width="wrap_content"
+    android:background="@color/colorPrimary"
+    android:scrollbars="none">
+
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:link_title="Hello"
-        app:link_url="https://www.google.com/"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:padding="@dimen/tile_padding">
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/tile_padding"
+                android:text="@string/pneumask_resources"
+                android:textColor="@color/design_default_color_background"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow android:gravity="center">
+
+            <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/tile_padding"
+                custom:icon="@drawable/link_placeholder"
+                custom:title="@string/project_website"
+                custom:url="https://www.google.com/" />
+
+            <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/tile_padding"
+                custom:icon="@drawable/link_placeholder"
+                custom:title="@string/clinical_validation"
+                custom:url="https://www.google.com/" />
+        </TableRow>
+
+        <TableRow android:gravity="center">
+
+            <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/tile_padding"
+                custom:icon="@drawable/link_placeholder"
+                custom:title="@string/donning_doffing"
+                custom:url="https://www.google.com/" />
+
+            <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/tile_padding"
+                custom:icon="@drawable/link_placeholder"
+                custom:title="@string/team"
+                custom:url="https://www.google.com/" />
+        </TableRow>
+
+        <TableRow android:gravity="center">
+
+            <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/tile_padding"
+                custom:icon="@drawable/link_placeholder"
+                custom:title="@string/get_involved"
+                custom:url="https://www.google.com/" />
+
+            <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/tile_padding"
+                custom:icon="@drawable/link_placeholder"
+                custom:title="@string/mask_feedback"
+                custom:url="https://www.google.com/" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/tile_padding"
+                android:text="@string/app_resources"
+                android:textColor="@color/design_default_color_background"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow android:gravity="center">
+
+            <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/tile_padding"
+                custom:icon="@drawable/link_placeholder"
+                custom:title="@string/app_feedback"
+                custom:url="https://www.google.com/" />
+
+            <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/tile_padding"
+                custom:icon="@drawable/link_placeholder"
+                custom:title="@string/clinical_validation"
+                custom:url="https://www.google.com/" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/tile_padding"
+                android:text="@string/disclaimer_amp_privacy_policy"
+                android:textColor="@color/design_default_color_background"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow android:gravity="center">
+
+            <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/tile_padding"
+                custom:icon="@drawable/link_placeholder"
+                custom:title="@string/pneumask_disclaimer"
+                custom:url="https://www.google.com/" />
+
+            <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="@dimen/tile_padding"
+                custom:icon="@drawable/link_placeholder"
+                custom:title="@string/privacy"
+                custom:url="https://www.google.com/" />
+        </TableRow>
+
+    </TableLayout>
+</ScrollView>

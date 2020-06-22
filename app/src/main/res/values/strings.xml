@@ -43,4 +43,17 @@
     <string name="wizard_5_text">To help make this app the best it can be, we would like to collect anonymous usage information.\n \nThis information includes:\n&#8226; How often you open the app\n&#8226; How long you use the app for\n&#8226; What buttons you press in the app\n&#8226; What country you are in\n \nWe will NEVER collect any potentially sensitive information. This includes audio, precise geographic location, or anything else that might compromise the privacy of you or a patient.</string>
     <string name="disclaimer">Disclaimer</string>
     <string name="wizard_6_text">The following content, including but not limited to project descriptions, preliminary test results, figures/images, and prototypes, published here is meant to maximize potential public benefit during this SARS-CoV-2 (formerly CoVID-19) crisis, specifically in addressing the urgent need around PPE shortage. The content is currently being submitted to the U.S. Food and Drug Administration (FDA) for review and approval.\n\n PLEASE NOTE: The content has not been peer reviewed. The Authors make no representations or warranties of any kind (express or implied) relating to accuracy, safety, usefulness, usability, marketability, performance, or otherwise of the content released here. The Authors disclaim all express and implied warranties of merchantability and fitness of the content for a particular purpose, and disclaims all express and implied warranties regarding non-infringement of any patent, copyright, trademark, or other rights of third parties in the content or use of the content, or in the making, using, or selling products or services by any person or entity.\n\nPeople or entities attempting to use the content in any way, including creating products or offering services, assume all risk and responsibility related to those uses, including all legal and regulatory compliance, safety, efficacy, performance, design, marketability, title, and quality. The Authors assume no liability related to the actions of third parties and in respect of any infringement of any patent, copyright, or other right of third parties.\n\nThe content/device has not been used in formal testing with human subjects at this time.\n\n Although no determination has been made with respect to this design,the Department of Health and Human Services (DHHS) has declared liability immunity for medical countermeasures against COVID-19.  https://www.phe.gov/Preparedness/legal/prepact/Pages/COVID19.aspx</string>
+    <string name="link_icon">Link icon</string>
+    <string name="pneumask_resources">Pneumask Resources</string>
+    <string name="project_website">Project Website</string>
+    <string name="clinical_validation">Clinical Validation</string>
+    <string name="donning_doffing"><![CDATA[Donning & Doffing]]></string>
+    <string name="team">Team</string>
+    <string name="get_involved">Get Involved</string>
+    <string name="mask_feedback">Mask Feedback</string>
+    <string name="app_resources">App Resources</string>
+    <string name="app_feedback">App Feedback</string>
+    <string name="disclaimer_amp_privacy_policy"><![CDATA[Disclaimer & Privacy Policy]]></string>
+    <string name="pneumask_disclaimer">Pneumask Disclaimer</string>
+    <string name="privacy">Privacy</string>
 </resources>

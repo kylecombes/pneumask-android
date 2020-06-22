@@ -1,7 +1,9 @@
 package com.kylecombes.micrepeater.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,6 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.kylecombes.micrepeater.R;
-import com.kylecombes.micrepeater.ResourceLink;
 
 public class ResourceLinkTile extends ConstraintLayout {
 
@@ -23,39 +24,28 @@ public class ResourceLinkTile extends ConstraintLayout {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.resource_link_tile, this, true);
-
-        // Locate the views
-        mTextView = findViewById(R.id.resource_link_name_tv);
-        mIcon = findViewById(R.id.resource_link_iv);
-
-    }
-
-    public ResourceLinkTile(Context context, ResourceLink resourceLink) {
-        super(context);
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.resource_link_tile, this, true);
-
-        initViews(context, resourceLink);
-    }
-
-    private void initViews(Context context, AttributeSet attrs) {
         findViews();
 
-        // Apply the attributes to the views
+        // Connect custom attributes with the view
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.ResourceLinkTile,
                 0, 0);
-        try {
-            mTextView.setText(a.getText(R.styleable.ResourceLinkTile_link_title));
-            mIcon.setImageDrawable(a.getDrawable(R.styleable.ResourceLinkTile_tile_image));
 
-            CharSequence linkUrl = a.getText(R.styleable.ResourceLinkTile_link_url);
-            setOnClickListener(new OnClickListener() {
+        try {
+            final String title = a.getString(R.styleable.ResourceLinkTile_title);
+            final String url = a.getString(R.styleable.ResourceLinkTile_url);
+            final int iconResourceId = a.getResourceId(R.styleable.ResourceLinkTile_icon, R.drawable.link_placeholder);
+
+            mTextView.setText(title);
+            mIcon.setImageResource(iconResourceId);
+            mIcon.setContentDescription(title + " icon.");
+            // TODO: make sure the buttons/links work on screen reader
+            this.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    // TODO: Open an activity instead of an url (for wizard activity)
+                    openBroswer(url);
                 }
             });
         } finally {
@@ -63,14 +53,12 @@ public class ResourceLinkTile extends ConstraintLayout {
         }
     }
 
-    private void initViews(Context context, ResourceLink resourceLink) {
-        findViews();
-
-        mTextView.setText(resourceLink.getTextResId());
-        Integer drawableResId = resourceLink.getImageResId();
-        if (drawableResId != null) {
-            mIcon.setImageDrawable(context.getResources().getDrawable(drawableResId));
-        }
+    private void openBroswer(String url) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(Uri.parse(url));
+        getContext().startActivity(intent);
     }
 
     private void findViews() {
@@ -78,5 +66,4 @@ public class ResourceLinkTile extends ConstraintLayout {
         mTextView = findViewById(R.id.resource_link_name_tv);
         mIcon = findViewById(R.id.resource_link_iv);
     }
-
 }
