@@ -43,6 +43,9 @@ public class WelcomeActivity extends FragmentActivity {
                 if (viewPager.getCurrentItem() == 0) {
                     //if the user returns to the first page, then the back button turns invisible
                     backbutton.setVisibility(View.INVISIBLE);
+                } else if(viewPager.getCurrentItem() == 4) {
+                    //if the user goes to the last page, but then returns to the pages before, the "next" button should read next instead of finish
+                    nextbutton.setText(R.string.next);
                 }
             }
         });
@@ -52,15 +55,12 @@ public class WelcomeActivity extends FragmentActivity {
             public void onClick(View view) {
                 if(viewPager.getCurrentItem() == 5){
                     //if on the last page, then hitting the "next" button will finish welcome activity and start main activity
-                    Intent intent = new Intent(WelcomeActivity.this, MainActivity2.class);// New activity
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
                     finish();
                 }
                 viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
                 if (viewPager.getCurrentItem() == 5){
                     //if on the last page, the "next" button will read "finish" instead of "next"
-                    nextbutton.setText("Finish");
+                    nextbutton.setText(R.string.finish);
                 } else if (viewPager.getCurrentItem() != 0) {
                     //if not on the first page, then the back button will be visible, otherwise the back button is invisible
                     backbutton.setVisibility(View.VISIBLE);

@@ -19,9 +19,6 @@ public class ScreenSlidePageFragment extends Fragment {
             R.layout.welcome1, R.layout.welcome2, R.layout.welcome3, R.layout.welcome4, R.layout.welcome5, R.layout.welcome6,
     };
 
-    public ScreenSlidePageFragment() {
-        // Required empty public constructor
-    }
     public static ScreenSlidePageFragment newInstance(Integer counter) {
         ScreenSlidePageFragment fragment = new ScreenSlidePageFragment();
         Bundle args = new Bundle();

@@ -46,7 +46,7 @@ public class MainActivity2 extends AppCompatActivity implements VoiceAmplificati
             startActivity(new Intent(MainActivity2.this, WelcomeActivity.class));
             //set isFirstRun to false so the welcome wizard doesn't run again on the same device
             getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                    .putBoolean("isFirstRun", false).commit();
+                    .putBoolean("isFirstRun", false).apply();
         }
 
         setContentView(R.layout.activity_main2);
