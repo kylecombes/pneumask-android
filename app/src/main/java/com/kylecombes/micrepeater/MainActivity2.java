@@ -37,6 +37,18 @@ public class MainActivity2 extends AppCompatActivity implements VoiceAmplificati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
+        //using a fake to run welcome wizard every time right now (for developing purposes). For app to function properly, replace fake with isFirstRun
+        Boolean fake = true;
+        if (fake) {
+            //show start activity
+            startActivity(new Intent(MainActivity2.this, WelcomeActivity.class));
+            //set isFirstRun to false so the welcome wizard doesn't run again on the same device
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                    .putBoolean("isFirstRun", false).apply();
+        }
+
         setContentView(R.layout.activity_main2);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);

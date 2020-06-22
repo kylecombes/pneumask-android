@@ -37,4 +37,7 @@
     <string name="percentage">%d%%</string>
     <string name="tab_text_1">Voice Amplifier</string>
     <string name="tab_text_2">Pneumask Resources</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="finish">Finish</string>
 </resources>
