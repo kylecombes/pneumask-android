@@ -40,4 +40,7 @@
     <string name="next">Next</string>
     <string name="back">Back</string>
     <string name="finish">Finish</string>
+    <string name="science_backed_reusable_ppe">Science-backed reusable PPE</string>
+    <string name="pneumask">Pneumask</string>
+    <string name="wizard_1_text">The Pneumask Project is a collaborative effort to develop the most clinically validated alternative personal protective equipment (PPE) for front-line workers combating the COVID-19 pandemic.</string>
 </resources>

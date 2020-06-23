@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScreenSlidePageFragment"
-    >
+    android:paddingVertical="@dimen/fragment_padding"
+    tools:context=".ScreenSlidePageFragment">
+
     <TextView
-        android:id="@+id/tv_counter"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:id="@+id/header_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/fragment_padding"
+        android:text="@string/pneumask"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_h1"
         android:textStyle="bold"
-        android:text="Page 1"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/subheader_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/fragment_padding"
+        android:text="@string/science_backed_reusable_ppe"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_h3"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_tv" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/fragment_padding"
+        android:text="@string/wizard_1_text"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_p"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subheader_tv" />
+</androidx.constraintlayout.widget.ConstraintLayout>
