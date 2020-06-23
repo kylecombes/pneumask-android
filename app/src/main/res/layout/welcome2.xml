@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/fragment_padding"
-        android:text="@string/pneumask"
+        android:text="@string/community"
         android:textColor="@color/white"
         android:textSize="@dimen/text_h1"
         android:textStyle="bold"
@@ -20,24 +20,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/subheader_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="@dimen/fragment_padding"
-        android:text="@string/science_backed_reusable_ppe"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_h3"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_tv" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/fragment_padding"
-        android:text="@string/wizard_1_text"
+        android:text="@string/wizard_2_text"
         android:textColor="@color/white"
         android:textSize="@dimen/text_p"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subheader_tv" />
+        app:layout_constraintTop_toBottomOf="@id/header_tv" />
 </androidx.constraintlayout.widget.ConstraintLayout>
