@@ -1,10 +1,13 @@
 package com.kylecombes.micrepeater;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -36,6 +39,20 @@ public class WelcomeActivity extends FragmentActivity {
 
         final Button backbutton = (Button) findViewById(R.id.back_button);
         final Button nextbutton = (Button) findViewById(R.id.next_button);
+
+        if (viewPager.getCurrentItem() == 3){
+            final Switch datareporting = (Switch) findViewById(R.id.firebase_switch);
+
+            datareporting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                            .putBoolean("reportdata", isChecked).apply();
+                    Log.v( "","changed" + isChecked);
+                }
+            });
+        }
+
+
         backbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

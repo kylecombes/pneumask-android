@@ -1,10 +1,15 @@
 package com.kylecombes.micrepeater;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +37,7 @@ public class ScreenSlidePageFragment extends Fragment {
         if (getArguments() != null) {
             counter = getArguments().getInt(ARG_COUNT);
         }
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +48,8 @@ public class ScreenSlidePageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
     }
 }
 

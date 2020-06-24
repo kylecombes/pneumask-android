@@ -48,7 +48,9 @@ public class MainActivity2 extends AppCompatActivity implements VoiceAmplificati
             getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
                     .putBoolean("isFirstRun", false).apply();
         }
-
+        Boolean firebase = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("reportdata", true);
+        Log.v("", ""+firebase);
         setContentView(R.layout.activity_main2);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);

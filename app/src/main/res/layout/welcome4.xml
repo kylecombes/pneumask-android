@@ -12,32 +12,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/fragment_padding"
-        android:text="@string/pneumask"
+        android:text="@string/app"
         android:textColor="@color/white"
         android:textSize="@dimen/text_h1"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/subheader_tv"
+    <ImageView
+        android:id="@+id/audioicon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/fragment_padding"
-        android:text="@string/science_backed_reusable_ppe"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_h3"
-        android:textStyle="bold"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/amplifying_off"
+        app:layout_constraintTop_toBottomOf="@id/header_tv"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_tv" />
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
+        android:id="@+id/p1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:padding="@dimen/fragment_padding"
-        android:text="@string/wizard_1_text"
+        android:text="@string/wizard_4_text"
         android:textColor="@color/white"
         android:textSize="@dimen/text_p"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/subheader_tv" />
+        app:layout_constraintTop_toBottomOf="@id/audioicon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
