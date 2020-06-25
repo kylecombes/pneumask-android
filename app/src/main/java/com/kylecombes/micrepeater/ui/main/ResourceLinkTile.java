@@ -45,7 +45,7 @@ public class ResourceLinkTile extends ConstraintLayout {
                 @Override
                 public void onClick(View v) {
                     // TODO: Open an activity instead of an url (for wizard activity)
-                    openBroswer(url);
+                    openBrowser(url);
                 }
             });
         } finally {
@@ -53,7 +53,7 @@ public class ResourceLinkTile extends ConstraintLayout {
         }
     }
 
-    private void openBroswer(String url) {
+    private void openBrowser(String url) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
