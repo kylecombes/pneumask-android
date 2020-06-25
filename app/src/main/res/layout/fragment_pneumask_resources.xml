@@ -33,7 +33,7 @@
             android:padding="@dimen/tile_padding"
             custom:icon="@drawable/link_placeholder"
             custom:title="@string/project_website"
-            custom:url="https://www.google.com/" />
+            custom:url="https://www.pneumask.org/" />
 
         <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_clinical_validation"
@@ -45,7 +45,7 @@
             android:padding="@dimen/tile_padding"
             custom:icon="@drawable/link_placeholder"
             custom:title="@string/clinical_validation"
-            custom:url="https://www.google.com/" />
+            custom:url="https://www.pneumask.org/clinical-validation" />
 
         <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_donning_doffing"
@@ -57,7 +57,7 @@
             android:padding="@dimen/tile_padding"
             custom:icon="@drawable/link_placeholder"
             custom:title="@string/donning_doffing"
-            custom:url="https://www.google.com/" />
+            custom:url="https://www.pneumask.org/clinician-engagement#donning-and-doffing" />
 
         <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_team"
@@ -70,7 +70,7 @@
             android:padding="@dimen/tile_padding"
             custom:icon="@drawable/link_placeholder"
             custom:title="@string/team"
-            custom:url="https://www.google.com/" />
+            custom:url="https://www.pneumask.org/team" />
 
         <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_get_involved"
@@ -82,7 +82,7 @@
             android:padding="@dimen/tile_padding"
             custom:icon="@drawable/link_placeholder"
             custom:title="@string/get_involved"
-            custom:url="https://www.google.com/" />
+            custom:url="https://www.pneumask.org/get-involved" />
 
         <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_mask_feedback"
@@ -94,7 +94,7 @@
             android:padding="@dimen/tile_padding"
             custom:icon="@drawable/link_placeholder"
             custom:title="@string/mask_feedback"
-            custom:url="https://www.google.com/" />
+            custom:url="mailto:pneumask.covid19@gmail.com" />
 
         <TextView
             android:id="@+id/app_resources_title"
