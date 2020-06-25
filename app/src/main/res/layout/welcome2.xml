@@ -1,152 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".ScreenSlidePageFragment">
 
-        <FrameLayout
-            android:id="@+id/decathlon"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/logo_height"
-            android:paddingVertical="@dimen/tile_padding"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/p1_tv"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".5">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/tile_padding"
-                android:layout_gravity="end"
-                android:adjustViewBounds="true"
-                android:background="@drawable/ic_decathlon_logo" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/medtronic"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/logo_height"
-            android:paddingVertical="@dimen/tile_padding"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/p1_tv"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".5">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/tile_padding"
-                android:layout_gravity="start"
-                android:adjustViewBounds="true"
-                android:background="@drawable/ic_medtronic_logo" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/pall"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/logo_height"
-            android:paddingVertical="@dimen/tile_padding"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/decathlon"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".5">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/tile_padding"
-                android:layout_gravity="end"
-                android:adjustViewBounds="true"
-                android:background="@drawable/ic_pall_corporation_logo" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/bic"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/logo_height"
-            android:paddingVertical="@dimen/tile_padding"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/medtronic"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".5">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/tile_padding"
-                android:layout_gravity="start"
-                android:adjustViewBounds="true"
-                android:background="@drawable/ic_bic_logo" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/autodesk"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/logo_height"
-            android:paddingVertical="@dimen/tile_padding"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pall"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".5">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/tile_padding"
-                android:layout_gravity="end"
-                android:adjustViewBounds="true"
-                android:background="@drawable/ic_autodesk_logo" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/mitre"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/logo_height"
-            android:paddingVertical="@dimen/tile_padding"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bic"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".5">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/logo_height"
-                android:layout_marginHorizontal="@dimen/tile_padding"
-                android:layout_gravity="start"
-                android:adjustViewBounds="true"
-                android:background="@drawable/ic_mitre_logo" />
-        </FrameLayout>
-
         <ImageView
             android:id="@+id/map_iv"
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/tile_padding"
+            android:layout_marginHorizontal="@dimen/fragment_padding"
             android:adjustViewBounds="true"
             android:src="@drawable/map"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header_tv" />
-
-        <TextView
-            android:id="@+id/p1_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/fragment_padding"
-            android:text="@string/wizard_2_text"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_p"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/map_iv" />
 
         <TextView
             android:id="@+id/header_tv"
@@ -159,5 +34,134 @@
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/p1_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wizard_2_text"
+            android:padding="@dimen/fragment_padding"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_p"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/map_iv" />
+
+        <FrameLayout
+            android:id="@+id/decathlon"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/logo_height"
+            android:paddingHorizontal="@dimen/fragment_padding"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/p1_tv"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".5">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_decathlon_logo"
+                tools:ignore="VectorDrawableCompat" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/medtronic"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/logo_height"
+            android:paddingHorizontal="@dimen/fragment_padding"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/p1_tv"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".5">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_medtronic_logo"
+                tools:ignore="VectorDrawableCompat" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/pall"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/logo_height"
+            android:paddingHorizontal="@dimen/fragment_padding"
+            android:layout_marginTop="@dimen/tile_padding"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/decathlon"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".5">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_pall_corporation_logo"
+                tools:ignore="VectorDrawableCompat" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/bic"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/logo_height"
+            android:paddingHorizontal="@dimen/fragment_padding"
+            android:layout_marginTop="@dimen/tile_padding"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/medtronic"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".5">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_bic_logo"
+                tools:ignore="VectorDrawableCompat" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/autodesk"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/logo_height"
+            android:paddingHorizontal="@dimen/fragment_padding"
+            android:layout_marginTop="@dimen/tile_padding"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pall"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".5">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_autodesk_logo"
+                tools:ignore="VectorDrawableCompat" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/mitre"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/logo_height"
+            android:paddingHorizontal="@dimen/fragment_padding"
+            android:layout_marginTop="@dimen/tile_padding"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bic"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".5">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_mitre_logo"
+                tools:ignore="VectorDrawableCompat" />
+        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

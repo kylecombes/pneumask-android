@@ -16,9 +16,8 @@
             android:id="@+id/snorkel_iv"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/tile_padding"
+            android:layout_marginVertical="@dimen/fragment_padding"
             android:adjustViewBounds="true"
-            android:paddingTop="@dimen/tile_padding"
             android:src="@drawable/snorkel"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subheader_tv" />
