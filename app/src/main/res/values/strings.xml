@@ -53,7 +53,6 @@
     <string name="mask_feedback">Mask Feedback</string>
     <string name="app_resources">App Resources</string>
     <string name="app_feedback">App Feedback</string>
-    <string name="disclaimer_amp_privacy_policy"><![CDATA[Disclaimer & Privacy Policy]]></string>
-    <string name="pneumask_disclaimer">Pneumask Disclaimer</string>
+    <string name="disclaimer">Disclaimer</string>
     <string name="privacy">Privacy</string>
 </resources>

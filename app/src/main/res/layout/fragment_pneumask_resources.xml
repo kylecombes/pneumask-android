@@ -96,12 +96,24 @@
             custom:title="@string/mask_feedback"
             custom:url="mailto:pneumask.covid19@gmail.com" />
 
+        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+            android:id="@+id/mask_resource_link_disclaimer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            custom:layout_constraintTop_toBottomOf="@id/pneumask_resource_link_get_involved"
+            custom:layout_constraintLeft_toLeftOf="parent"
+            custom:layout_constraintRight_toRightOf="@id/app_resource_link_feedback"
+            android:padding="@dimen/tile_padding"
+            custom:icon="@drawable/link_placeholder"
+            custom:title="@string/disclaimer"
+            custom:url="https://www.google.com/" />
+
         <TextView
             android:id="@+id/app_resources_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             custom:layout_constraintLeft_toLeftOf="parent"
-            custom:layout_constraintTop_toBottomOf="@id/pneumask_resource_link_get_involved"
+            custom:layout_constraintTop_toBottomOf="@id/mask_resource_link_disclaimer"
             android:padding="@dimen/tile_padding"
             android:text="@string/app_resources"
             android:textColor="@color/design_default_color_background"
@@ -130,30 +142,6 @@
             android:padding="@dimen/tile_padding"
             custom:icon="@drawable/link_placeholder"
             custom:title="@string/privacy"
-            custom:url="https://www.google.com/" />
-
-        <TextView
-            android:id="@+id/mask_resources_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            custom:layout_constraintLeft_toLeftOf="parent"
-            custom:layout_constraintTop_toBottomOf="@id/app_resource_link_feedback"
-            android:padding="@dimen/tile_padding"
-            android:text="@string/disclaimer_amp_privacy_policy"
-            android:textColor="@color/design_default_color_background"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
-            android:id="@+id/mask_resource_link_disclaimer"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            custom:layout_constraintTop_toBottomOf="@id/mask_resources_title"
-            custom:layout_constraintLeft_toLeftOf="parent"
-            custom:layout_constraintRight_toRightOf="@id/app_resource_link_feedback"
-            android:padding="@dimen/tile_padding"
-            custom:icon="@drawable/link_placeholder"
-            custom:title="@string/pneumask_disclaimer"
             custom:url="https://www.google.com/" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
