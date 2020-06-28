@@ -106,7 +106,7 @@
             android:padding="@dimen/tile_padding"
             custom:icon="@drawable/link_placeholder"
             custom:title="@string/disclaimer"
-            custom:url="https://www.google.com/" />
+            custom:url="https://www.pneumask.org/disclaimer" />
 
         <TextView
             android:id="@+id/app_resources_title"
@@ -130,7 +130,7 @@
             android:padding="@dimen/tile_padding"
             custom:icon="@drawable/link_placeholder"
             custom:title="@string/app_feedback"
-            custom:url="https://www.google.com/" />
+            custom:url="https://forms.gle/j27MD3annxVi49nZ8" />
 
         <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
             android:id="@+id/app_resource_link_privacy"
