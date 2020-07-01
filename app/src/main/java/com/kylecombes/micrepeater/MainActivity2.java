@@ -37,14 +37,14 @@ public class MainActivity2 extends AppCompatActivity implements VoiceAmplificati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isFirstRun", true);
         //using a fake to run welcome wizard every time right now (for developing purposes). For app to function properly, replace fake with isFirstRun
         Boolean fake = true;
         if (fake) {
-            //show start activity
+            // Show Welcome activity
             startActivity(new Intent(MainActivity2.this, WelcomeActivity.class));
-            //set isFirstRun to false so the welcome wizard doesn't run again on the same device
+            // Set isFirstRun to false so the welcome wizard doesn't run again on the same device
             getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
                     .putBoolean("isFirstRun", false).apply();
         }

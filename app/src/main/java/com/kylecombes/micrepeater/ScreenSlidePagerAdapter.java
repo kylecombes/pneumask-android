@@ -1,10 +1,9 @@
 package com.kylecombes.micrepeater;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import com.kylecombes.micrepeater.ScreenSlidePageFragment;
 
 public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
     private static final int NUM_PAGES = 6;
@@ -12,6 +11,7 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
         super(fa);
     }
 
+    @NonNull
     @Override
     public Fragment createFragment(int position) {
         return ScreenSlidePageFragment.newInstance(position);
