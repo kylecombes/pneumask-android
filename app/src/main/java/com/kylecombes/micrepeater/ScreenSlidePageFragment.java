@@ -46,10 +46,26 @@ public class ScreenSlidePageFragment extends Fragment {
         return inflater.inflate(layout_files[counter], container, false);
     }
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(counter == 4){
+            Switch datareporting = view.findViewById(R.id.data_switch);
+            //by default, set reportdata to true
+            SharedPreferences preferences = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE);
+            SharedPreferences.Editor edt = preferences.edit();
+            edt.putBoolean("reportdata", true);
+            edt.commit();
 
-
+            datareporting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    //set reportdata to what the user sets it to
+                    SharedPreferences preferences = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edt = preferences.edit();
+                    edt.putBoolean("reportdata", isChecked);
+                    edt.commit();
+                }
+            });
+        }
     }
 }
 
