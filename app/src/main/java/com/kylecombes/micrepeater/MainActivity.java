@@ -88,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements VoiceAmplificatio
                 new BluetoothStateReceiver.StateChangeReceiver() {
                     @Override
                     public void bluetoothDeviceConnectionStateChange(boolean isConnected) {
+                        // If we just lost the connection to the device, forget the battery level
+                        if (mBluetoothDeviceConnected && !isConnected) {
+                            mViewModel.setMicBatteryPercentage(null);
+                        }
                         mBluetoothDeviceConnected = isConnected;
                         mViewModel.setBluetoothAudioConnected(mBluetoothDeviceConnected && mScoAudioConnected);
                         activateBluetoothScoIfNecessary();

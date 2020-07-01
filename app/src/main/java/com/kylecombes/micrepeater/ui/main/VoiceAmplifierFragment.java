@@ -24,10 +24,10 @@ import java.util.Objects;
 public class VoiceAmplifierFragment extends Fragment {
 
     private AppStateViewModel pageViewModel;
-    private TextView mDeviceStatusTitleTextView;
+    private TextView mDeviceStatusTitleLabelView;
     private TextView mDeviceStatusTextView;
-    private TextView mBatteryStatusTitleTextView;
-    private TextView mBatteryStatusTextView;
+    private TextView mBatteryLevelLabelTextView;
+    private TextView mBatteryLevelTextView;
     private Button mStartStopButton;
     private ImageView mStatusImageView;
     private AmplifyingControlTile mAmplifyingControlTile;
@@ -57,10 +57,10 @@ public class VoiceAmplifierFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_voice_amplifier, container, false);
-        mDeviceStatusTitleTextView = root.findViewById(R.id.status_box_status_title_tv);
+        mDeviceStatusTitleLabelView = root.findViewById(R.id.status_box_status_label_tv);
         mDeviceStatusTextView = root.findViewById(R.id.status_box_status_tv);
-        mBatteryStatusTitleTextView = root.findViewById(R.id.status_box_battery_level_title_tv);
-        mBatteryStatusTextView = root.findViewById(R.id.status_box_battery_level_tv);
+        mBatteryLevelLabelTextView = root.findViewById(R.id.status_box_battery_level_label_tv);
+        mBatteryLevelTextView = root.findViewById(R.id.status_box_battery_level_tv);
         mAmplifyingControlTile = root.findViewById(R.id.amplifying_control_tile);
         mStartStopButton = root.findViewById(R.id.amplifying_control_start_stop_button);
         mStartStopButton.setOnClickListener(startStopButtonClickedListener);
@@ -98,24 +98,42 @@ public class VoiceAmplifierFragment extends Fragment {
         if (isDeviceConnected) {
             mDeviceStatusTextView.setText(R.string.connected);
             mDeviceStatusTextView.setTextColor(getResources().getColor(R.color.green));
-            mDeviceStatusTitleTextView.setTextColor(getResources().getColor(R.color.green));
+            mDeviceStatusTitleLabelView.setTextColor(getResources().getColor(R.color.green));
+            // If we have a battery percentage, display it
+            if (pageViewModel.getMicBatteryPercentage().getValue() != null) {
+                setBatteryLevelVisible(true);
+            }
         } else {
             mDeviceStatusTextView.setText(R.string.disconnected);
             mDeviceStatusTextView.setTextColor(getResources().getColor(R.color.red));
-            mDeviceStatusTitleTextView.setTextColor(getResources().getColor(R.color.red));
+            mDeviceStatusTitleLabelView.setTextColor(getResources().getColor(R.color.red));
+            setBatteryLevelVisible(false);
         }
     }
 
+    private void setBatteryLevelVisible(boolean isVisible) {
+        mBatteryLevelTextView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        mBatteryLevelLabelTextView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
+
     private void updateBatteryLevelText(Integer percentage) {
-        if (percentage == null) {
-            mBatteryStatusTextView.setVisibility(View.GONE);
-            mBatteryStatusTitleTextView.setVisibility(View.GONE);
-        } else {
-            mBatteryStatusTextView.setVisibility(View.VISIBLE);
-            mBatteryStatusTitleTextView.setVisibility(View.VISIBLE);
+        setBatteryLevelVisible(percentage != null);
+        if (percentage != null) {
             percentage = Math.max(0, Math.min(percentage, 100));
+            // Set the text
             String percentageText = getString(R.string.percentage, percentage);
-            mBatteryStatusTextView.setText(percentageText);
+            mBatteryLevelTextView.setText(percentageText);
+            // Set the color
+            int color;
+            if (percentage > 50) {
+                color = getResources().getColor(R.color.green);
+            } else if (percentage > 25) {
+                color = getResources().getColor(R.color.yellow);
+            } else {
+                color = getResources().getColor(R.color.red);
+            }
+            mBatteryLevelLabelTextView.setTextColor(color);
+            mBatteryLevelTextView.setTextColor(color);
         }
     }
 
