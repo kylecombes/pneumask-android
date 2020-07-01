@@ -32,14 +32,14 @@ public class SettingActivity extends Activity {
         getWindow().setLayout((int) (width * 0.8), (int) (height * 0.6));
 
         firebaseSwitch = findViewById(R.id.firebase_switch);
-        firebaseSwitch.setChecked(MainActivity.firebaseAnalyticsOn);
+//        firebaseSwitch.setChecked(MainActivity.firebaseAnalyticsOn);
         exitButton = findViewById(R.id.setting_exit);
         radioGroup = findViewById(R.id.output_options);
-        setCheckedButton(MainActivity.streamType);
+//        setCheckedButton(MainActivity.streamType);
 
         firebaseSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                MainActivity.activateFirebase(isChecked);
+//                MainActivity.activateFirebase(isChecked);
             }
         });
 
@@ -47,19 +47,19 @@ public class SettingActivity extends Activity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.alarm_option:
-                        MainActivity.streamType = AudioManager.STREAM_ALARM;
+//                        MainActivity.streamType = AudioManager.STREAM_ALARM;
                         break;
                     case R.id.music_option:
-                        MainActivity.streamType = AudioManager.STREAM_MUSIC;
+//                        MainActivity.streamType = AudioManager.STREAM_MUSIC;
                         break;
                     case R.id.voice_call_option:
                     default:
-                        MainActivity.streamType = AudioManager.STREAM_VOICE_CALL;
+//                        MainActivity.streamType = AudioManager.STREAM_VOICE_CALL;
                 }
             }
         });
     }
-
+/*
     private void setCheckedButton(int streamType) {
         switch (streamType) {
             case AudioManager.STREAM_ALARM:
@@ -77,5 +77,5 @@ public class SettingActivity extends Activity {
 
     public void exitPage(View view) {
         finish();
-    }
+    }*/
 }
