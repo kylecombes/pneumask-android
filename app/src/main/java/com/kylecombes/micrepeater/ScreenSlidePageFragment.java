@@ -14,16 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class ScreenSlidePageFragment extends Fragment {
-    private static final String ARG_COUNT = "COUNTER";
-    private Integer counter;
-    private int[] layout_files = {
-            R.layout.welcome1, R.layout.welcome2, R.layout.welcome3, R.layout.welcome4, R.layout.welcome5, R.layout.welcome6,
-    };
+    private static final String ARG_PAGE_INDEX = "PAGE_INDEX";
+    private static final String ARG_LAYOUT_REF = "ARG_LAYOUT_REF";
+    private int mPageIndex;
+    private int mLayoutRef;
 
-    public static ScreenSlidePageFragment newInstance(Integer counter) {
+    public static ScreenSlidePageFragment newInstance(int counter, int layoutFile) {
         ScreenSlidePageFragment fragment = new ScreenSlidePageFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COUNT, counter);
+        args.putInt(ARG_PAGE_INDEX, counter);
+        args.putInt(ARG_LAYOUT_REF, layoutFile);
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,7 +32,8 @@ public class ScreenSlidePageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            counter = getArguments().getInt(ARG_COUNT);
+            mPageIndex = getArguments().getInt(ARG_PAGE_INDEX);
+            mLayoutRef = getArguments().getInt(ARG_LAYOUT_REF);
         }
 
     }
@@ -41,30 +42,31 @@ public class ScreenSlidePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(layout_files[counter], container, false);
+        return inflater.inflate(mLayoutRef, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (counter == 4) {
-            Switch datareporting = view.findViewById(R.id.data_switch);
-            // By default, set reportdata to true
+        if (mPageIndex == 4) {
+            // Set up firebase switch and useFirebase shared preference
+            Switch useFirebaseSwitch = view.findViewById(R.id.data_switch);
+            // By default, set useFirebase to true
             SharedPreferences preferences = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE);
-            if (preferences.contains("reportdata")) {
-                datareporting.setChecked(preferences.getBoolean("reportdata", true));
+            if (preferences.contains("useFirebase")) {
+                useFirebaseSwitch.setChecked(preferences.getBoolean("useFirebase", true));
             } else {
                 SharedPreferences.Editor edt = preferences.edit();
-                edt.putBoolean("reportdata", true);
+                edt.putBoolean("useFirebase", true);
                 edt.apply();
             }
 
-            datareporting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            useFirebaseSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    // Set reportdata to what the user sets it to
+                    // Set useFirebase to what the user sets it to
                     SharedPreferences preferences = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE);
                     SharedPreferences.Editor edt = preferences.edit();
-                    edt.putBoolean("reportdata", isChecked);
+                    edt.putBoolean("useFirebase", isChecked);
                     edt.apply();
                 }
             });

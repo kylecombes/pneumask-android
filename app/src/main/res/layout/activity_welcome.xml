@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,30 +12,33 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="38dp" />
+        android:layout_marginBottom="@dimen/view_pager_padding"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
-        android:id="@+id/next_button"
+        android:id="@+id/welcome_wizard_next_button"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/view_pager_padding"
+        android:background="@android:color/transparent"
         android:text="@string/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:textColor="@color/white"
         android:textAllCaps="true"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pager" />
+
     <Button
-        android:visibility="invisible"
-        android:textAllCaps="true"
-        android:id="@+id/back_button"
-        android:text="@string/back"
-        android:textColor="@color/white"
-        android:background="@android:color/transparent"
+        android:id="@+id/welcome_wizard_back_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/view_pager_padding"
+        android:layout_marginVertical="@dimen/tile_padding"
+        android:background="@android:color/transparent"
+        android:text="@string/back"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pager" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
