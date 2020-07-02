@@ -11,4 +11,9 @@
     <color name="black">#090909</color>
     <color name="tile_bg_light">#FFFFFF</color>
     <color name="white">#FFFFFF</color>
+    <color name="graphic_primary">#FFFFFF</color>
+    <color name="graphic_bg_blue_primary">#75A4F0</color>
+    <color name="graphic_bg_blue_secondary">#5E95ED</color>
+    <color name="graphic_bg_red_primary">#E92A2A</color>
+    <color name="graphic_bg_red_secondary">#E92A2A</color>
 </resources>

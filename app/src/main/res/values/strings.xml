@@ -5,7 +5,7 @@
     <string name="stop">Stop</string>
     <string name="bluetooth_initializing">Bluetooth initializing…</string>
     <string name="bluetooth_available">Bluetooth ready</string>
-    <string name="bluetooth_unavailable">Bluetooth microphone unavailable.\nPlease ensure your Bluetooth device is connected, then close and reopen the app.</string>
+    <string name="bluetooth_device_not_detected">To use this app to amplify your voice, please connect a Bluetooth device with a microphone.</string>
     <string name="broadcasting_in_process">Broadcasting in process</string>
     <string name="enable_crash_reports">Report anonymous usage data</string>
     <string name="off">Off</string>

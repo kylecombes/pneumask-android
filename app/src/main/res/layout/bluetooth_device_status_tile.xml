@@ -25,7 +25,7 @@
             app:layout_constraintLeft_toRightOf="@id/status_box_status_label_tv"
             android:layout_marginStart="@dimen/text_space"
             android:textStyle="bold"
-            android:text="@string/connected"/>
+            android:text="@string/disconnected"/>
 
         <TextView
             android:id="@+id/status_box_battery_level_label_tv"

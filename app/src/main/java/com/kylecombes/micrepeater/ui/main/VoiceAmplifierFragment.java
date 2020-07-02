@@ -23,12 +23,12 @@ import java.util.Objects;
 
 public class VoiceAmplifierFragment extends Fragment {
 
-    private AppStateViewModel pageViewModel;
+    private AppStateViewModel mPageViewModel;
     private TextView mDeviceStatusTitleLabelView;
     private TextView mDeviceStatusTextView;
     private TextView mBatteryLevelLabelTextView;
     private TextView mBatteryLevelTextView;
-    private Button mStartStopButton;
+    private TextView mNoDeviceFoundTextView;
     private ImageView mStatusImageView;
     private AmplifyingControlTile mAmplifyingControlTile;
     private VoiceAmplificationController mAmpController;
@@ -40,7 +40,7 @@ public class VoiceAmplifierFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pageViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(AppStateViewModel.class);
+        mPageViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(AppStateViewModel.class);
     }
 
     @Override
@@ -62,62 +62,82 @@ public class VoiceAmplifierFragment extends Fragment {
         mBatteryLevelLabelTextView = root.findViewById(R.id.status_box_battery_level_label_tv);
         mBatteryLevelTextView = root.findViewById(R.id.status_box_battery_level_tv);
         mAmplifyingControlTile = root.findViewById(R.id.amplifying_control_tile);
-        mStartStopButton = root.findViewById(R.id.amplifying_control_start_stop_button);
-        mStartStopButton.setOnClickListener(startStopButtonClickedListener);
+        mNoDeviceFoundTextView = root.findViewById(R.id.voice_amplifier_no_device_detected_msg_tv);
+        root.findViewById(R.id.amplifying_control_start_stop_button)
+            .setOnClickListener(startStopButtonClickedListener);
         mStatusImageView = root.findViewById(R.id.voice_amplifier_status_iv);
 
         LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
-        pageViewModel.getBluetoothAudioConnected().observe(lifecycleOwner, new Observer<Boolean>() {
+        mPageViewModel.getAppMode().observe(lifecycleOwner, new Observer<AppStateViewModel.AppMode>() {
             @Override
-            public void onChanged(Boolean deviceConnected) {
-                updateConnectedText(deviceConnected);
-            }
-        });
-        pageViewModel.getMicBatteryPercentage().observe(lifecycleOwner, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer p) {
-                updateBatteryLevelText(p);
-            }
-        });
-        pageViewModel.getMicIsOn().observe(lifecycleOwner, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean b) {
-                mAmplifyingControlTile.setAmplifyingActive(b);
-                if (b) {
-                    mStatusImageView.setImageDrawable(getResources().getDrawable(R.drawable.amplifying_on));
-
+            public void onChanged(AppStateViewModel.AppMode mode) {
+                if (mode == AppStateViewModel.AppMode.NO_MIC_CONNECTED) {
+                    mAmplifyingControlTile.setVisibility(View.GONE);
+                    mNoDeviceFoundTextView.setVisibility(View.VISIBLE);
+                    renderMicStatusWidget(false);
                 } else {
-                    mStatusImageView.setImageDrawable(getResources().getDrawable(R.drawable.amplifying_off));
+                    mAmplifyingControlTile.setVisibility(View.VISIBLE);
+                    mNoDeviceFoundTextView.setVisibility(View.GONE);
+                    renderMicStatusWidget(true);
+                    if (mode == AppStateViewModel.AppMode.AMPLIFYING_ON) {
+                        mAmplifyingControlTile.setAmplifyingActive(true);
+                    } else {
+                        mAmplifyingControlTile.setAmplifyingActive(false);
+                    }
                 }
+                updateBackgroundImage(mode);
+            }
+        });
+        mPageViewModel.getMicBatteryPercentage().observe(lifecycleOwner, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer batteryPercentage) {
+                updateBatteryLevelText(batteryPercentage);
             }
         });
         return root;
     }
 
-    private void updateConnectedText(Boolean isDeviceConnected) {
-        if (isDeviceConnected) {
+    private void updateBackgroundImage(AppStateViewModel.AppMode appMode) {
+        int imageDrawableId;
+        switch (appMode) {
+            case NO_MIC_CONNECTED:
+                imageDrawableId = R.drawable.no_mic;
+                break;
+            case AMPLIFYING_OFF:
+                imageDrawableId = R.drawable.amplifying_off;
+                break;
+            case AMPLIFYING_ON:
+            default:
+                imageDrawableId = R.drawable.amplifying_on;
+                break;
+        }
+        mStatusImageView.setImageDrawable(getResources().getDrawable(imageDrawableId));
+    }
+
+    private void renderMicStatusWidget(boolean micConnected) {
+        if (micConnected) {
             mDeviceStatusTextView.setText(R.string.connected);
             mDeviceStatusTextView.setTextColor(getResources().getColor(R.color.green));
             mDeviceStatusTitleLabelView.setTextColor(getResources().getColor(R.color.green));
             // If we have a battery percentage, display it
-            if (pageViewModel.getMicBatteryPercentage().getValue() != null) {
-                setBatteryLevelVisible(true);
+            if (mPageViewModel.getMicBatteryPercentage().getValue() != null) {
+                setMicBatteryLevelTextVisible(true);
             }
         } else {
             mDeviceStatusTextView.setText(R.string.disconnected);
             mDeviceStatusTextView.setTextColor(getResources().getColor(R.color.red));
             mDeviceStatusTitleLabelView.setTextColor(getResources().getColor(R.color.red));
-            setBatteryLevelVisible(false);
+            setMicBatteryLevelTextVisible(false);
         }
     }
 
-    private void setBatteryLevelVisible(boolean isVisible) {
+    private void setMicBatteryLevelTextVisible(boolean isVisible) {
         mBatteryLevelTextView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
         mBatteryLevelLabelTextView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     private void updateBatteryLevelText(Integer percentage) {
-        setBatteryLevelVisible(percentage != null);
+        setMicBatteryLevelTextVisible(percentage != null);
         if (percentage != null) {
             percentage = Math.max(0, Math.min(percentage, 100));
             // Set the text
@@ -140,8 +160,8 @@ public class VoiceAmplifierFragment extends Fragment {
     private View.OnClickListener startStopButtonClickedListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Boolean amplificationActive = Objects.requireNonNull(pageViewModel.getMicIsOn().getValue());
-            if (amplificationActive) {
+            AppStateViewModel.AppMode mode = Objects.requireNonNull(mPageViewModel.getAppMode().getValue());
+            if (mode == AppStateViewModel.AppMode.AMPLIFYING_ON) {
                 mAmpController.stopAmplification();
             } else {
                 mAmpController.startAmplification();

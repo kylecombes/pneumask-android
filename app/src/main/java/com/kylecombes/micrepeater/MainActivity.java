@@ -91,21 +91,24 @@ public class MainActivity extends AppCompatActivity implements VoiceAmplificatio
                         // If we just lost the connection to the device, forget the battery level
                         if (mBluetoothDeviceConnected && !isConnected) {
                             mViewModel.setMicBatteryPercentage(null);
+                            if (mViewModel.getAppMode().getValue() == AppStateViewModel.AppMode.AMPLIFYING_ON) {
+                                stopAmplification();
+                            }
                         }
                         mBluetoothDeviceConnected = isConnected;
-                        mViewModel.setBluetoothAudioConnected(mBluetoothDeviceConnected && mScoAudioConnected);
+                        updateAppMode();
                         activateBluetoothScoIfNecessary();
                     }
 
                     @Override
                     public void scoAudioConnectionStateChange(boolean isConnected) {
                         mScoAudioConnected = isConnected;
-                        Boolean micIsOn = Objects.requireNonNull(mViewModel.getMicIsOn().getValue());
-                        if (!mScoAudioConnected && micIsOn) {
+                        AppStateViewModel.AppMode mode = mViewModel.getAppMode().getValue();
+                        if (!mScoAudioConnected && mode == AppStateViewModel.AppMode.AMPLIFYING_ON) {
                             stopAmplification();
                         }
                         activateBluetoothScoIfNecessary();
-                        mViewModel.setBluetoothAudioConnected(mBluetoothDeviceConnected && mScoAudioConnected);
+                        updateAppMode();
                     }
 
                     @Override
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements VoiceAmplificatio
         // Set default volume control
         setVolumeControlStream(streamType);
         startService(audioRelayServiceIntent);
-        mViewModel.setMicIsOn(true);
+        mViewModel.setAppMode(AppStateViewModel.AppMode.AMPLIFYING_ON);
     }
 
     /**
@@ -139,7 +142,14 @@ public class MainActivity extends AppCompatActivity implements VoiceAmplificatio
         if (ars != null) {
             ars.shutDown();
         }
-        mViewModel.setMicIsOn(false);
+        mViewModel.setAppMode(AppStateViewModel.AppMode.AMPLIFYING_OFF);
+    }
+
+    private void updateAppMode() {
+        AppStateViewModel.AppMode newMode = (mBluetoothDeviceConnected && mScoAudioConnected)
+                ? AppStateViewModel.AppMode.AMPLIFYING_OFF
+                : AppStateViewModel.AppMode.NO_MIC_CONNECTED;
+        mViewModel.setAppMode(newMode);
     }
 
     private void activateBluetoothScoIfNecessary() {
