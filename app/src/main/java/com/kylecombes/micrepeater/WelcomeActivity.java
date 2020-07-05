@@ -1,28 +1,19 @@
 package com.kylecombes.micrepeater;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 public class WelcomeActivity extends FragmentActivity {
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
-    private ViewPager2 viewPager;
 
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
-    private FragmentStateAdapter pagerAdapter;
+    private static final int[] LAYOUT_FILES = {
+            R.layout.welcome1, R.layout.welcome2, R.layout.welcome3, R.layout.welcome4, R.layout.welcome5, R.layout.welcome6,
+    };
+    private ViewPager2 viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,42 +22,43 @@ public class WelcomeActivity extends FragmentActivity {
 
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.pager);
-        pagerAdapter = new ScreenSlidePagerAdapter(this);
+        FragmentStateAdapter pagerAdapter = new ScreenSlidePagerAdapter(this, LAYOUT_FILES);
         viewPager.setAdapter(pagerAdapter);
 
-        final Button backbutton = (Button) findViewById(R.id.back_button);
-        final Button nextbutton = (Button) findViewById(R.id.next_button);
-        backbutton.setOnClickListener(new View.OnClickListener() {
+        final Button backButton = findViewById(R.id.welcome_wizard_back_button);
+        final Button nextButton = findViewById(R.id.welcome_wizard_next_button);
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            public void onPageSelected(int position) {
+                backButton.setVisibility(viewPager.getCurrentItem() == 0 ? View.INVISIBLE : View.VISIBLE);
+                nextButton.setText(viewPager.getCurrentItem() == getLastItemIndex() ? R.string.finish : R.string.next);
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true); //getItem(-1) for previous
-                if (viewPager.getCurrentItem() == 0) {
-                    //if the user returns to the first page, then the back button turns invisible
-                    backbutton.setVisibility(View.INVISIBLE);
-                } else if(viewPager.getCurrentItem() == 4) {
-                    //if the user goes to the last page, but then returns to the pages before, the "next" button should read next instead of finish
-                    nextbutton.setText(R.string.next);
-                }
             }
         });
 
-        nextbutton.setOnClickListener(new View.OnClickListener() {
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(viewPager.getCurrentItem() == 5){
-                    //if on the last page, then hitting the "next" button will finish welcome activity and start main activity
+                if (viewPager.getCurrentItem() == getLastItemIndex()) {
+                    // If on the last page, then pressing the Finish button will finish this activity and start the main activity
+                    // Also set welcomeWizardCompleted to false so the welcome wizard doesn't run again on the same device
+                    getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                            .putBoolean("welcomeWizardCompleted", true).apply();
                     finish();
                 }
                 viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
-                if (viewPager.getCurrentItem() == 5){
-                    //if on the last page, the "next" button will read "finish" instead of "next"
-                    nextbutton.setText(R.string.finish);
-                } else if (viewPager.getCurrentItem() != 0) {
-                    //if not on the first page, then the back button will be visible, otherwise the back button is invisible
-                    backbutton.setVisibility(View.VISIBLE);
-                }
             }
         });
+    }
+
+    private int getLastItemIndex() {
+        return LAYOUT_FILES.length - 1;
     }
 
 }

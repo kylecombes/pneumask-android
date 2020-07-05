@@ -2,4 +2,12 @@
     <dimen name="tile_padding">10dp</dimen>
     <dimen name="text_space">5dp</dimen>
     <dimen name="fragment_padding">25dp</dimen>
+    <dimen name="text_h1">36sp</dimen>
+    <dimen name="text_h2">26sp</dimen>
+    <dimen name="text_h3">24sp</dimen>
+    <dimen name="text_h4">22sp</dimen>
+    <dimen name="text_h5">20sp</dimen>
+    <dimen name="text_p">18sp</dimen>
+    <dimen name="logo_height">50dp</dimen>
+    <dimen name="view_pager_padding">60dp</dimen>
 </resources>
