@@ -15,9 +15,6 @@
         android:roundIcon="@mipmap/speaker"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WelcomeActivity">
-
-        </activity>
         <activity
             android:name=".MainActivity2"
             android:theme="@style/AppTheme.NoActionBar">
@@ -25,15 +22,16 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".PrivacySettingsActivity" />
+        <activity android:name=".WelcomeActivity" />
         <activity
             android:name=".InformationActivity"
             android:theme="@style/AppTheme.PopUpTheme" />
         <activity
             android:name=".SettingActivity"
             android:theme="@style/AppTheme.PopUpTheme" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <service
             android:name=".AudioRelayService"

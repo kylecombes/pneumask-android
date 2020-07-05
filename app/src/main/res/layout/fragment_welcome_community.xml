@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ScreenSlidePageFragment">
+        tools:context=".WelcomeWizardInfoPageFragment">
 
         <ImageView
             android:id="@+id/map_iv"

@@ -16,7 +16,10 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return ScreenSlidePageFragment.newInstance(position, mLayoutFiles[position]);
+        if (mLayoutFiles[position] == R.layout.fragment_privacy_settings) {
+            return PrivacySettingsFragment.newInstance();
+        }
+        return WelcomeWizardInfoPageFragment.newInstance(position, mLayoutFiles[position]);
     }
 
     @Override

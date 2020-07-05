@@ -141,8 +141,7 @@
             custom:layout_constraintRight_toRightOf="parent"
             android:padding="@dimen/tile_padding"
             custom:icon="@drawable/link_placeholder"
-            custom:title="@string/privacy"
-            custom:url="https://www.google.com/" />
+            custom:title="@string/privacy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
