@@ -14,7 +14,6 @@ public class WelcomeActivity extends FragmentActivity {
             R.layout.welcome1, R.layout.welcome2, R.layout.welcome3, R.layout.welcome4, R.layout.welcome5, R.layout.welcome6,
     };
     private ViewPager2 viewPager;
-    private FragmentStateAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +22,7 @@ public class WelcomeActivity extends FragmentActivity {
 
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.pager);
-        pagerAdapter = new ScreenSlidePagerAdapter(this, LAYOUT_FILES);
+        FragmentStateAdapter pagerAdapter = new ScreenSlidePagerAdapter(this, LAYOUT_FILES);
         viewPager.setAdapter(pagerAdapter);
 
         final Button backButton = findViewById(R.id.welcome_wizard_back_button);
