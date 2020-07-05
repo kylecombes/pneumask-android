@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:scrollbars="none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/tile_padding">
+
+        <TextView
+            android:id="@+id/pneumask_resources_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:layout_constraintTop_toTopOf="parent"
+            custom:layout_constraintLeft_toLeftOf="parent"
+            android:padding="@dimen/tile_padding"
+            android:text="@string/pneumask_resources"
+            android:textColor="@color/design_default_color_background"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+            android:id="@+id/pneumask_resource_link_project"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            custom:layout_constraintTop_toBottomOf="@id/pneumask_resources_title"
+            custom:layout_constraintLeft_toLeftOf="parent"
+            custom:layout_constraintRight_toLeftOf="@id/pneumask_resource_link_clinical_validation"
+            android:padding="@dimen/tile_padding"
+            custom:icon="@drawable/link_placeholder"
+            custom:title="@string/project_website"
+            custom:url="https://www.pneumask.org/" />
+
+        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+            android:id="@+id/pneumask_resource_link_clinical_validation"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            custom:layout_constraintTop_toBottomOf="@id/pneumask_resources_title"
+            custom:layout_constraintLeft_toRightOf="@id/pneumask_resource_link_project"
+            custom:layout_constraintRight_toRightOf="parent"
+            android:padding="@dimen/tile_padding"
+            custom:icon="@drawable/link_placeholder"
+            custom:title="@string/clinical_validation"
+            custom:url="https://www.pneumask.org/clinical-validation" />
+
+        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+            android:id="@+id/pneumask_resource_link_donning_doffing"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            custom:layout_constraintLeft_toLeftOf="parent"
+            custom:layout_constraintTop_toBottomOf="@id/pneumask_resource_link_project"
+            custom:layout_constraintRight_toLeftOf="@id/pneumask_resource_link_team"
+            android:padding="@dimen/tile_padding"
+            custom:icon="@drawable/link_placeholder"
+            custom:title="@string/donning_doffing"
+            custom:url="https://www.pneumask.org/clinician-engagement#donning-and-doffing" />
+
+        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+            android:id="@+id/pneumask_resource_link_team"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            custom:layout_constraintTop_toBottomOf="@id/pneumask_resource_link_project"
+            custom:layout_constraintLeft_toRightOf="@id/pneumask_resource_link_donning_doffing"
+            custom:layout_constraintRight_toRightOf="parent"
+            android:layout_weight="1"
+            android:padding="@dimen/tile_padding"
+            custom:icon="@drawable/link_placeholder"
+            custom:title="@string/team"
+            custom:url="https://www.pneumask.org/team" />
+
+        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+            android:id="@+id/pneumask_resource_link_get_involved"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            custom:layout_constraintTop_toBottomOf="@id/pneumask_resource_link_donning_doffing"
+            custom:layout_constraintLeft_toLeftOf="parent"
+            custom:layout_constraintRight_toLeftOf="@id/pneumask_resource_link_mask_feedback"
+            android:padding="@dimen/tile_padding"
+            custom:icon="@drawable/link_placeholder"
+            custom:title="@string/get_involved"
+            custom:url="https://www.pneumask.org/get-involved" />
+
+        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+            android:id="@+id/pneumask_resource_link_mask_feedback"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            custom:layout_constraintTop_toBottomOf="@id/pneumask_resource_link_donning_doffing"
+            custom:layout_constraintLeft_toRightOf="@id/pneumask_resource_link_get_involved"
+            custom:layout_constraintRight_toRightOf="parent"
+            android:padding="@dimen/tile_padding"
+            custom:icon="@drawable/link_placeholder"
+            custom:title="@string/mask_feedback"
+            custom:url="mailto:pneumask.covid19@gmail.com" />
+
+        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+            android:id="@+id/mask_resource_link_disclaimer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            custom:layout_constraintTop_toBottomOf="@id/pneumask_resource_link_get_involved"
+            custom:layout_constraintLeft_toLeftOf="parent"
+            custom:layout_constraintRight_toRightOf="@id/app_resource_link_feedback"
+            android:padding="@dimen/tile_padding"
+            custom:icon="@drawable/link_placeholder"
+            custom:title="@string/disclaimer"
+            custom:url="https://www.pneumask.org/disclaimer" />
+
+        <TextView
+            android:id="@+id/app_resources_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:layout_constraintLeft_toLeftOf="parent"
+            custom:layout_constraintTop_toBottomOf="@id/mask_resource_link_disclaimer"
+            android:padding="@dimen/tile_padding"
+            android:text="@string/app_resources"
+            android:textColor="@color/design_default_color_background"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+            android:id="@+id/app_resource_link_feedback"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            custom:layout_constraintTop_toBottomOf="@id/app_resources_title"
+            custom:layout_constraintLeft_toLeftOf="parent"
+            custom:layout_constraintRight_toLeftOf="@id/app_resource_link_privacy"
+            android:padding="@dimen/tile_padding"
+            custom:icon="@drawable/link_placeholder"
+            custom:title="@string/app_feedback"
+            custom:url="https://forms.gle/j27MD3annxVi49nZ8" />
+
+        <com.kylecombes.micrepeater.ui.main.ResourceLinkTile
+            android:id="@+id/app_resource_link_privacy"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            custom:layout_constraintTop_toBottomOf="@id/app_resources_title"
+            custom:layout_constraintLeft_toRightOf="@id/app_resource_link_feedback"
+            custom:layout_constraintRight_toRightOf="parent"
+            android:padding="@dimen/tile_padding"
+            custom:icon="@drawable/link_placeholder"
+            custom:title="@string/privacy" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

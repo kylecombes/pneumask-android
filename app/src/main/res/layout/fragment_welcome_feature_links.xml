@@ -9,29 +9,40 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ScreenSlidePageFragment">
+        tools:context=".WelcomeWizardInfoPageFragment">
+
+        <ImageView
+            android:id="@+id/audioicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/ic_check_list"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header_tv" />
 
         <TextView
             android:id="@+id/header_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/fragment_padding"
-            android:text="@string/disclaimer"
+            android:text="@string/app"
             android:textColor="@color/white"
             android:textSize="@dimen/text_h1"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <TextView
+            android:id="@+id/p1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             android:padding="@dimen/fragment_padding"
-            android:text="@string/wizard_6_text"
+            android:text="@string/wizard_3_text"
             android:textColor="@color/white"
             android:textSize="@dimen/text_p"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header_tv" />
+            app:layout_constraintTop_toBottomOf="@id/audioicon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -6,15 +6,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:context=".WelcomeWizardInfoPageFragment">
 
         <TextView
             android:id="@+id/header_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/fragment_padding"
-            android:text="@string/usagedata"
+            android:text="@string/disclaimer"
             android:textColor="@color/white"
             android:textSize="@dimen/text_h1"
             android:textStyle="bold"
@@ -23,32 +25,13 @@
 
 
         <TextView
-            android:id="@+id/p1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/fragment_padding"
-            android:text="@string/wizard_5_text"
+            android:text="@string/wizard_6_text"
             android:textColor="@color/white"
             android:textSize="@dimen/text_p"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_tv" />
-
-        <Switch
-            android:id="@+id/data_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:layout_marginTop="10dp"
-            android:text="@string/enable_crash_reports"
-            android:textColor="@color/white"
-            android:textOff="@string/off"
-            android:textOn="@string/on"
-            android:textSize="@dimen/text_p"
-            android:padding="@dimen/fragment_padding"
-            app:switchPadding="12dp"
-            android:layoutDirection="rtl"
-            android:layout_centerHorizontal="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/p1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

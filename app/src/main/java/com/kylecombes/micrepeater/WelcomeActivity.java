@@ -11,7 +11,12 @@ import androidx.viewpager2.widget.ViewPager2;
 public class WelcomeActivity extends FragmentActivity {
 
     private static final int[] LAYOUT_FILES = {
-            R.layout.welcome1, R.layout.welcome2, R.layout.welcome3, R.layout.welcome4, R.layout.welcome5, R.layout.welcome6,
+            R.layout.fragment_welcome_project_overview,
+            R.layout.fragment_welcome_community,
+            R.layout.fragment_welcome_feature_links,
+            R.layout.fragment_welcome_feature_amp,
+            R.layout.fragment_privacy_settings,
+            R.layout.fragment_disclaimer,
     };
     private ViewPager2 viewPager;
 
