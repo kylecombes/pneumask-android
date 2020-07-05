@@ -37,9 +37,9 @@ public class MainActivity2 extends AppCompatActivity implements VoiceAmplificati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                .getBoolean("isFirstRun", true);
-        if (isFirstRun) {
+        boolean welcomeWizardCompleted = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("welcomeWizardCompleted", false);
+        if (!welcomeWizardCompleted) {
             // Show Welcome activity
             startActivity(new Intent(MainActivity2.this, WelcomeActivity.class));
         }

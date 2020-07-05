@@ -47,10 +47,10 @@ public class WelcomeActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 if (viewPager.getCurrentItem() == getLastItemIndex()) {
-                    // If on the last page, then hitting the "next" button will finish welcome activity and start main activity
-                    // Also set isFirstRun to false so the welcome wizard doesn't run again on the same device
+                    // If on the last page, then pressing the Finish button will finish this activity and start the main activity
+                    // Also set welcomeWizardCompleted to false so the welcome wizard doesn't run again on the same device
                     getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
-                            .putBoolean("isFirstRun", false).apply();
+                            .putBoolean("welcomeWizardCompleted", true).apply();
                     finish();
                 }
                 viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
