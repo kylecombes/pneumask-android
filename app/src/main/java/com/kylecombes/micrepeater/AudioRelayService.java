@@ -47,9 +47,9 @@ public class AudioRelayService extends Service {
             CHANNEL_CONFIG, AUDIO_FORMAT);
 
     /**
-     * Signals whether a recording is in progress (true) or not (false).
+     * Whether audio is currently being relayed.
      */
-    private final AtomicBoolean recordingInProgress = new AtomicBoolean(false);
+    private final AtomicBoolean mRelayingActive = new AtomicBoolean(false);
 
     private AudioRecord recorder = null;
 
@@ -78,7 +78,7 @@ public class AudioRelayService extends Service {
 
         displayNotification();
 
-        startRecording();
+        startRelaying();
 
         return Service.START_STICKY;
     }
@@ -88,7 +88,7 @@ public class AudioRelayService extends Service {
         return null;
     }
 
-    public void startRecording() {
+    public void startRelaying() {
         // Depending on the device one might has to change the AudioSource, e.g. to DEFAULT
         // or VOICE_COMMUNICATION
         recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT,
@@ -97,7 +97,7 @@ public class AudioRelayService extends Service {
         improveRecorder(recorder);
         recorder.startRecording();
 
-        recordingInProgress.set(true);
+        mRelayingActive.set(true);
 
         recordingThread = new Thread(new RecordingRunnable(), "Recording Thread");
         recordingThread.start();
@@ -123,11 +123,11 @@ public class AudioRelayService extends Service {
         }
     }
 
-    public void stopRecording() {
+    public void stopRelaying() {
         if (null == recorder) {
             return;
         }
-        recordingInProgress.set(false);
+        mRelayingActive.set(false);
         recorder.stop();
         recorder.release();
         recorder = null;
@@ -136,11 +136,11 @@ public class AudioRelayService extends Service {
 
     @Override
     public void onDestroy() {
-        stopRecording();
+        stopRelaying();
     }
 
     public void shutDown() {
-        stopRecording();
+        stopRelaying();
         mInstance = null;
         stopSelf();
     }
@@ -182,7 +182,7 @@ public class AudioRelayService extends Service {
             setPreferredOutputDevice(audio);
             audio.play();
 
-            while (recordingInProgress.get()) {
+            while (mRelayingActive.get()) {
                 int result = recorder.read(buffer, BUFFER_SIZE);
                 if (result < 0) {
                     Log.w(TAG, "Reading of buffer failed.");
@@ -194,8 +194,8 @@ public class AudioRelayService extends Service {
         }
     }
 
-    public boolean recordingInProgress() {
-        return recordingInProgress.get();
+    public boolean getRelayingActive() {
+        return mRelayingActive.get();
     }
 
     private static int getMinSupportedSampleRate() {

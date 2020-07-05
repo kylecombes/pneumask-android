@@ -47,6 +47,12 @@ public class MainActivity extends AppCompatActivity implements VoiceAmplificatio
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         mViewModel = new ViewModelProvider(this).get(AppStateViewModel.class);
+        AudioRelayService relayService = AudioRelayService.getInstance();
+        if (relayService != null && relayService.getRelayingActive()) {
+            mBluetoothDeviceConnected = true;
+            mScoAudioConnected = true;
+            mViewModel.setAppMode(AppStateViewModel.AppMode.AMPLIFYING_ON);
+        }
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         requestNeededPermissions();
         registerBluetoothSCOListener();
@@ -146,10 +152,11 @@ public class MainActivity extends AppCompatActivity implements VoiceAmplificatio
     }
 
     private void updateAppMode() {
-        AppStateViewModel.AppMode newMode = (mBluetoothDeviceConnected && mScoAudioConnected)
-                ? AppStateViewModel.AppMode.AMPLIFYING_OFF
-                : AppStateViewModel.AppMode.NO_MIC_CONNECTED;
-        mViewModel.setAppMode(newMode);
+        if (!mBluetoothDeviceConnected || !mScoAudioConnected)
+            mViewModel.setAppMode(AppStateViewModel.AppMode.NO_MIC_CONNECTED);
+        else if (mViewModel.getAppMode().getValue() != AppStateViewModel.AppMode.AMPLIFYING_ON) {
+            mViewModel.setAppMode(AppStateViewModel.AppMode.AMPLIFYING_OFF);
+        }
     }
 
     private void activateBluetoothScoIfNecessary() {
