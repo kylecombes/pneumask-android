@@ -9,6 +9,16 @@
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
 
+    <style name="SettingTheme" parent="Theme.AppCompat.Light">
+        <!-- colorAccent is used as the default value for colorControlActivated,
+             which is used to tint widgets -->
+        <item name="colorAccent">@color/gray</item>
+    </style>
+
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem"></style>
+
+    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem"></style>
+
     <style name="AppTheme.PopUpTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>

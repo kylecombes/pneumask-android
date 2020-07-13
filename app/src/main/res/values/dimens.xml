@@ -8,6 +8,8 @@
     <dimen name="text_h4">22sp</dimen>
     <dimen name="text_h5">20sp</dimen>
     <dimen name="text_p">18sp</dimen>
+    <dimen name="setting_text">16sp</dimen>
+    <dimen name="switch_padding">20sp</dimen>
     <dimen name="logo_height">50dp</dimen>
     <dimen name="view_pager_padding">60dp</dimen>
 </resources>

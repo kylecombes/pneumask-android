@@ -2,11 +2,15 @@ package com.kylecombes.micrepeater.ui.main;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -30,8 +34,13 @@ public class VoiceAmplifierFragment extends Fragment {
     private TextView mBatteryLevelTextView;
     private TextView mNoDeviceFoundTextView;
     private ImageView mStatusImageView;
+    private AudioOutputControlTile mAudioOutputControlTile;
     private AmplifyingControlTile mAmplifyingControlTile;
     private VoiceAmplificationController mAmpController;
+    private Spinner dropdown;
+    private int current_output;
+
+    private String audioOutput;
 
     static VoiceAmplifierFragment newInstance() {
         return new VoiceAmplifierFragment();
@@ -41,6 +50,18 @@ public class VoiceAmplifierFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPageViewModel = new ViewModelProvider(Objects.requireNonNull(getActivity())).get(AppStateViewModel.class);
+        String output = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
+                .getString("audioOutput", "voice");
+        Log.v("out", output);
+        if (output.equals("voice")){
+            current_output = 0;
+        } else if (output.equals("alarm")){
+            current_output = 1;
+        } else {
+            current_output = 2;
+        }
+
+
     }
 
     @Override
@@ -68,6 +89,32 @@ public class VoiceAmplifierFragment extends Fragment {
         mStatusImageView = root.findViewById(R.id.voice_amplifier_status_iv);
 
         LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
+        dropdown = root.findViewById(R.id.audio_output_dropdown);
+        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
+        //There are multiple variations of this, but this is the basic variant.
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(),  R.array.audio_output_options, R.layout.spinner_item);
+        //set the spinners adapter to the previously created one.
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        dropdown.setAdapter(adapter);
+        dropdown.setSelection(current_output);
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0){
+                    audioOutput = "voice";
+                } else if (position == 1){
+                    audioOutput = "alarm";
+                } else if (position == 2) {
+                    audioOutput = "music";
+                }
+                getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
+                        .edit().putString("audioOutput", audioOutput).apply();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         mPageViewModel.getAppMode().observe(lifecycleOwner, new Observer<AppStateViewModel.AppMode>() {
             @Override
             public void onChanged(AppStateViewModel.AppMode mode) {

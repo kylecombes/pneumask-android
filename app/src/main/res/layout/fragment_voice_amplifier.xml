@@ -12,6 +12,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <com.kylecombes.micrepeater.ui.main.AudioOutputControlTile
+        android:id="@+id/dropdown_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
     <ImageView
         android:id="@+id/voice_amplifier_status_iv"
         android:layout_width="match_parent"
@@ -52,5 +59,4 @@
             android:text="@string/bluetooth_device_not_detected"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
