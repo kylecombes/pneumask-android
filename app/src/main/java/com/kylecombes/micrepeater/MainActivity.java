@@ -131,10 +131,20 @@ public class MainActivity extends AppCompatActivity implements VoiceAmplificatio
     public void startAmplification() {
         Log.d(TAG, "Starting amplification...");
         audioRelayServiceIntent = new Intent(this, AudioRelayService.class);
-        Integer streamType = Objects.requireNonNull(mViewModel.getStreamType().getValue());
-        audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY, streamType);
-        // Set default volume control
-        setVolumeControlStream(streamType);
+        String streamType = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getString("audioOutput", "voice");
+        if(streamType.equals("voice")){
+            audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY, AudioManager.STREAM_VOICE_CALL);
+            setVolumeControlStream(AudioManager.STREAM_VOICE_CALL);
+        } else if(streamType.equals("alarm")){
+            audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY, AudioManager.STREAM_ALARM);
+            setVolumeControlStream(AudioManager.STREAM_ALARM);
+        } else {
+            audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY, AudioManager.STREAM_MUSIC);
+            setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        }
+//        Integer streamType = Objects.requireNonNull(mViewModel.getStreamType().getValue());
+
         startService(audioRelayServiceIntent);
         mViewModel.setAppMode(AppStateViewModel.AppMode.AMPLIFYING_ON);
     }

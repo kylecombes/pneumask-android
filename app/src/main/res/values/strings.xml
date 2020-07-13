@@ -19,7 +19,7 @@
     <string name="option1">Voice Call</string>
     <string name="option2">Alarm Speaker</string>
     <string name="option3">Music Speaker</string>
-    <string name="output_options">Sound Output Options</string>
+    <string name="output_options">Sound Mode:</string>
     <string name="close">Close</string>
     <string name="mic_status_colon">Mic:</string>
     <string name="status">Status</string>
@@ -56,6 +56,9 @@
     <string name="app_feedback">App Feedback</string>
     <string name="privacy">Privacy</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="volume_filter">Filter audio by volume range</string>
+    <string name="echo_filter">Reduce feedback</string>
+    <string name="background_noise_filter">Filter out background noise</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
@@ -71,4 +74,11 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <string-array name="audio_output_options">
+        <item>Voice</item>
+        <item>Alarm</item>
+        <item>Music</item>
+    </string-array>
+
 </resources>
