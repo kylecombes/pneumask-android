@@ -5,11 +5,12 @@
     <string name="stop">Stop</string>
     <string name="bluetooth_initializing">Bluetooth initializing…</string>
     <string name="bluetooth_available">Bluetooth ready</string>
-    <string name="bluetooth_unavailable">Bluetooth microphone unavailable.\nPlease ensure your Bluetooth device is connected, then close and reopen the app.</string>
+    <string name="bluetooth_device_not_detected">To use this app to amplify your voice, please connect a Bluetooth device with a microphone.</string>
     <string name="broadcasting_in_process">Broadcasting in process</string>
     <string name="enable_crash_reports">Report anonymous usage data</string>
-    <string name="off">OFF</string>
-    <string name="on">ON</string>
+    <string name="off">Off</string>
+    <string name="on">On</string>
+    <string name="amplification_active">Amplifying</string>
     <string name="informationtext"><b>Feel free to leave us feedback by filling out <a href="https://forms.gle/Jw3tzXSxwijApNBz6">this form</a>. </b> \n\nThis app was developed by members of Olin College of Engineering\'s <a href="http://pint.olin.edu/"> Public Interest Technology group </a> who were working in tandem with students and faculty from Stanford\'s<a href="https://web.stanford.edu/group/prakash-lab/cgi-bin/labsite/">Prakash Lab</a>. This app is meant to help medical professionals using the Pnuemask communicate, as the mask muffles sound and makes it difficult for the wearer to be heard by people in their surroundings. For more information about the Pnuemask project, please visit<a href="https://www.pneumask.org/">this website.</a>\n</string>
     <string name="linktosite"><a href="https://www.pneumask.org/">Pneumask website</a></string>
     <string name="linktoPint"><a href="http://pint.olin.edu/">PInT website</a></string>
@@ -20,11 +21,11 @@
     <string name="option3">Music Speaker</string>
     <string name="output_options">Sound Output Options</string>
     <string name="close">Close</string>
-    <string name="status_colon">Status:</string>
+    <string name="mic_status_colon">Mic:</string>
     <string name="status">Status</string>
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
-    <string name="mice_battery">Mic Battery:</string>
+    <string name="mic_battery">Battery:</string>
     <string name="percentage">%d%%</string>
     <string name="tab_text_1">Voice Amplifier</string>
     <string name="tab_text_2">Pneumask Resources</string>

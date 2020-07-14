@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity2"
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,6 @@
         <activity
             android:name=".SettingActivity"
             android:theme="@style/AppTheme.PopUpTheme" />
-        <activity android:name=".MainActivity" />
 
         <service
             android:name=".AudioRelayService"

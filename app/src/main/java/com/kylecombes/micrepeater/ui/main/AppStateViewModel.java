@@ -8,24 +8,30 @@ import androidx.lifecycle.ViewModel;
 
 public class AppStateViewModel extends ViewModel {
 
+    public enum AppMode {
+        NO_MIC_CONNECTED,
+        AMPLIFYING_OFF,
+        AMPLIFYING_ON,
+    }
+
+    private MutableLiveData<AppMode> mAppMode = new MutableLiveData<>(AppMode.NO_MIC_CONNECTED);
     private MutableLiveData<Integer> mMicBatteryPercentage = new MutableLiveData<>();
-    private MutableLiveData<Boolean> mMicIsOn = new MutableLiveData<>(false);
     private MutableLiveData<Integer> mStreamType = new MutableLiveData<>(AudioManager.STREAM_VOICE_CALL);
 
-    public void setMicBatteryPercentage(int percentage) {
+    public void setAppMode(AppMode appMode) {
+        mAppMode.setValue(appMode);
+    }
+
+    public void setMicBatteryPercentage(Integer percentage) {
         mMicBatteryPercentage.setValue(percentage);
     }
 
-    public void setMicIsOn(boolean isOn) {
-        mMicIsOn.setValue(isOn);
+    public LiveData<AppMode> getAppMode() {
+        return mAppMode;
     }
 
     public LiveData<Integer> getMicBatteryPercentage() {
         return mMicBatteryPercentage;
-    }
-
-    public LiveData<Boolean> getMicIsOn() {
-        return mMicIsOn;
     }
 
     public LiveData<Integer> getStreamType() {

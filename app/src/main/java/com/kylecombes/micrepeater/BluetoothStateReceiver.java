@@ -1,9 +1,9 @@
 package com.kylecombes.micrepeater;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.util.Log;
 
@@ -12,13 +12,14 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
     private static final String TAG = BluetoothStateReceiver.class.getCanonicalName();
 
     private static BluetoothStateReceiver mInstance = null;
-    private boolean mScoAudioConnected = false;
-    private boolean mDeviceConnected = false;
-    private int batteryLevel = -1;
+    private static AudioManager mAudioManager;
 
     private StateChangeReceiver stateChangeReceiver = null;
 
-    public static BluetoothStateReceiver getInstance() {
+    public static BluetoothStateReceiver getInstance(AudioManager audioManager) {
+        if (audioManager != null) {
+            mAudioManager = audioManager;
+        }
         if (mInstance == null) {
             mInstance = new BluetoothStateReceiver();
         }
@@ -32,43 +33,58 @@ public class BluetoothStateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (action == null)
+        if (action == null | stateChangeReceiver == null)
             return;
         if (action.equals(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED)) {
+            boolean scoAudioConnected = false;
             int state = intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, -1);
             switch (state) {
                 case AudioManager.SCO_AUDIO_STATE_CONNECTED:
                     Log.i(TAG, "Bluetooth HFP Headset is connected");
-                    mScoAudioConnected = true;
+                    scoAudioConnected = true;
                     break;
                 case AudioManager.SCO_AUDIO_STATE_CONNECTING:
                     Log.i(TAG, "Bluetooth HFP Headset is connecting");
-                    mScoAudioConnected = false;
+                    scoAudioConnected = false;
+                    break;
                 case AudioManager.SCO_AUDIO_STATE_DISCONNECTED:
                     Log.i(TAG, "Bluetooth HFP Headset is disconnected");
-                    mScoAudioConnected = false;
+                    scoAudioConnected = false;
                     break;
                 case AudioManager.SCO_AUDIO_STATE_ERROR:
                     Log.i(TAG, "Bluetooth HFP Headset is in error state");
-                    mScoAudioConnected = false;
+                    scoAudioConnected = false;
                     break;
                 default:
                     // Don't trigger any notifications
-                    return;
+                    break;
             }
+            stateChangeReceiver.scoAudioConnectionStateChange(scoAudioConnected);
         } else if (action.equals("android.bluetooth.device.action.BATTERY_LEVEL_CHANGED")) {
-            batteryLevel = intent.getIntExtra("android.bluetooth.device.extra.BATTERY_LEVEL", -1);
-            Log.i(TAG, "Battery level: " + batteryLevel);
-        }else {
-            mDeviceConnected = BluetoothDevice.ACTION_ACL_CONNECTED.equals(action);
+            // Handle Bluetooth device battery level messages
+            int batteryLevel = intent.getIntExtra("android.bluetooth.device.extra.BATTERY_LEVEL", -1);
+            if (batteryLevel != -1) {
+                stateChangeReceiver.batteryLevelChanged(batteryLevel);
+            }
         }
-        if (stateChangeReceiver != null) {
-            stateChangeReceiver.stateChanged(mDeviceConnected, mScoAudioConnected, batteryLevel);
+        // Check if a Bluetooth SCO mic is connected (Android M and above only)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            boolean deviceConnected = false;
+            AudioDeviceInfo[] microphones = mAudioManager.getDevices(AudioManager.GET_DEVICES_INPUTS);
+            for (AudioDeviceInfo device : microphones) {
+                if (device.getType() == AudioDeviceInfo.TYPE_BLUETOOTH_SCO) {
+                    deviceConnected = true;
+                    break;
+                }
+            }
+            stateChangeReceiver.bluetoothDeviceConnectionStateChange(deviceConnected);
         }
     }
 
     public interface StateChangeReceiver {
-        void stateChanged(boolean deviceConnected, boolean scoAudioConnected, int batterylevel);
+        void bluetoothDeviceConnectionStateChange(boolean isConnected);
+        void scoAudioConnectionStateChange(boolean isConnected);
+        void batteryLevelChanged(Integer batteryLevel);
     }
 
 }

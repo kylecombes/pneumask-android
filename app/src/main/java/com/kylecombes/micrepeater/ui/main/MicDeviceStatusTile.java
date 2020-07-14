@@ -14,6 +14,6 @@ public class MicDeviceStatusTile extends ConstraintLayout {
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.floating_tile_box, this, true);
+        inflater.inflate(R.layout.bluetooth_device_status_tile, this, true);
     }
 }
