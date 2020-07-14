@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements VoiceAmplificatio
         tabs.setupWithViewPager(viewPager);
         mViewModel = new ViewModelProvider(this).get(AppStateViewModel.class);
         AudioRelayService relayService = AudioRelayService.getInstance();
-        if (relayService != null && relayService.getRelayingActive()) {
+        if (relayService != null && relayService.isRelayingActive()) {
             mBluetoothDeviceConnected = true;
             mScoAudioConnected = true;
             mViewModel.setAppMode(AppStateViewModel.AppMode.AMPLIFYING_ON);

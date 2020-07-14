@@ -182,7 +182,7 @@ public class AudioRelayService extends Service {
             setPreferredOutputDevice(audio);
             audio.play();
 
-            while (mRelayingActive.get()) {
+            while (isRelayingActive()) {
                 int result = recorder.read(buffer, BUFFER_SIZE);
                 if (result < 0) {
                     Log.w(TAG, "Reading of buffer failed.");
@@ -194,7 +194,7 @@ public class AudioRelayService extends Service {
         }
     }
 
-    public boolean getRelayingActive() {
+    public boolean isRelayingActive() {
         return mRelayingActive.get();
     }
 
