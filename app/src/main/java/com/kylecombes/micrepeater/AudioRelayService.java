@@ -72,10 +72,7 @@ public class AudioRelayService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         // STREAM_ALARM also works, but STREAM_VOICE_CALL reduces the echo
-
-
         streamOutput = intent.getIntExtra(STREAM_KEY, AudioManager.STREAM_VOICE_CALL);
 
         displayNotification();
