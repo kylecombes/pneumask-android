@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity implements VoiceAmplificatio
             audioRelayServiceIntent.putExtra(AudioRelayService.STREAM_KEY, AudioManager.STREAM_MUSIC);
             setVolumeControlStream(AudioManager.STREAM_MUSIC);
         }
-//        Integer streamType = Objects.requireNonNull(mViewModel.getStreamType().getValue());
 
         startService(audioRelayServiceIntent);
         mViewModel.setAppMode(AppStateViewModel.AppMode.AMPLIFYING_ON);
