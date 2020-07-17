@@ -80,7 +80,7 @@ public class VoiceAmplifierFragment extends Fragment {
         //set the spinners adapter to the previously created one.
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         mdropdown.setAdapter(adapter);
-        mdropdown.setSelection(finddropdownposition());
+        mdropdown.setSelection(findDropdownPosition());
         mdropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -183,6 +183,18 @@ public class VoiceAmplifierFragment extends Fragment {
         }
     }
 
+    private int findDropdownPosition() {
+        String output = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
+                .getString("audioOutput", "voice");
+        if (output.equals("voice")) {
+            return 0;
+        } else if (output.equals("alarm")) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
     private View.OnClickListener startStopButtonClickedListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -193,19 +205,6 @@ public class VoiceAmplifierFragment extends Fragment {
                 mAmpController.startAmplification();
             }
         }
-    };
-
-    private int finddropdownposition(){
-        String output = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
-                .getString("audioOutput", "voice");
-        if (output.equals("voice")) {
-            return 0;
-        } else if (output.equals("alarm")) {
-            return 1;
-        } else {
-            return 2;
-        }
-
     };
 
 }
