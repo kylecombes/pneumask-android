@@ -32,10 +32,8 @@ public class VoiceAmplifierFragment extends Fragment {
     private TextView mBatteryLevelTextView;
     private TextView mNoDeviceFoundTextView;
     private ImageView mStatusImageView;
-    private AudioOutputControlTile mAudioOutputControlTile;
     private AmplifyingControlTile mAmplifyingControlTile;
     private VoiceAmplificationController mAmpController;
-    private Spinner mdropdown;
     private static final String[] OUTPUTS = {"voice", "alarm", "music"};
 
     static VoiceAmplifierFragment newInstance() {
@@ -69,19 +67,19 @@ public class VoiceAmplifierFragment extends Fragment {
         mAmplifyingControlTile = root.findViewById(R.id.amplifying_control_tile);
         mNoDeviceFoundTextView = root.findViewById(R.id.voice_amplifier_no_device_detected_msg_tv);
         root.findViewById(R.id.amplifying_control_start_stop_button)
-            .setOnClickListener(startStopButtonClickedListener);
+                .setOnClickListener(startStopButtonClickedListener);
         mStatusImageView = root.findViewById(R.id.voice_amplifier_status_iv);
 
         LifecycleOwner lifecycleOwner = getViewLifecycleOwner();
-        mdropdown = root.findViewById(R.id.audio_output_dropdown);
-        //create an adapter to describe how the items are displayed, adapters are used in several places in android.
-        //There are multiple variations of this, but this is the basic variant.
+        Spinner mDropdown = root.findViewById(R.id.audio_output_dropdown);
+        // Create an adapter to describe how the items are displayed, adapters are used in several places in Android.
+        // There are multiple variations of this, but this is the basic variant.
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity().getBaseContext(), R.array.audio_output_options, R.layout.spinner_item);
         //set the spinners adapter to the previously created one.
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        mdropdown.setAdapter(adapter);
-        mdropdown.setSelection(findDropdownPosition());
-        mdropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mDropdown.setAdapter(adapter);
+        mDropdown.setSelection(findDropdownPosition());
+        mDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String audioOutput = OUTPUTS[position];
@@ -184,15 +182,13 @@ public class VoiceAmplifierFragment extends Fragment {
     }
 
     private int findDropdownPosition() {
-        String output = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
+        String outputPreference = getActivity().getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
                 .getString("audioOutput", "voice");
-        if (output.equals("voice")) {
-            return 0;
-        } else if (output.equals("alarm")) {
-            return 1;
-        } else {
-            return 2;
+        for (int i = 0; i < OUTPUTS.length; ++i) {
+            if (OUTPUTS[i].equals(outputPreference))
+                return i;
         }
+        return -1;
     }
 
     private View.OnClickListener startStopButtonClickedListener = new View.OnClickListener() {

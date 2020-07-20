@@ -32,7 +32,7 @@ public class AudioRelayService extends Service {
 
     private static final String NOTIFICATION_CHANNEL_ID = BuildConfig.class.getPackage().toString()
             + "." + TAG;
-    private static final String NOTIFICATION_MESSAGE = "Mic Repeater is running.";
+    private static final String NOTIFICATION_MESSAGE = "Mic amplification is active.";
 
     private static final int SAMPLING_RATE_IN_HZ = getMinSupportedSampleRate();
 
@@ -108,17 +108,17 @@ public class AudioRelayService extends Service {
 
         // Turn on Android library filter for reducing background noise in recordings
         if (NoiseSuppressor.isAvailable()) {
-              NoiseSuppressor.create(audioSessionId);
+            NoiseSuppressor.create(audioSessionId);
         }
 
-         // Android library filter for automatic volume control in recordings
-        if(AutomaticGainControl.isAvailable()) {
-             AutomaticGainControl.create(audioSessionId);
+        // Android library filter for automatic volume control in recordings
+        if (AutomaticGainControl.isAvailable()) {
+            AutomaticGainControl.create(audioSessionId);
         }
 
         // Android library filter for reducing echo in recordings
         if (AcousticEchoCanceler.isAvailable()) {
-             AcousticEchoCanceler.create(audioSessionId);
+            AcousticEchoCanceler.create(audioSessionId);
         }
     }
 
@@ -198,9 +198,9 @@ public class AudioRelayService extends Service {
     }
 
     private static int getMinSupportedSampleRate() {
-        final int[] validSampleRates = new int[] { 8000, 11025, 16000, 22050,
+        final int[] validSampleRates = new int[]{8000, 11025, 16000, 22050,
                 32000, 37800, 44056, 44100, 47250, 48000, 50000, 50400, 88200,
-                96000, 176400, 192000, 352800, 2822400, 5644800 };
+                96000, 176400, 192000, 352800, 2822400, 5644800};
         /*
          * Selecting default audio input source for recording since
          * AudioFormat.CHANNEL_CONFIGURATION_DEFAULT is deprecated and selecting
@@ -222,6 +222,7 @@ public class AudioRelayService extends Service {
     /**
      * Function to set the preferred input device to Bluetooth SCO.
      * Function has no effect on Android version below Android 6.0 Marshmallow
+     *
      * @param recorder: AudioRecord instance
      */
     private void setPreferredInputDevice(AudioRecord recorder) {
@@ -239,6 +240,7 @@ public class AudioRelayService extends Service {
      * Function to set the preferred input device to a connected AUX line (preferably) or
      * the built-in speakers if the AUX line is not connected.
      * Function has no effect on Android version below Android 6.0 Marshmallow
+     *
      * @param audio: AudioTrack instance
      */
     private void setPreferredOutputDevice(AudioTrack audio) {
