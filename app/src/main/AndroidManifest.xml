@@ -25,13 +25,6 @@
         </activity>
         <activity android:name=".PrivacySettingsActivity" />
         <activity android:name=".WelcomeActivity" />
-        <activity
-            android:name=".InformationActivity"
-            android:theme="@style/AppTheme.PopUpTheme" />
-        <activity
-            android:name=".SettingActivity"
-            android:theme="@style/AppTheme.PopUpTheme" />
-
         <service
             android:name=".AudioRelayService"
             android:enabled="true"
