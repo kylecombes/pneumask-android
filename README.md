@@ -28,7 +28,7 @@ The app also provides links to the Pneumask project website with information on 
 ![App screenshot](https://user-images.githubusercontent.com/3915596/89126707-e5ee7300-d4b5-11ea-97f4-7cc54a2b5cdc.png)
 ![App screenshot](https://user-images.githubusercontent.com/3915596/89126742-26e68780-d4b6-11ea-859d-167696c54ab9.png)
 
-# Using the app
+# Using the App
 
  1. Connect phone to a Bluetooth device with a microphone. We recommend using cheap Bluetooth
     headphones, which can be put inside a sterile plastic bag, and placing them inside the face
