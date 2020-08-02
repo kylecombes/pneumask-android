@@ -1,39 +1,32 @@
 <resources>
     <string name="app_name">Pneumask</string>
     <string name="version">Version %1$d.</string>
-    <string name="start">Start</string>
-    <string name="stop">Stop</string>
-    <string name="bluetooth_initializing">Bluetooth initializing…</string>
-    <string name="bluetooth_available">Bluetooth ready</string>
-    <string name="bluetooth_device_not_detected">To use this app to amplify your voice, please connect a Bluetooth device with a microphone.</string>
-    <string name="broadcasting_in_process">Broadcasting in process</string>
-    <string name="enable_crash_reports">Report anonymous usage data</string>
+    <string name="tab_text_1">Voice Amplifier</string>
+    <string name="tab_text_2">Pneumask Resources</string>
+
+    <!-- Voice Amplification -->
     <string name="off">Off</string>
     <string name="on">On</string>
     <string name="amplification_active">Amplifying</string>
-    <string name="informationtext"><b>Feel free to leave us feedback by filling out <a href="https://forms.gle/Jw3tzXSxwijApNBz6">this form</a>. </b> \n\nThis app was developed by members of Olin College of Engineering\'s <a href="http://pint.olin.edu/"> Public Interest Technology group </a> who were working in tandem with students and faculty from Stanford\'s<a href="https://web.stanford.edu/group/prakash-lab/cgi-bin/labsite/">Prakash Lab</a>. This app is meant to help medical professionals using the Pnuemask communicate, as the mask muffles sound and makes it difficult for the wearer to be heard by people in their surroundings. For more information about the Pnuemask project, please visit<a href="https://www.pneumask.org/">this website.</a>\n</string>
-    <string name="linktosite"><a href="https://www.pneumask.org/">Pneumask website</a></string>
-    <string name="linktoPint"><a href="http://pint.olin.edu/">PInT website</a></string>
-    <string name="settings">Settings</string>
-    <string name="background_information">Background Information</string>
-    <string name="option1">Voice Call</string>
-    <string name="option2">Alarm Speaker</string>
-    <string name="option3">Music Speaker</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="bluetooth_device_not_detected">To use this app to amplify your voice, please connect a Bluetooth device with a microphone.</string>
     <string name="output_options">Sound Mode:</string>
-    <string name="close">Close</string>
     <string name="mic_status_colon">Mic:</string>
     <string name="status">Status</string>
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
     <string name="mic_battery">Battery:</string>
     <string name="percentage">%d%%</string>
-    <string name="tab_text_1">Voice Amplifier</string>
-    <string name="tab_text_2">Pneumask Resources</string>
-    <string name="next">Next</string>
-    <string name="back">Back</string>
-    <string name="finish">Finish</string>
-    <string name="science_backed_reusable_ppe">Science-backed reusable PPE</string>
+    <string-array name="audio_output_options">
+        <item>Voice</item>
+        <item>Alarm</item>
+        <item>Music</item>
+    </string-array>
+
+    <!-- Welcome wizard -->
     <string name="pneumask">Pneumask</string>
+    <string name="science_backed_reusable_ppe">Science-backed reusable PPE</string>
     <string name="wizard_1_text">The Pneumask Project is a collaborative effort to develop the most clinically validated alternative personal protective equipment (PPE) for front-line workers combating the COVID-19 pandemic.</string>
     <string name="community">Community</string>
     <string name="wizard_2_text">The Pneumask community consists of researchers, medical professionals, corporations, and others from across the globe.</string>
@@ -44,6 +37,11 @@
     <string name="wizard_5_text">To help make this app the best it can be, we would like to collect anonymous usage information.\n \nThis information includes:\n&#8226; How often you open the app\n&#8226; How long you use the app for\n&#8226; What buttons you press in the app\n&#8226; What country you are in\n \nWe will NEVER collect any potentially sensitive information. This includes audio, precise geographic location, or anything else that might compromise the privacy of you or a patient.</string>
     <string name="disclaimer">Disclaimer</string>
     <string name="wizard_6_text">The following content, including but not limited to project descriptions, preliminary test results, figures/images, and prototypes, published here is meant to maximize potential public benefit during this SARS-CoV-2 (formerly CoVID-19) crisis, specifically in addressing the urgent need around PPE shortage. The content is currently being submitted to the U.S. Food and Drug Administration (FDA) for review and approval.\n\n PLEASE NOTE: The content has not been peer reviewed. The Authors make no representations or warranties of any kind (express or implied) relating to accuracy, safety, usefulness, usability, marketability, performance, or otherwise of the content released here. The Authors disclaim all express and implied warranties of merchantability and fitness of the content for a particular purpose, and disclaims all express and implied warranties regarding non-infringement of any patent, copyright, trademark, or other rights of third parties in the content or use of the content, or in the making, using, or selling products or services by any person or entity.\n\nPeople or entities attempting to use the content in any way, including creating products or offering services, assume all risk and responsibility related to those uses, including all legal and regulatory compliance, safety, efficacy, performance, design, marketability, title, and quality. The Authors assume no liability related to the actions of third parties and in respect of any infringement of any patent, copyright, or other right of third parties.\n\nThe content/device has not been used in formal testing with human subjects at this time.\n\n Although no determination has been made with respect to this design,the Department of Health and Human Services (DHHS) has declared liability immunity for medical countermeasures against COVID-19.  https://www.phe.gov/Preparedness/legal/prepact/Pages/COVID19.aspx</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="finish">Finish</string>
+
+    <!-- Resources -->
     <string name="link_icon">Link icon</string>
     <string name="pneumask_resources">Pneumask Resources</string>
     <string name="project_website">Project Website</string>
@@ -54,31 +52,9 @@
     <string name="mask_feedback">Mask Feedback</string>
     <string name="app_resources">App Resources</string>
     <string name="app_feedback">App Feedback</string>
+
+    <!-- Privacy -->
     <string name="privacy">Privacy</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="volume_filter">Filter audio by volume range</string>
-    <string name="echo_filter">Reduce feedback</string>
-    <string name="background_noise_filter">Filter out background noise</string>
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-
-    <string-array name="audio_output_options">
-        <item>Voice</item>
-        <item>Alarm</item>
-        <item>Music</item>
-    </string-array>
+    <string name="enable_crash_reports">Report anonymous usage data</string>
 
 </resources>
