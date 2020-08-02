@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.ui.main;
+package com.kylecombes.micrepeater.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.kylecombes.micrepeater.PrivacySettingsActivity;
+import com.kylecombes.micrepeater.activities.PrivacySettingsActivity;
 import com.kylecombes.micrepeater.R;
 
 public class ResourceLinksFragment extends Fragment {
 
-    static ResourceLinksFragment newInstance() {
+    public static ResourceLinksFragment newInstance() {
         return new ResourceLinksFragment();
     }
 

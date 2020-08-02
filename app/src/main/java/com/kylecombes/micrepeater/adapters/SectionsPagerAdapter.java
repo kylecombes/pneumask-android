@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.ui.main;
+package com.kylecombes.micrepeater.adapters;
 
 import android.content.Context;
 
@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.kylecombes.micrepeater.R;
+import com.kylecombes.micrepeater.fragments.ResourceLinksFragment;
+import com.kylecombes.micrepeater.fragments.VoiceAmplifierFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

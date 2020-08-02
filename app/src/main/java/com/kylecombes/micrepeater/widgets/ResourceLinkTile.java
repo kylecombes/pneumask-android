@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.ui.main;
+package com.kylecombes.micrepeater.widgets;
 
 import android.content.Context;
 import android.content.Intent;

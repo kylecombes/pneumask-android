@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.ui.main;
+package com.kylecombes.micrepeater.models;
 
 import android.media.AudioManager;
 

@@ -16,17 +16,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PrivacySettingsActivity" />
-        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".activities.PrivacySettingsActivity" />
+        <activity android:name=".activities.WelcomeActivity" />
         <service
-            android:name=".AudioRelayService"
+            android:name=".services.AudioRelayService"
             android:enabled="true"
             android:exported="false" />
     </application>

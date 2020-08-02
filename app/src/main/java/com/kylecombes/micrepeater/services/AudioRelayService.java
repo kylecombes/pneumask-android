@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater;
+package com.kylecombes.micrepeater.services;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -18,6 +18,8 @@ import android.media.audiofx.NoiseSuppressor;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
+
+import com.kylecombes.micrepeater.BuildConfig;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;

@@ -1,10 +1,14 @@
-package com.kylecombes.micrepeater;
+package com.kylecombes.micrepeater.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import com.kylecombes.micrepeater.fragments.PrivacySettingsFragment;
+
+import com.kylecombes.micrepeater.R;
 
 public class PrivacySettingsActivity extends AppCompatActivity {
 
