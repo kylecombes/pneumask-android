@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.adapters;
+package com.kylecombes.pneumask.adapters;
 
 import android.content.Context;
 
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.kylecombes.micrepeater.R;
-import com.kylecombes.micrepeater.fragments.ResourceLinksFragment;
-import com.kylecombes.micrepeater.fragments.VoiceAmplifierFragment;
+import com.kylecombes.pneumask.R;
+import com.kylecombes.pneumask.fragments.ResourceLinksFragment;
+import com.kylecombes.pneumask.fragments.VoiceAmplifierFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

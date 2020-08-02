@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.widgets;
+package com.kylecombes.pneumask.widgets;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.kylecombes.micrepeater.R;
+import com.kylecombes.pneumask.R;
 
 public class ResourceLinkTile extends ConstraintLayout {
 

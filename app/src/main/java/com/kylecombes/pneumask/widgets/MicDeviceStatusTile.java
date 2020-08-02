@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.widgets;
+package com.kylecombes.pneumask.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.kylecombes.micrepeater.R;
+import com.kylecombes.pneumask.R;
 
 public class MicDeviceStatusTile extends ConstraintLayout {
     public MicDeviceStatusTile(Context context, AttributeSet attrs) {

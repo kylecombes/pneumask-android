@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.bluetooth;
+package com.kylecombes.pneumask.bluetooth;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

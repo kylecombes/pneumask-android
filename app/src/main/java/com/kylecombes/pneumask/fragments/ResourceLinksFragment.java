@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.fragments;
+package com.kylecombes.pneumask.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.kylecombes.micrepeater.activities.PrivacySettingsActivity;
-import com.kylecombes.micrepeater.R;
+import com.kylecombes.pneumask.activities.PrivacySettingsActivity;
+import com.kylecombes.pneumask.R;
 
 public class ResourceLinksFragment extends Fragment {
 

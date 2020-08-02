@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.kylecombes.micrepeater">
+    package="com.kylecombes.pneumask">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Both permissions are required for the Bluetooth HFP recording to work -->
@@ -16,17 +16,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.kylecombes.pneumask.activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.PrivacySettingsActivity" />
-        <activity android:name=".activities.WelcomeActivity" />
+        <activity android:name="com.kylecombes.pneumask.activities.PrivacySettingsActivity" />
+        <activity android:name="com.kylecombes.pneumask.activities.WelcomeActivity" />
         <service
-            android:name=".services.AudioRelayService"
+            android:name="com.kylecombes.pneumask.services.AudioRelayService"
             android:enabled="true"
             android:exported="false" />
     </application>

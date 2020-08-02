@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Audio Relay</string>
+    <string name="app_name">Pneumask</string>
     <string name="version">Version %1$d.</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>

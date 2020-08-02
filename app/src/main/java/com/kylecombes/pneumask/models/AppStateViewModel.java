@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.models;
+package com.kylecombes.pneumask.models;
 
 import android.media.AudioManager;
 

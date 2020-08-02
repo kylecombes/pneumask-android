@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.activities;
+package com.kylecombes.pneumask.activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,9 +8,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.kylecombes.micrepeater.adapters.ScreenSlidePagerAdapter;
+import com.kylecombes.pneumask.adapters.ScreenSlidePagerAdapter;
 
-import com.kylecombes.micrepeater.R;
+import com.kylecombes.pneumask.R;
 
 public class WelcomeActivity extends FragmentActivity {
 

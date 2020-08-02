@@ -23,7 +23,7 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <com.kylecombes.micrepeater.widgets.ResourceLinkTile
+        <com.kylecombes.pneumask.widgets.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_project"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -35,7 +35,7 @@
             custom:title="@string/project_website"
             custom:url="https://www.pneumask.org/" />
 
-        <com.kylecombes.micrepeater.widgets.ResourceLinkTile
+        <com.kylecombes.pneumask.widgets.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_clinical_validation"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -47,7 +47,7 @@
             custom:title="@string/clinical_validation"
             custom:url="https://www.pneumask.org/clinical-validation" />
 
-        <com.kylecombes.micrepeater.widgets.ResourceLinkTile
+        <com.kylecombes.pneumask.widgets.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_donning_doffing"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -59,7 +59,7 @@
             custom:title="@string/donning_doffing"
             custom:url="https://www.pneumask.org/clinician-engagement#donning-and-doffing" />
 
-        <com.kylecombes.micrepeater.widgets.ResourceLinkTile
+        <com.kylecombes.pneumask.widgets.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_team"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -72,7 +72,7 @@
             custom:title="@string/team"
             custom:url="https://www.pneumask.org/team" />
 
-        <com.kylecombes.micrepeater.widgets.ResourceLinkTile
+        <com.kylecombes.pneumask.widgets.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_get_involved"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -84,7 +84,7 @@
             custom:title="@string/get_involved"
             custom:url="https://www.pneumask.org/get-involved" />
 
-        <com.kylecombes.micrepeater.widgets.ResourceLinkTile
+        <com.kylecombes.pneumask.widgets.ResourceLinkTile
             android:id="@+id/pneumask_resource_link_mask_feedback"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -96,7 +96,7 @@
             custom:title="@string/mask_feedback"
             custom:url="mailto:pneumask.covid19@gmail.com" />
 
-        <com.kylecombes.micrepeater.widgets.ResourceLinkTile
+        <com.kylecombes.pneumask.widgets.ResourceLinkTile
             android:id="@+id/mask_resource_link_disclaimer"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -120,7 +120,7 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <com.kylecombes.micrepeater.widgets.ResourceLinkTile
+        <com.kylecombes.pneumask.widgets.ResourceLinkTile
             android:id="@+id/app_resource_link_feedback"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -132,7 +132,7 @@
             custom:title="@string/app_feedback"
             custom:url="https://forms.gle/j27MD3annxVi49nZ8" />
 
-        <com.kylecombes.micrepeater.widgets.ResourceLinkTile
+        <com.kylecombes.pneumask.widgets.ResourceLinkTile
             android:id="@+id/app_resource_link_privacy"
             android:layout_width="0dp"
             android:layout_height="match_parent"

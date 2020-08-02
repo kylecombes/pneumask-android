@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.interfaces;
+package com.kylecombes.pneumask.interfaces;
 
 public interface VoiceAmplificationController {
     void startAmplification();

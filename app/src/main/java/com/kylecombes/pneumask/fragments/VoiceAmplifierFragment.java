@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.fragments;
+package com.kylecombes.pneumask.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,10 +18,10 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.kylecombes.micrepeater.R;
-import com.kylecombes.micrepeater.interfaces.VoiceAmplificationController;
-import com.kylecombes.micrepeater.widgets.AmplifyingControlTile;
-import com.kylecombes.micrepeater.models.AppStateViewModel;
+import com.kylecombes.pneumask.R;
+import com.kylecombes.pneumask.interfaces.VoiceAmplificationController;
+import com.kylecombes.pneumask.widgets.AmplifyingControlTile;
+import com.kylecombes.pneumask.models.AppStateViewModel;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.activities;
+package com.kylecombes.pneumask.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.kylecombes.micrepeater.fragments.PrivacySettingsFragment;
+import com.kylecombes.pneumask.fragments.PrivacySettingsFragment;
 
-import com.kylecombes.micrepeater.R;
+import com.kylecombes.pneumask.R;
 
 public class PrivacySettingsActivity extends AppCompatActivity {
 

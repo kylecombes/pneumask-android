@@ -1,14 +1,14 @@
-package com.kylecombes.micrepeater.adapters;
+package com.kylecombes.pneumask.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.kylecombes.micrepeater.fragments.PrivacySettingsFragment;
-import com.kylecombes.micrepeater.fragments.WelcomeWizardInfoPageFragment;
+import com.kylecombes.pneumask.fragments.PrivacySettingsFragment;
+import com.kylecombes.pneumask.fragments.WelcomeWizardInfoPageFragment;
 
-import com.kylecombes.micrepeater.R;
+import com.kylecombes.pneumask.R;
 
 public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
     private int[] mLayoutFiles;
