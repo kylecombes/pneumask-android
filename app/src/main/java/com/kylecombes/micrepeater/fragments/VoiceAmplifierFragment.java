@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater.ui.main;
+package com.kylecombes.micrepeater.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,7 +19,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.kylecombes.micrepeater.R;
-import com.kylecombes.micrepeater.VoiceAmplificationController;
+import com.kylecombes.micrepeater.interfaces.VoiceAmplificationController;
+import com.kylecombes.micrepeater.widgets.AmplifyingControlTile;
+import com.kylecombes.micrepeater.models.AppStateViewModel;
 
 import java.util.Objects;
 
@@ -36,7 +38,7 @@ public class VoiceAmplifierFragment extends Fragment {
     private VoiceAmplificationController mAmpController;
     private static final String[] OUTPUTS = {"voice", "alarm", "music"};
 
-    static VoiceAmplifierFragment newInstance() {
+    public static VoiceAmplifierFragment newInstance() {
         return new VoiceAmplifierFragment();
     }
 

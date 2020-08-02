@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater;
+package com.kylecombes.micrepeater.activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,10 +16,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.kylecombes.micrepeater.ui.main.AppStateViewModel;
-import com.kylecombes.micrepeater.ui.main.SectionsPagerAdapter;
+import com.kylecombes.micrepeater.services.AudioRelayService;
+import com.kylecombes.micrepeater.bluetooth.BluetoothStateReceiver;
+import com.kylecombes.micrepeater.adapters.SectionsPagerAdapter;
+import com.kylecombes.micrepeater.interfaces.VoiceAmplificationController;
+import com.kylecombes.micrepeater.models.AppStateViewModel;
 
-import java.util.Objects;
+import com.kylecombes.micrepeater.R;
 
 public class MainActivity extends AppCompatActivity implements VoiceAmplificationController {
 

@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater;
+package com.kylecombes.micrepeater.bluetooth;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

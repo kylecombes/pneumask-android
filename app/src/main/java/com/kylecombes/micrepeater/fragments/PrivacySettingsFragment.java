@@ -1,4 +1,4 @@
-package com.kylecombes.micrepeater;
+package com.kylecombes.micrepeater.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +12,8 @@ import android.widget.Switch;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.kylecombes.micrepeater.R;
 
 public class PrivacySettingsFragment extends Fragment {
 
