@@ -1,4 +1,4 @@
-package com.kylecombes.pneumask.activities;
+package org.pneumask.app.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.kylecombes.pneumask.fragments.PrivacySettingsFragment;
+import org.pneumask.app.fragments.PrivacySettingsFragment;
 
-import com.kylecombes.pneumask.R;
+import org.pneumask.app.R;
 
 public class PrivacySettingsActivity extends AppCompatActivity {
 

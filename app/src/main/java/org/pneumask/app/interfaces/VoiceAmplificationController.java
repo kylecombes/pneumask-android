@@ -1,4 +1,4 @@
-package com.kylecombes.pneumask.interfaces;
+package org.pneumask.app.interfaces;
 
 public interface VoiceAmplificationController {
     void startAmplification();

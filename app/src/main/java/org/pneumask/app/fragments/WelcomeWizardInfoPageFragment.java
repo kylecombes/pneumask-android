@@ -1,4 +1,4 @@
-package com.kylecombes.pneumask.fragments;
+package org.pneumask.app.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.kylecombes.pneumask.R;
+import org.pneumask.app.R;
 
 public class WelcomeWizardInfoPageFragment extends Fragment {
     private static final String ARG_PAGE_INDEX = "PAGE_INDEX";

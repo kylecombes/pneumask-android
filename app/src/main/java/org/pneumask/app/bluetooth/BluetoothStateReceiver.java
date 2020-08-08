@@ -1,4 +1,4 @@
-package com.kylecombes.pneumask.bluetooth;
+package org.pneumask.app.bluetooth;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

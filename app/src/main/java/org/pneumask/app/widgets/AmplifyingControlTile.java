@@ -1,4 +1,4 @@
-package com.kylecombes.pneumask.widgets;
+package org.pneumask.app.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.kylecombes.pneumask.R;
+import org.pneumask.app.R;
 
 public class AmplifyingControlTile extends ConstraintLayout {
 

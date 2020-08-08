@@ -1,4 +1,4 @@
-package com.kylecombes.pneumask.models;
+package org.pneumask.app.models;
 
 import android.media.AudioManager;
 

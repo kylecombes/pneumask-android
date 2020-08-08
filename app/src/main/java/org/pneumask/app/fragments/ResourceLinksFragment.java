@@ -1,4 +1,4 @@
-package com.kylecombes.pneumask.fragments;
+package org.pneumask.app.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.kylecombes.pneumask.activities.PrivacySettingsActivity;
-import com.kylecombes.pneumask.R;
+import org.pneumask.app.activities.PrivacySettingsActivity;
+import org.pneumask.app.R;
 
 public class ResourceLinksFragment extends Fragment {
 

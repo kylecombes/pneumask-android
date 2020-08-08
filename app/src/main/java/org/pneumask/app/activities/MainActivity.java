@@ -1,4 +1,4 @@
-package com.kylecombes.pneumask.activities;
+package org.pneumask.app.activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,13 +16,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.kylecombes.pneumask.services.AudioRelayService;
-import com.kylecombes.pneumask.bluetooth.BluetoothStateReceiver;
-import com.kylecombes.pneumask.adapters.SectionsPagerAdapter;
-import com.kylecombes.pneumask.interfaces.VoiceAmplificationController;
-import com.kylecombes.pneumask.models.AppStateViewModel;
+import org.pneumask.app.services.AudioRelayService;
+import org.pneumask.app.bluetooth.BluetoothStateReceiver;
+import org.pneumask.app.adapters.SectionsPagerAdapter;
+import org.pneumask.app.interfaces.VoiceAmplificationController;
+import org.pneumask.app.models.AppStateViewModel;
 
-import com.kylecombes.pneumask.R;
+import org.pneumask.app.R;
 
 public class MainActivity extends AppCompatActivity implements VoiceAmplificationController {
 

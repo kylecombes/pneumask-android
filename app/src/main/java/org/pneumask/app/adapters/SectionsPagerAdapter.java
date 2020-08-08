@@ -1,4 +1,4 @@
-package com.kylecombes.pneumask.adapters;
+package org.pneumask.app.adapters;
 
 import android.content.Context;
 
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.kylecombes.pneumask.R;
-import com.kylecombes.pneumask.fragments.ResourceLinksFragment;
-import com.kylecombes.pneumask.fragments.VoiceAmplifierFragment;
+import org.pneumask.app.R;
+import org.pneumask.app.fragments.ResourceLinksFragment;
+import org.pneumask.app.fragments.VoiceAmplifierFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

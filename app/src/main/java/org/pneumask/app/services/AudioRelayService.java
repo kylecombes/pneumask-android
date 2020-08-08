@@ -1,4 +1,4 @@
-package com.kylecombes.pneumask.services;
+package org.pneumask.app.services;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -19,7 +19,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.kylecombes.pneumask.BuildConfig;
+import org.pneumask.app.BuildConfig;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicBoolean;

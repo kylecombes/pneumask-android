@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:padding="@dimen/fragment_padding"
     android:background="@color/colorPrimary">
-    <com.kylecombes.pneumask.widgets.MicDeviceStatusTile
+    <org.pneumask.app.widgets.MicDeviceStatusTile
         android:id="@+id/status_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.kylecombes.pneumask.widgets.AudioOutputControlTile
+    <org.pneumask.app.widgets.AudioOutputControlTile
         android:id="@+id/dropdown_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent">
-        <com.kylecombes.pneumask.widgets.AmplifyingControlTile
+        <org.pneumask.app.widgets.AmplifyingControlTile
             android:visibility="invisible"
             android:id="@+id/amplifying_control_tile"
             android:layout_width="match_parent"
